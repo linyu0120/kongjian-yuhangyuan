@@ -2,7 +2,9 @@
 <html lang="zh-Hant">
 
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>🏸 空間羽航員 V5.6 Final</title>
@@ -16,18 +18,21 @@
 
 <body>
 
-<div class="container">
+<div class="app">
+
 
 <h1>🏸 空間羽航員</h1>
 
-<h2>V5.6 Final</h2>
+<h2>V5.6 Final Ultimate</h2>
 
-<p>羽球輪轉排場工具</p>
+<p>羽球公平輪轉工具</p>
+
 
 
 <section>
 
-<h3>👥 球友名單</h3>
+<h3>👥 球友管理</h3>
+
 
 <input 
 id="playerName"
@@ -35,7 +40,7 @@ placeholder="輸入球友姓名">
 
 
 <button onclick="addPlayer()">
-新增球友
+＋ 新增
 </button>
 
 
@@ -46,55 +51,104 @@ placeholder="輸入球友姓名">
 
 
 
+
 <section>
 
-<h3>🏟 排場設定</h3>
+<h3>🏟 今日設定</h3>
 
 
 <label>
 球場數
 </label>
 
+
 <input 
 id="courtCount"
 type="number"
-value="2"
-min="1">
+value="2">
+
 
 
 <br>
+
 
 
 <label>
 每場人數
 </label>
 
+
 <input 
 id="peopleCount"
 type="number"
-value="4"
-min="2">
+value="4">
+
 
 
 </section>
 
 
 
+
+
 <section>
 
+
+<h3>⚙️ 模式</h3>
+
+
+<select id="mode">
+
+
+<option value="double">
+🏸 雙打模式
+</option>
+
+
+<option value="rotate">
+🔄 三人輪替
+</option>
+
+
+<option value="free">
+⭐ 自由模式
+</option>
+
+
+</select>
+
+
+
+</section>
+
+
+
+
+
+<section>
+
+
 <button 
-class="mainBtn"
-onclick="startSchedule()">
+class="main"
+onclick="startGame()">
 
 🏸 開始排場
 
 </button>
 
 
-<button
-onclick="nextRound()">
+
+<button onclick="nextRound()">
 
 🔄 下一輪
+
+</button>
+
+
+
+<button onclick="clearToday()">
+
+🗑 清除今日
 
 </button>
 
@@ -103,13 +157,17 @@ onclick="nextRound()">
 
 
 
+
+
 <section>
+
 
 <h3>📋 排場結果</h3>
 
+
 <div id="result">
 
-尚未排場
+尚未開始
 
 </div>
 
@@ -117,10 +175,33 @@ onclick="nextRound()">
 </section>
 
 
+
+
+
+<section>
+
+
+<h3>📊 今日統計</h3>
+
+
+<div id="stats">
+
+尚無資料
+
 </div>
 
 
+</section>
+
+
+
+</div>
+
+
+
 <script src="storage.js"></script>
+
+<script src="stats.js"></script>
 
 <script src="scheduler.js"></script>
 
@@ -128,5 +209,6 @@ onclick="nextRound()">
 
 
 </body>
+
 
 </html>
