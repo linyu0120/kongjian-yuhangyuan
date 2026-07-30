@@ -1,9 +1,9 @@
 {
-  "name": "🏸 空間羽航員 V5.6 Final",
+  "name": "🏸 空間羽航員 V5.6 Final Ultimate Plus",
   "short_name": "空間羽航員",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f2f7ff",
-  "theme_color": "#f2f7ff",
+  "background_color": "#e8f4ff",
+  "theme_color": "#8fc9ff",
   "lang": "zh-TW"
 }
