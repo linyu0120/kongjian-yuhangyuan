@@ -1,68 +1,84 @@
 let players = JSON.parse(localStorage.getItem("players")) || [];
 
-function addPlayer() {
+
+function savePlayers(){
+  localStorage.setItem(
+    "players",
+    JSON.stringify(players)
+  );
+}
+
+
+function addPlayer(){
+
   let input = document.getElementById("playerName");
   let name = input.value.trim();
 
-  if (name === "") {
-    alert("請輸入球友姓名");
+  if(name === ""){
+    alert("請輸入姓名");
     return;
   }
 
   players.push(name);
 
-  localStorage.setItem(
-    "players",
-    JSON.stringify(players)
-  );
+  savePlayers();
 
-  input.value = "";
+  input.value="";
 
   showPlayers();
 }
 
 
-function removePlayer(index) {
-  players.splice(index, 1);
+function removePlayer(index){
 
-  localStorage.setItem(
-    "players",
-    JSON.stringify(players)
-  );
+  players.splice(index,1);
+
+  savePlayers();
 
   showPlayers();
+
 }
 
 
-function showPlayers() {
-  let list = document.getElementById("playerList");
+function showPlayers(){
 
-  if (!list) return;
+  let list=document.getElementById("playerList");
 
-  list.innerHTML = "";
+  list.innerHTML="";
 
-  players.forEach(function(player, index){
+  players.forEach((p,i)=>{
 
-    let li = document.createElement("li");
+    let li=document.createElement("li");
 
     li.innerHTML =
-      player +
-      ' <button onclick="removePlayer(' +
-      index +
-      ')">❌</button>';
+    p+" <button onclick='removePlayer("+i+")'>❌</button>";
 
     list.appendChild(li);
 
   });
+
 }
 
 
-function start() {
-  alert(
-    "🏸 空間羽航員 V5.6 Final\n目前球友：" +
-    players.length +
-    " 人"
-  );
+function start(){
+
+ let courts=
+ Number(document.getElementById("courtCount").value);
+
+ let people=
+ Number(document.getElementById("peopleCount").value);
+
+
+ let result=createSchedule(
+   players,
+   courts,
+   people
+ );
+
+
+ document.getElementById("result").innerHTML=
+ result.join("<br>");
+
 }
 
 
