@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏸 空間羽航員</title>
+<title>🏸 空間羽航員 V5.6</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,7 +23,32 @@
 
 <ul id="playerList"></ul>
 
+<hr>
+
+<h3>排場設定</h3>
+
+<label>
+球場數：
+<input id="courtCount" type="number" value="2">
+</label>
+
+<br><br>
+
+<label>
+每場人數：
+<input id="peopleCount" type="number" value="4">
+</label>
+
+<br><br>
+
 <button onclick="start()">開始排場</button>
+
+<h3>排場結果</h3>
+
+<div id="result"></div>
+
+<script src="storage.js"></script>
+<script src="scheduler.js"></script>
 <script src="app.js"></script>
 
 </body>
