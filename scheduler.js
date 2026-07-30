@@ -1,15 +1,43 @@
-// 🏸 空間羽航員 V5.6 Final
-// 公平輪轉排場核心
+function createSchedule(players,courts,people){
 
-function createSchedule(players, courts) {
-  let result = [];
+ let result=[];
 
-  for (let i = 0; i < players.length; i++) {
-    result.push({
-      court: (i % courts) + 1,
-      player: players[i]
-    });
-  }
+ if(players.length < people){
 
-  return result;
+   return [
+    "人數不足，無法排場"
+   ];
+
+ }
+
+
+ let index=0;
+
+
+ for(let c=1;c<=courts;c++){
+
+   let group=[];
+
+   for(let i=0;i<people;i++){
+
+     if(index >= players.length){
+       index=0;
+     }
+
+     group.push(players[index]);
+
+     index++;
+
+   }
+
+
+   result.push(
+    "🏟 第 "+c+" 場："+group.join("、")
+   );
+
+ }
+
+
+ return result;
+
 }
