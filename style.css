@@ -16,7 +16,7 @@ body {
   background:
   linear-gradient(
     180deg,
-    #eaf4ff,
+    #e8f4ff,
     #ffffff
   );
 
@@ -28,16 +28,16 @@ body {
 
   max-width: 520px;
 
-  margin: auto;
+  margin:auto;
 
   background:white;
 
-  padding:20px;
+  padding:22px;
 
   border-radius:25px;
 
   box-shadow:
-  0 5px 20px rgba(0,0,0,0.1);
+  0 8px 25px rgba(0,0,0,0.12);
 
 }
 
@@ -45,17 +45,20 @@ body {
 
 h1 {
 
-  text-align:center;
+ text-align:center;
 
-  font-size:34px;
+ font-size:34px;
+
+ margin-bottom:5px;
 
 }
 
 
-
 h2 {
 
-  text-align:center;
+ text-align:center;
+
+ margin-top:0;
 
 }
 
@@ -63,9 +66,9 @@ h2 {
 
 p {
 
-  text-align:center;
+ text-align:center;
 
-  color:#555;
+ color:#555;
 
 }
 
@@ -73,13 +76,21 @@ p {
 
 section {
 
-  margin-top:20px;
+ margin-top:20px;
 
-  padding:15px;
+ padding:18px;
 
-  background:#f8fbff;
+ background:#f7fbff;
 
-  border-radius:18px;
+ border-radius:18px;
+
+}
+
+
+
+h3 {
+
+ margin-top:0;
 
 }
 
@@ -89,17 +100,17 @@ input,
 select {
 
 
-  width:100%;
+ width:100%;
 
-  padding:14px;
+ padding:14px;
 
-  margin-top:8px;
+ margin-top:8px;
 
-  font-size:18px;
+ font-size:18px;
 
-  border-radius:12px;
+ border-radius:12px;
 
-  border:1px solid #ccc;
+ border:1px solid #ccc;
 
 
 }
@@ -109,19 +120,20 @@ select {
 button {
 
 
-  width:100%;
+ width:100%;
 
-  margin-top:10px;
+ padding:14px;
 
-  padding:14px;
+ margin-top:10px;
 
-  font-size:18px;
+ font-size:18px;
 
-  border-radius:15px;
+ border-radius:15px;
 
-  border:0;
+ border:none;
 
-  background:#d9edff;
+ background:#d8ecff;
+
 
 }
 
@@ -130,9 +142,28 @@ button {
 button.main {
 
 
-  font-size:22px;
+ background:#8fc9ff;
 
-  background:#9bd1ff;
+ font-size:22px;
+
+ font-weight:bold;
+
+
+}
+
+
+
+button:hover {
+
+ opacity:0.85;
+
+}
+
+
+
+ul {
+
+ padding-left:20px;
 
 }
 
@@ -140,11 +171,9 @@ button.main {
 
 li {
 
+ margin:10px 0;
 
-  margin:10px 0;
-
-  font-size:18px;
-
+ font-size:18px;
 
 }
 
@@ -154,9 +183,39 @@ li {
 #stats {
 
 
-  line-height:2;
+ font-size:18px;
 
-  font-size:18px;
+ line-height:2;
+
+ padding:10px;
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+ body{
+
+  padding:10px;
+
+ }
+
+
+ .app{
+
+  padding:15px;
+
+ }
+
+
+ h1{
+
+  font-size:28px;
+
+ }
 
 
 }
