@@ -1,55 +1,132 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🏸 空間羽航員 V5.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🏸 空間羽航員 V5.6 Final</title>
+
 <link rel="stylesheet" href="style.css">
+
+<link rel="manifest" href="manifest.json">
+
 </head>
 
+
 <body>
+
+<div class="container">
 
 <h1>🏸 空間羽航員</h1>
 
 <h2>V5.6 Final</h2>
 
-<p>羽球輪轉工具</p>
+<p>羽球輪轉排場工具</p>
 
-<h3>球友名單</h3>
 
-<input id="playerName" placeholder="輸入球友姓名">
+<section>
 
-<button onclick="addPlayer()">新增球友</button>
+<h3>👥 球友名單</h3>
+
+<input 
+id="playerName"
+placeholder="輸入球友姓名">
+
+
+<button onclick="addPlayer()">
+新增球友
+</button>
+
 
 <ul id="playerList"></ul>
 
-<hr>
 
-<h3>排場設定</h3>
+</section>
+
+
+
+<section>
+
+<h3>🏟 排場設定</h3>
+
 
 <label>
-球場數：
-<input id="courtCount" type="number" value="2">
+球場數
 </label>
 
-<br><br>
+<input 
+id="courtCount"
+type="number"
+value="2"
+min="1">
+
+
+<br>
+
 
 <label>
-每場人數：
-<input id="peopleCount" type="number" value="4">
+每場人數
 </label>
 
-<br><br>
+<input 
+id="peopleCount"
+type="number"
+value="4"
+min="2">
 
-<button onclick="start()">開始排場</button>
 
-<h3>排場結果</h3>
+</section>
 
-<div id="result"></div>
+
+
+<section>
+
+<button 
+class="mainBtn"
+onclick="startSchedule()">
+
+🏸 開始排場
+
+</button>
+
+
+<button
+onclick="nextRound()">
+
+🔄 下一輪
+
+</button>
+
+
+</section>
+
+
+
+<section>
+
+<h3>📋 排場結果</h3>
+
+<div id="result">
+
+尚未排場
+
+</div>
+
+
+</section>
+
+
+</div>
+
 
 <script src="storage.js"></script>
+
 <script src="scheduler.js"></script>
+
 <script src="app.js"></script>
 
+
 </body>
+
 </html>
