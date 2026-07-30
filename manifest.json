@@ -1,8 +1,9 @@
 {
-  "name": "🏸 空間羽航員",
-  "short_name": "羽航員",
-  "start_url": "index.html",
+  "name": "🏸 空間羽航員 V5.6 Final",
+  "short_name": "空間羽航員",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#f2f7ff",
+  "theme_color": "#f2f7ff",
   "lang": "zh-TW"
 }
