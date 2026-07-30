@@ -8,10 +8,10 @@ let round = 0;
 
 function savePlayers(){
 
- saveData(
-   "players",
-   players
- );
+  saveData(
+    "players",
+    players
+  );
 
 }
 
@@ -21,70 +21,67 @@ function savePlayers(){
 function addPlayer(){
 
 
- let input =
- document.getElementById("playerName");
+  let input =
+  document.getElementById("playerName");
 
 
- let name =
- input.value.trim();
-
-
-
- if(name===""){
-
-  alert("請輸入球友姓名");
-
-  return;
-
- }
+  let name =
+  input.value.trim();
 
 
 
- if(players.includes(name)){
+  if(name===""){
 
-  alert("此球友已存在");
+    alert("請輸入球友姓名");
 
-  return;
+    return;
 
- }
-
-
-
- players.push(name);
+  }
 
 
 
- savePlayers();
+  if(players.includes(name)){
 
+    alert("此球友已存在");
 
- input.value="";
+    return;
 
-
- showPlayers();
-
-
- updateStats();
-
-
-}
+  }
 
 
 
-
-function removePlayer(i){
-
-
- players.splice(i,1);
+  players.push(name);
 
 
- savePlayers();
+
+  savePlayers();
 
 
- showPlayers();
+
+  input.value="";
+
+
+  showPlayers();
 
 
 }
 
+
+
+
+function removePlayer(index){
+
+
+  players.splice(index,1);
+
+
+  savePlayers();
+
+
+  showPlayers();
+
+
+}
 
 
 
@@ -92,33 +89,37 @@ function removePlayer(i){
 function showPlayers(){
 
 
- let list =
- document.getElementById("playerList");
+  let list =
+  document.getElementById("playerList");
 
 
- list.innerHTML="";
-
-
- players.forEach(
- function(p,i){
-
-
- let li =
- document.createElement("li");
+  list.innerHTML="";
 
 
 
- li.innerHTML =
- p+
- " <button onclick='removePlayer("+i+")'>❌</button>";
+  players.forEach(
+  function(name,index){
 
 
 
- list.appendChild(li);
+    let li =
+    document.createElement("li");
 
 
 
- });
+    li.innerHTML =
+    name+
+    " <button onclick='removePlayer("
+    +index+
+    ")'>❌</button>";
+
+
+
+    list.appendChild(li);
+
+
+
+  });
 
 
 }
@@ -126,24 +127,22 @@ function showPlayers(){
 
 
 
-
-
 function startGame(){
 
 
- if(players.length===0){
+  if(players.length===0){
 
-  alert("請先加入球友");
+    alert("請先新增球友");
 
-  return;
+    return;
 
- }
-
-
- round=0;
+  }
 
 
- createRound();
+  round=0;
+
+
+  makeRound();
 
 
 }
@@ -154,10 +153,10 @@ function startGame(){
 function nextRound(){
 
 
- round++;
+  round++;
 
 
- createRound();
+  makeRound();
 
 
 }
@@ -166,8 +165,7 @@ function nextRound(){
 
 
 
-function createRound(){
-
+function makeRound(){
 
 
  let courts =
@@ -176,12 +174,10 @@ function createRound(){
  );
 
 
-
  let people =
  Number(
  document.getElementById("peopleCount").value
  );
-
 
 
  let mode =
@@ -189,30 +185,59 @@ function createRound(){
 
 
 
-
- let result =
+ let data =
  createSchedule(
- players,
- courts,
- people,
- round,
- mode
+   players,
+   courts,
+   people,
+   round,
+   mode
  );
 
 
 
+ let text="";
+
+
+ data.forEach(
+ function(item){
+
+
+  text +=
+  item.text+
+  "<br>";
+
+
+ });
+
+
+
  document.getElementById("result")
- .innerHTML =
- result.join("<br>");
+ .innerHTML=text;
 
 
 
- recordGames(result);
-
+ recordGames(data);
 
 
  updateStats();
 
+
+}
+
+
+
+
+
+function updateStats(){
+
+
+ let box =
+ document.getElementById("stats");
+
+
+ box.innerHTML =
+ getStatsText();
 
 
 }
@@ -227,8 +252,12 @@ function clearToday(){
  localStorage.removeItem("stats");
 
 
+ round=0;
+
+
  document.getElementById("result")
- .innerHTML="已清除今日資料";
+ .innerHTML =
+ "已清除今日紀錄";
 
 
  updateStats();
@@ -237,44 +266,6 @@ function clearToday(){
 }
 
 
-
-
-function updateStats(){
-
-
- let box =
- document.getElementById("stats");
-
-
- let stats =
- loadData("stats") || {};
-
-
-
- let text="";
-
-
- Object.keys(stats)
- .forEach(function(name){
-
-
- text +=
- name+
- "：出場 "+
- stats[name].play+
- " 次<br>";
-
-
-
- });
-
-
-
- box.innerHTML =
- text || "尚無資料";
-
-
-}
 
 
 
