@@ -11,7 +11,7 @@ function saveData(key, value){
 
 function loadData(key){
 
-  let data =
+  const data =
   localStorage.getItem(key);
 
 
