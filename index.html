@@ -13,25 +13,28 @@
 
 <link rel="manifest" href="manifest.json">
 
+<meta name="theme-color" content="#9bd1ff">
+
 </head>
 
 
 <body>
+
 
 <div class="app">
 
 
 <h1>🏸 空間羽航員</h1>
 
-<h2>V5.6 Final Ultimate</h2>
+<h2>V5.6 Final Ultimate Plus</h2>
 
-<p>羽球公平輪轉工具</p>
+<p>羽球公平輪轉排場工具</p>
 
 
 
 <section>
 
-<h3>👥 球友管理</h3>
+<h3>👥 球友名單</h3>
 
 
 <input 
@@ -40,7 +43,7 @@ placeholder="輸入球友姓名">
 
 
 <button onclick="addPlayer()">
-＋ 新增
+新增球友
 </button>
 
 
@@ -52,9 +55,10 @@ placeholder="輸入球友姓名">
 
 
 
+
 <section>
 
-<h3>🏟 今日設定</h3>
+<h3>🏟 排場設定</h3>
 
 
 <label>
@@ -62,15 +66,15 @@ placeholder="輸入球友姓名">
 </label>
 
 
-<input 
+<input
 id="courtCount"
 type="number"
-value="2">
+value="2"
+min="1">
 
 
 
 <br>
-
 
 
 <label>
@@ -78,10 +82,11 @@ value="2">
 </label>
 
 
-<input 
+<input
 id="peopleCount"
 type="number"
-value="4">
+value="4"
+min="2">
 
 
 
@@ -93,30 +98,28 @@ value="4">
 
 <section>
 
-
-<h3>⚙️ 模式</h3>
+<h3>🏸 模式</h3>
 
 
 <select id="mode">
 
 
 <option value="double">
-🏸 雙打模式
+雙打模式
 </option>
 
 
 <option value="rotate">
-🔄 三人輪替
+輪替模式
 </option>
 
 
 <option value="free">
-⭐ 自由模式
+自由模式
 </option>
 
 
 </select>
-
 
 
 </section>
@@ -128,11 +131,10 @@ value="4">
 <section>
 
 
-<button 
-class="main"
+<button class="main"
 onclick="startGame()">
 
-🏸 開始排場
+🏸 開始今日排場
 
 </button>
 
@@ -148,12 +150,14 @@ onclick="startGame()">
 
 <button onclick="clearToday()">
 
-🗑 清除今日
+🗑 清除今日紀錄
 
 </button>
 
 
+
 </section>
+
 
 
 
@@ -173,6 +177,7 @@ onclick="startGame()">
 
 
 </section>
+
 
 
 
@@ -199,6 +204,8 @@ onclick="startGame()">
 
 
 
+
+
 <script src="storage.js"></script>
 
 <script src="stats.js"></script>
@@ -208,7 +215,7 @@ onclick="startGame()">
 <script src="app.js"></script>
 
 
-</body>
 
+</body>
 
 </html>
