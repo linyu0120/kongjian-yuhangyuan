@@ -1,0 +1,8 @@
+{
+  "name": "🏸 空間羽航員",
+  "short_name": "羽航員",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "zh-TW"
+}
