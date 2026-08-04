@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🏸 羽球輪轉小幫手</title>
+<title>🏸 羽球輪轉小幫手 V8.0</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
@@ -14,36 +14,39 @@
 <body>
 
 <header class="topbar">
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <div class="title">
-       <h1>🏸 羽球輪轉小幫手</h1>
+<button class="menu-btn" onclick="toggleMenu()">
+☰
+</button>
+
+<div class="title">
+
+<h1>🏸 羽球輪轉小幫手</h1>
 
 <span>
-V7.0 Stable
+V8.0 Stable
 </span>
 
-
-<div id="currentClubName">
+<div id="currentClubName"></div>
 
 </div>
-    </div>
-
-    <button class="setting-btn" onclick="openSettings()">⚙️</button>
 
 
-    
+<button class="setting-btn" onclick="openSettings()">
+⚙️
+</button>
+
 </header>
 
 
-<!-- 球團建立畫面 -->
 
-<div id="clubSetup" class="modal" style="display:none;">
+<!-- 建立球團 -->
+
+<div id="clubSetup" class="modal">
 
 <div class="modal-content">
 
-<h2>🏸 建立你的球團</h2>
-
+<h2>建立球團</h2>
 
 <input
 id="clubNameInput"
@@ -51,73 +54,96 @@ placeholder="輸入球團名稱">
 
 
 <button onclick="createNewClub()">
-
 開始使用
+</button>
 
+</div>
+
+</div>
+
+
+
+
+<!-- 選單 -->
+
+<div id="sideMenu" class="side-menu">
+
+<h2>功能</h2>
+
+
+<button onclick="showHome()">
+🏠 今日排場
+</button>
+
+
+<button onclick="showTodayPlayers()">
+☑ 今日到場
+</button>
+
+
+<button onclick="showClubPlayers()">
+📋 球友名單
+</button>
+
+
+<button onclick="showStatistics()">
+📊 統計
+</button>
+
+
+<button onclick="showClubManager()">
+🏠 球團管理
 </button>
 
 
 </div>
 
-</div>
-
-<!-- 側邊選單 -->
-<div id="sideMenu" class="side-menu">
-
-    <h2>☰ 功能</h2>
-
-    <button onclick="showHome()">
-        🏠 今日排場
-    </button>
-
-    <button onclick="showTodayPlayers()">
-        👥 今日活動
-    </button>
-
-    <button onclick="showClubPlayers()">
-        📋 社團球友
-    </button>
-
-    <button onclick="showStatistics()">
-        📊 今日統計
-    </button>
 
 
-    <button onclick="showClubManager()">
-    🏠 切換球團
-    </button>
-    
-</div>
-
-
-<!-- 遮罩 -->
 <div id="overlay" onclick="toggleMenu()"></div>
+
 
 
 
 <main>
 
 
-<!-- 今日資訊 -->
+<!-- 資訊 -->
 
 <section class="info-bar">
 
-    <div>
-        👥
-        <span id="todayCount">0</span>人
-    </div>
 
-    <div>
-        🏟
-        <span id="courtCount">3</span>場
-    </div>
+<div>
+👥
+<span id="todayCount">
+0
+</span>
+人
+</div>
 
-    <div>
-        🏸
-        第<span id="roundCount">0</span>輪
-    </div>
+
+<div>
+🏟
+<span id="courtCount">
+3
+</span>
+場
+</div>
+
+
+<div>
+🏸
+第
+<span id="roundCount">
+0
+</span>
+輪
+</div>
+
 
 </section>
+
+
 
 
 
@@ -125,14 +151,17 @@ placeholder="輸入球團名稱">
 
 <section id="schedulePage">
 
-<h2>🏸 今日排場</h2>
+
+<h2>
+🏸 今日排場
+</h2>
+
 
 
 <div id="roundContainer">
 
-    <!-- 每輪卡片會由 JS 產生 -->
-
 </div>
+
 
 
 <button class="main-btn"
@@ -142,28 +171,41 @@ onclick="nextRound()">
 
 </button>
 
+
+
 <button onclick="clearRounds()">
-🗑 清除今日排場
+
+🗑 清除排場
+
 </button>
-    
+
+
+
 </section>
 
 
 
 
 
-<!-- 今日活動 -->
+
+
+<!-- 今日到場 -->
 
 <section id="todayPlayersPage"
 class="hidden">
 
-<h2>👥 今日活動</h2>
+
+<h2>
+☑ 今日到場
+</h2>
+
 
 
 <input
 id="todaySearch"
-placeholder="搜尋球友..."
+placeholder="搜尋球友"
 oninput="searchTodayPlayers()">
+
 
 
 <div id="todayPlayerList"
@@ -172,8 +214,11 @@ class="player-box">
 </div>
 
 
-<button onclick="addTodayPlayer()">
-➕ 加入今日活動
+
+<button onclick="confirmTodayPlayers()">
+
+確認到場
+
 </button>
 
 
@@ -184,19 +229,24 @@ class="player-box">
 
 
 
-<!-- 社團球友 -->
+
+
+<!-- 球友名單 -->
 
 <section id="clubPlayersPage"
 class="hidden">
 
 
-<h2>📋 社團球友</h2>
+<h2>
+📋 球友名單
+</h2>
+
 
 
 <input
 id="clubSearch"
-placeholder="搜尋球友..."
-oninput="searchClubPlayers()">
+placeholder="搜尋球友"
+oninput="searchClubPlayers">
 
 
 
@@ -206,32 +256,43 @@ class="player-box">
 </div>
 
 
+
+
 <input
 id="newPlayerName"
-placeholder="輸入球友姓名">
+placeholder="新增球友">
+
 
 
 <button onclick="addClubPlayer()">
-➕ 新增球友
+
+➕ 新增
+
 </button>
 
 
-<button onclick="addAllToday()">
-👥 全部加入今日
-</button>
 
 <textarea
 id="importPlayers"
-placeholder="大量匯入名單（一行一位球友）"
-rows="8"></textarea>
+placeholder="大量匯入名單">
+</textarea>
+
 
 
 <button onclick="importPlayers()">
-📥 匯入名單
+
+📥 匯入
+
 </button>
 
 
+
 </section>
+
+
+
+
+
 
 
 <!-- 統計 -->
@@ -240,7 +301,10 @@ rows="8"></textarea>
 class="hidden">
 
 
-<h2>📊 今日統計</h2>
+<h2>
+📊 今日統計
+</h2>
+
 
 
 <div id="statisticsBox">
@@ -248,7 +312,12 @@ class="hidden">
 </div>
 
 
+
 </section>
+
+
+
+
 
 
 
@@ -259,7 +328,9 @@ class="hidden">
 class="hidden">
 
 
-<h2>🏠 球團管理</h2>
+<h2>
+🏠 球團管理
+</h2>
 
 
 <div id="clubList">
@@ -267,19 +338,23 @@ class="hidden">
 </div>
 
 
+
 <input
 id="newClubName"
-placeholder="輸入新球團名稱">
+placeholder="新增球團">
 
 
 <button onclick="createNewClubFromList()">
 
-➕ 新增球團
+新增球團
 
 </button>
 
 
+
 </section>
+
+
 
 
 
@@ -288,18 +363,29 @@ placeholder="輸入新球團名稱">
 
 
 
+
+
+
 <!-- 設定 -->
 
-<div id="settingModal" class="modal" style="display:none;">
+<div id="settingModal"
+class="modal"
+style="display:none;">
+
 
 <div class="modal-content">
 
-<h2>⚙️ 設定</h2>
+
+<h2>
+⚙️ 設定
+</h2>
+
 
 
 <label>
 球場數
 </label>
+
 
 <input
 id="courtSetting"
@@ -311,6 +397,7 @@ value="3">
 <label>
 每場人數
 </label>
+
 
 <input
 id="playerPerCourt"
@@ -326,6 +413,7 @@ value="4">
 </button>
 
 
+
 <button onclick="closeSettings()">
 
 取消
@@ -333,14 +421,18 @@ value="4">
 </button>
 
 
-</div>
 
 </div>
 
 
+</div>
 
 
 
+
+
+
+<script src="storage.js"></script>
 <script src="scheduler.js"></script>
 <script src="app.js"></script>
 
