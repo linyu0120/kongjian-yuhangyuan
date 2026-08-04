@@ -268,7 +268,15 @@ function renderClubPlayers(){
 
         div.innerHTML=`
 
-        <span>${p.name}</span>
+        <span>
+        ${p.name}
+        </span>
+
+
+        <button onclick="addToToday(${i})">
+        加入今日
+        </button>
+
 
         <button onclick="deleteClubPlayer(${i})">
         刪除
@@ -863,4 +871,51 @@ function importPlayers(){
 
 
 
+
+function addToToday(index){
+
+
+    let player =
+    clubPlayers[index];
+
+
+    if(
+        todayPlayers.some(
+            p=>p.name===player.name
+        )
+    ){
+
+        alert(
+            player.name + " 已經在今日活動"
+        );
+
+        return;
+
+    }
+
+
+
+    todayPlayers.push({
+
+        name:player.name,
+
+        restMinutes:0,
+
+        playCount:0
+
+    });
+
+
+
+    saveData();
+
+
+    renderTodayPlayers();
+
+
+    alert(
+        player.name + " 加入今日活動"
+    );
+
+}
 alert("app.js 已載入");
