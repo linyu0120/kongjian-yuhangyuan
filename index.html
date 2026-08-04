@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🏸 空間羽航員 V6.1 Stable</title>
+<title>🏸 羽球輪轉小幫手</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
@@ -17,13 +17,49 @@
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
     <div class="title">
-        <h1>🏸 空間羽航員</h1>
-        <span>V6.1 Stable</span>
+       <h1>🏸 羽球輪轉小幫手</h1>
+
+<span>
+V7.0 Stable
+</span>
+
+
+<div id="currentClubName">
+
+</div>
     </div>
 
     <button class="setting-btn" onclick="openSettings()">⚙️</button>
+
+
+    
 </header>
 
+
+<!-- 球團建立畫面 -->
+
+<div id="clubSetup" class="modal">
+
+<div class="modal-content">
+
+<h2>🏸 建立你的球團</h2>
+
+
+<input
+id="clubNameInput"
+placeholder="輸入球團名稱">
+
+
+<button onclick="createNewClub()">
+
+開始使用
+
+</button>
+
+
+</div>
+
+</div>
 
 <!-- 側邊選單 -->
 <div id="sideMenu" class="side-menu">
@@ -46,6 +82,11 @@
         📊 今日統計
     </button>
 
+
+    <button onclick="showClubManager()">
+    🏠 切換球團
+    </button>
+    
 </div>
 
 
@@ -201,7 +242,34 @@ rows="8"></textarea>
 
 <section id="statisticsPage"
 class="hidden">
+<!-- 球團管理 -->
 
+<section id="clubManagerPage"
+class="hidden">
+
+
+<h2>🏠 球團管理</h2>
+
+
+<div id="clubList">
+
+</div>
+
+
+
+<input
+id="newClubName"
+placeholder="輸入新球團名稱">
+
+
+<button onclick="createNewClubFromList()">
+
+➕ 新增球團
+
+</button>
+
+
+</section>
 
 <h2>📊 今日統計</h2>
 
@@ -216,7 +284,6 @@ class="hidden">
 
 
 </main>
-
 
 
 
