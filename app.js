@@ -776,3 +776,16 @@ function renderAll(){
 
 }
 
+function searchTodayPlayers(){
+
+    renderTodayPlayers();
+
+}
+
+
+function searchClubPlayers(){
+
+    renderClubPlayers();
+
+}
+alert("app.js 已載入");
