@@ -1,221 +1,469 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
-
 
 body {
+    margin: 0;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Microsoft JhengHei",
+        sans-serif;
 
-  margin: 0;
+    background: #f5f7fa;
+    color: #222;
+}
 
-  padding: 20px;
 
-  font-family:
-  "Microsoft JhengHei",
-  sans-serif;
+/* ===== 頂部 ===== */
 
-  background:
-  linear-gradient(
-    180deg,
-    #e8f4ff,
-    #ffffff
-  );
+.topbar {
+
+    height: 60px;
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 12px;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    box-shadow: 0 1px 5px #ccc;
+
+}
+
+
+.topbar button {
+
+    width: 42px;
+    height: 38px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 20px;
+
+    background: #eee;
+
+}
+
+
+.title {
+
+    text-align: center;
+
+}
+
+
+.title h1 {
+
+    font-size: 18px;
+    margin: 0;
+
+}
+
+
+.title span {
+
+    font-size: 12px;
+    color: #777;
 
 }
 
 
 
-.app {
 
-  max-width: 520px;
 
-  margin:auto;
+/* ===== 側邊選單 ===== */
 
-  background:white;
+.side-menu {
 
-  padding:22px;
+    position: fixed;
 
-  border-radius:25px;
+    left: -280px;
 
-  box-shadow:
-  0 8px 25px rgba(0,0,0,0.12);
+    top: 0;
+
+    width: 260px;
+
+    height: 100%;
+
+    background:white;
+
+    z-index:20;
+
+    padding:20px;
+
+    transition:0.3s;
+
+    box-shadow:2px 0 8px #aaa;
+
+}
+
+
+.side-menu.open {
+
+    left:0;
+
+}
+
+
+.side-menu button {
+
+    width:100%;
+
+    height:42px;
+
+    margin-bottom:10px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#f0f0f0;
+
+    font-size:16px;
 
 }
 
 
 
-h1 {
+#overlay {
 
- text-align:center;
+    display:none;
 
- font-size:34px;
+    position:fixed;
 
- margin-bottom:5px;
+    inset:0;
 
-}
+    background:rgba(0,0,0,.35);
 
-
-h2 {
-
- text-align:center;
-
- margin-top:0;
+    z-index:15;
 
 }
 
 
+#overlay.show {
 
-p {
-
- text-align:center;
-
- color:#555;
+    display:block;
 
 }
 
 
 
-section {
-
- margin-top:20px;
-
- padding:18px;
-
- background:#f7fbff;
-
- border-radius:18px;
-
-}
 
 
 
-h3 {
+/* ===== 主要內容 ===== */
 
- margin-top:0;
+
+main {
+
+    padding:12px;
 
 }
 
 
 
-input,
-select {
 
 
- width:100%;
+/* ===== 頂部資訊 ===== */
 
- padding:14px;
 
- margin-top:8px;
+.info-bar {
 
- font-size:18px;
+    display:flex;
 
- border-radius:12px;
+    justify-content:space-around;
 
- border:1px solid #ccc;
+    background:white;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
+
+    font-size:15px;
+
+}
+
+
+
+
+
+
+
+/* ===== 排場卡片 ===== */
+
+
+.round-card {
+
+
+    background:white;
+
+    border-radius:14px;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    box-shadow:0 2px 5px #ddd;
 
 
 }
 
+
+
+.round-title {
+
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+.court {
+
+
+    background:#f7f7f7;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    margin-bottom:10px;
+
+
+}
+
+
+
+.rest-box {
+
+
+    margin-top:10px;
+
+    padding:10px;
+
+    background:#fafafa;
+
+    border-radius:8px;
+
+}
+
+
+
+
+
+/* ===== 按鈕 ===== */
 
 
 button {
 
 
- width:100%;
+    cursor:pointer;
 
- padding:14px;
+}
 
- margin-top:10px;
 
- font-size:18px;
+.main-btn {
 
- border-radius:15px;
 
- border:none;
+    width:100%;
 
- background:#d8ecff;
+    height:44px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#333;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+section button {
+
+
+    height:40px;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:0 15px;
+
+    margin-top:8px;
+
+}
+
+
+
+
+
+
+
+/* ===== 名單 ===== */
+
+
+.player-box {
+
+
+    max-height:420px;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    margin:10px 0;
+
+
+}
+
+
+.player-item {
+
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:10px;
+
+    border-bottom:1px solid #eee;
 
 
 }
 
 
 
-button.main {
 
 
- background:#8fc9ff;
 
- font-size:22px;
+input {
 
- font-weight:bold;
+
+    width:100%;
+
+    height:42px;
+
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
+    padding:0 10px;
+
+    font-size:16px;
+
+    margin-bottom:8px;
+
+
+}
+
+
+
+
+
+
+/* ===== 隱藏 ===== */
+
+
+.hidden {
+
+    display:none;
+
+}
+
+
+
+
+
+
+/* ===== Modal ===== */
+
+
+.modal {
+
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.4);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:50;
 
 
 }
 
 
 
-button:hover {
-
- opacity:0.85;
-
-}
+.modal-content {
 
 
+    background:white;
 
-ul {
+    width:90%;
 
- padding-left:20px;
+    max-width:350px;
 
-}
+    padding:20px;
 
-
-
-li {
-
- margin:10px 0;
-
- font-size:18px;
-
-}
-
-
-
-#result,
-#stats {
-
-
- font-size:18px;
-
- line-height:2;
-
- padding:10px;
+    border-radius:15px;
 
 
 }
 
+
+
+
+/* 手機微調 */
 
 
 @media(max-width:600px){
 
 
- body{
+    .round-card{
 
-  padding:10px;
+        padding:12px;
 
- }
-
-
- .app{
-
-  padding:15px;
-
- }
+    }
 
 
- h1{
+    .title h1{
 
-  font-size:28px;
+        font-size:16px;
 
- }
+    }
 
 
 }
