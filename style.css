@@ -1,11 +1,13 @@
+/* 🏸 羽球輪轉小幫手 V8.2 Stable */
+
+/* ======================
+   基本
+====================== */
+
+
 *{
 
-box-sizing:border-box;
-
-font-family:
-"Microsoft JhengHei",
-Arial,
-sans-serif;
+    box-sizing:border-box;
 
 }
 
@@ -13,54 +15,90 @@ sans-serif;
 
 body{
 
-margin:0;
+    margin:0;
 
-background:#f4f6fa;
+    font-family:
 
-color:#333;
+    "Noto Sans TC",
+    Arial,
+    sans-serif;
+
+    background:#f5f7fa;
+
+    color:#222;
 
 }
 
 
 
 
-/* 頂部 */
+
+button{
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:8px 12px;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+
+
+/* ======================
+   頂部
+====================== */
+
 
 .topbar{
 
-height:58px;
+    height:70px;
 
-background:#1976d2;
+    background:#1f6feb;
 
-color:white;
+    color:white;
 
-display:flex;
+    display:flex;
 
-align-items:center;
+    align-items:center;
 
-justify-content:space-between;
+    justify-content:space-between;
 
-padding:0 8px;
+    padding:10px 15px;
 
-position:sticky;
+    position:sticky;
 
-top:0;
+    top:0;
 
-z-index:10;
-
-}
-
-
-
-.topbar button{
-
-background:none;
-
-border:0;
-
-color:white;
-
-font-size:20px;
+    z-index:10;
 
 }
 
@@ -68,7 +106,7 @@ font-size:20px;
 
 .title{
 
-text-align:center;
+    text-align:center;
 
 }
 
@@ -76,9 +114,9 @@ text-align:center;
 
 .title h1{
 
-margin:0;
+    margin:0;
 
-font-size:18px;
+    font-size:20px;
 
 }
 
@@ -86,16 +124,7 @@ font-size:18px;
 
 .title span{
 
-font-size:12px;
-
-}
-
-
-
-
-#currentClubName{
-
-font-size:12px;
+    font-size:12px;
 
 }
 
@@ -103,30 +132,49 @@ font-size:12px;
 
 
 
-/* 側邊選單 */
+.menu-btn,
+.setting-btn{
+
+    background:white;
+
+    color:#1f6feb;
+
+    width:40px;
+
+    height:40px;
+
+}
+
+
+
+
+
+
+
+/* ======================
+   側邊選單
+====================== */
 
 
 .side-menu{
 
-position:fixed;
+    position:fixed;
 
-left:-260px;
+    left:-260px;
 
-top:0;
+    top:0;
 
-height:100%;
+    width:240px;
 
-width:240px;
+    height:100%;
 
-background:white;
+    background:white;
 
-padding:15px;
+    padding:20px;
 
-z-index:30;
+    transition:.3s;
 
-transition:.25s;
-
-box-shadow:2px 0 8px #aaa;
+    z-index:20;
 
 }
 
@@ -134,7 +182,7 @@ box-shadow:2px 0 8px #aaa;
 
 .side-menu.open{
 
-left:0;
+    left:0;
 
 }
 
@@ -142,17 +190,11 @@ left:0;
 
 .side-menu button{
 
-width:100%;
+    width:100%;
 
-margin:4px 0;
+    margin-bottom:10px;
 
-padding:8px;
-
-font-size:14px;
-
-color:#333;
-
-background:#eee;
+    background:#eef5ff;
 
 }
 
@@ -162,15 +204,15 @@ background:#eee;
 
 #overlay{
 
-display:none;
+    display:none;
 
-position:fixed;
+    position:fixed;
 
-inset:0;
+    inset:0;
 
-background:#0006;
+    background:rgba(0,0,0,.4);
 
-z-index:20;
+    z-index:15;
 
 }
 
@@ -178,7 +220,7 @@ z-index:20;
 
 #overlay.show{
 
-display:block;
+    display:block;
 
 }
 
@@ -186,11 +228,16 @@ display:block;
 
 
 
+
+
+/* ======================
+   主內容
+====================== */
 
 
 main{
 
-padding:10px;
+    padding:15px;
 
 }
 
@@ -198,26 +245,36 @@ padding:10px;
 
 
 
-/* 今日資訊 */
+.hidden{
+
+    display:none;
+
+}
+
+
+
+
+
+
+
+/* ======================
+   今日資訊
+====================== */
 
 
 .info-bar{
 
-display:flex;
+    display:flex;
 
-justify-content:space-around;
+    justify-content:space-around;
 
-background:white;
+    background:white;
 
-padding:10px;
+    padding:12px;
 
-border-radius:12px;
+    border-radius:12px;
 
-margin-bottom:10px;
-
-font-size:15px;
-
-box-shadow:0 2px 5px #ddd;
+    margin-bottom:15px;
 
 }
 
@@ -225,56 +282,20 @@ box-shadow:0 2px 5px #ddd;
 
 
 
-#todaySummary{
-
-background:white;
-
-border-radius:10px;
-
-padding:8px;
-
-margin-bottom:10px;
-
-}
-
-
-
-
-
-/* 按鈕 */
-
-
-button{
-
-border:0;
-
-border-radius:7px;
-
-padding:5px 9px;
-
-margin:3px;
-
-background:#1976d2;
-
-color:white;
-
-font-size:12px;
-
-}
-
-
-
-button:active{
-
-transform:scale(.95);
-
-}
-
+/* ======================
+   按鈕
+====================== */
 
 
 .main-btn{
 
-font-size:13px;
+    width:100%;
+
+    margin-top:15px;
+
+    background:#1f6feb;
+
+    color:white;
 
 }
 
@@ -282,60 +303,9 @@ font-size:13px;
 
 
 
-/* 排場 */
+button{
 
-
-.round-card{
-
-background:white;
-
-border-radius:12px;
-
-padding:10px;
-
-margin-bottom:10px;
-
-box-shadow:0 2px 8px #ddd;
-
-}
-
-
-
-.round-card h3{
-
-margin:0 0 8px;
-
-}
-
-
-
-.court{
-
-border:1px solid #ddd;
-
-border-radius:8px;
-
-padding:8px;
-
-margin:6px 0;
-
-background:#fafafa;
-
-}
-
-
-
-.court b{
-
-font-size:15px;
-
-}
-
-
-
-.court p{
-
-margin:6px 0;
+    background:#e8f0ff;
 
 }
 
@@ -343,17 +313,9 @@ margin:6px 0;
 
 
 
-.rest-box{
+button:hover{
 
-background:#fff4cc;
-
-padding:8px;
-
-border-radius:8px;
-
-margin-top:8px;
-
-font-size:14px;
+    opacity:.85;
 
 }
 
@@ -363,34 +325,48 @@ font-size:14px;
 
 
 
-/* 球友列表 */
+/* ======================
+   球員列表
+====================== */
 
 
 .player-box{
 
-max-height:400px;
+    max-height:420px;
 
-overflow-y:auto;
+    overflow-y:auto;
+
+    background:white;
+
+    padding:10px;
+
+    border-radius:12px;
 
 }
+
+
 
 
 
 .player-item{
 
-background:white;
+    display:flex;
 
-border-radius:8px;
+    justify-content:space-between;
 
-padding:7px;
+    align-items:center;
 
-margin:5px 0;
+    background:#fff;
 
-display:flex;
+    padding:10px;
 
-align-items:center;
+    margin-bottom:8px;
 
-justify-content:space-between;
+    border-radius:10px;
+
+    box-shadow:
+
+    0 1px 4px rgba(0,0,0,.1);
 
 }
 
@@ -400,7 +376,7 @@ justify-content:space-between;
 
 .player-item span{
 
-font-size:14px;
+    flex:1;
 
 }
 
@@ -410,55 +386,9 @@ font-size:14px;
 
 .player-item button{
 
-font-size:11px;
+    margin-left:5px;
 
-padding:4px 7px;
-
-}
-
-
-
-
-
-input,
-textarea{
-
-width:100%;
-
-padding:8px;
-
-margin:5px 0;
-
-border-radius:8px;
-
-border:1px solid #ccc;
-
-}
-
-
-
-textarea{
-
-height:120px;
-
-}
-
-
-
-
-
-/* 統計 */
-
-
-#statisticsBox p{
-
-background:white;
-
-padding:8px;
-
-border-radius:8px;
-
-margin:5px 0;
+    padding:6px 10px;
 
 }
 
@@ -468,62 +398,166 @@ margin:5px 0;
 
 
 
-/* 彈窗 */
+/* ======================
+   排場
+====================== */
+
+
+.round-card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+
+.court{
+
+    background:#f0f7ff;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    margin-bottom:12px;
+
+}
+
+
+
+
+
+.team{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin:10px 0;
+
+}
+
+
+
+
+
+
+.player-select-btn{
+
+    background:white;
+
+    border:
+
+    1px solid #1f6feb;
+
+    color:#1f6feb;
+
+    padding:8px 12px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+}
+
+
+
+
+
+.player-select{
+
+    width:130px;
+
+    background:white;
+
+}
+
+
+
+
+
+.rest-box{
+
+    background:#fff6d8;
+
+    padding:10px;
+
+    border-radius:10px;
+
+}
+
+
+
+
+
+
+
+/* ======================
+   Modal
+====================== */
 
 
 .modal{
 
-position:fixed;
+    position:fixed;
 
-inset:0;
+    inset:0;
 
-background:#0006;
+    background:
 
-display:flex;
+    rgba(0,0,0,.5);
 
-align-items:center;
+    display:flex;
 
-justify-content:center;
+    align-items:center;
 
-z-index:50;
+    justify-content:center;
+
+    z-index:30;
 
 }
+
+
 
 
 
 .modal-content{
 
-background:white;
+    background:white;
 
-width:90%;
+    width:90%;
 
-max-width:350px;
+    max-width:400px;
 
-padding:20px;
+    padding:20px;
 
-border-radius:12px;
+    border-radius:15px;
 
 }
+
+
 
 
 
 .modal-content button{
 
-width:100%;
+    width:100%;
 
-padding:8px;
-
-}
-
-
-
-
-
-
-
-.hidden{
-
-display:none;
+    margin-top:10px;
 
 }
 
@@ -532,42 +566,22 @@ display:none;
 
 
 
-@media(max-width:600px){
+
+/* ======================
+   桌機
+====================== */
 
 
-
-.title h1{
-
-font-size:16px;
-
-}
+@media(min-width:700px){
 
 
+    main{
 
-.info-bar{
+        max-width:800px;
 
-font-size:13px;
+        margin:auto;
 
-}
-
-
-
-button{
-
-font-size:11px;
-
-padding:5px 7px;
-
-}
-
-
-
-.round-card{
-
-padding:8px;
-
-}
-
+    }
 
 
 }
