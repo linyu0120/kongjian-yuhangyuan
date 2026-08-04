@@ -1,10 +1,21 @@
 {
-  "name": "🏸 空間羽航員 V6.1 Stable",
-  "short_name": "空間羽航員",
+  "name": "🏸 羽球輪轉小幫手",
+  "short_name": "羽球輪轉",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f7fa",
-  "theme_color": "#333333",
-  "lang": "zh-TW",
-  "description": "羽球社團自動輪轉排場工具"
+  "background_color": "#f5f7fb",
+  "theme_color": "#1f6feb",
+  "lang": "zh-Hant",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
