@@ -1,13 +1,10 @@
- /* 🏸 羽球輪轉小幫手 V8.0 Stable */
-/* style.css */
-
-
 *{
 
 box-sizing:border-box;
 
 font-family:
 "Microsoft JhengHei",
+Arial,
 sans-serif;
 
 }
@@ -18,7 +15,7 @@ body{
 
 margin:0;
 
-background:#f5f7fb;
+background:#f4f6fa;
 
 color:#333;
 
@@ -27,14 +24,13 @@ color:#333;
 
 
 
-
 /* 頂部 */
 
 .topbar{
 
-height:60px;
+height:58px;
 
-background:#1f6feb;
+background:#1976d2;
 
 color:white;
 
@@ -44,7 +40,7 @@ align-items:center;
 
 justify-content:space-between;
 
-padding:0 10px;
+padding:0 8px;
 
 position:sticky;
 
@@ -60,11 +56,11 @@ z-index:10;
 
 background:none;
 
-border:none;
+border:0;
 
 color:white;
 
-font-size:22px;
+font-size:20px;
 
 }
 
@@ -80,15 +76,24 @@ text-align:center;
 
 .title h1{
 
-font-size:20px;
-
 margin:0;
+
+font-size:18px;
 
 }
 
 
 
 .title span{
+
+font-size:12px;
+
+}
+
+
+
+
+#currentClubName{
 
 font-size:12px;
 
@@ -105,23 +110,23 @@ font-size:12px;
 
 position:fixed;
 
-top:0;
-
 left:-260px;
 
-width:240px;
+top:0;
 
 height:100%;
 
+width:240px;
+
 background:white;
 
-padding:20px;
+padding:15px;
 
-transition:.3s;
+z-index:30;
 
-z-index:20;
+transition:.25s;
 
-box-shadow:2px 0 10px #999;
+box-shadow:2px 0 8px #aaa;
 
 }
 
@@ -139,11 +144,15 @@ left:0;
 
 width:100%;
 
-margin:5px 0;
+margin:4px 0;
 
 padding:8px;
 
-font-size:15px;
+font-size:14px;
+
+color:#333;
+
+background:#eee;
 
 }
 
@@ -159,9 +168,9 @@ position:fixed;
 
 inset:0;
 
-background:#0008;
+background:#0006;
 
-z-index:15;
+z-index:20;
 
 }
 
@@ -177,6 +186,8 @@ display:block;
 
 
 
+
+
 main{
 
 padding:10px;
@@ -187,7 +198,8 @@ padding:10px;
 
 
 
-/* 資訊 */
+/* 今日資訊 */
+
 
 .info-bar{
 
@@ -197,9 +209,29 @@ justify-content:space-around;
 
 background:white;
 
+padding:10px;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
+font-size:15px;
+
+box-shadow:0 2px 5px #ddd;
+
+}
+
+
+
+
+
+#todaySummary{
+
+background:white;
+
 border-radius:10px;
 
-padding:10px;
+padding:8px;
 
 margin-bottom:10px;
 
@@ -211,21 +243,22 @@ margin-bottom:10px;
 
 /* 按鈕 */
 
+
 button{
 
-border:none;
+border:0;
 
-border-radius:8px;
+border-radius:7px;
 
-padding:7px 12px;
+padding:5px 9px;
 
 margin:3px;
 
-background:#1f6feb;
+background:#1976d2;
 
 color:white;
 
-font-size:14px;
+font-size:12px;
 
 }
 
@@ -233,7 +266,7 @@ font-size:14px;
 
 button:active{
 
-transform:scale(.96);
+transform:scale(.95);
 
 }
 
@@ -241,9 +274,7 @@ transform:scale(.96);
 
 .main-btn{
 
-font-size:15px;
-
-width:120px;
+font-size:13px;
 
 }
 
@@ -251,7 +282,7 @@ width:120px;
 
 
 
-/* 卡片 */
+/* 排場 */
 
 
 .round-card{
@@ -278,8 +309,6 @@ margin:0 0 8px;
 
 
 
-
-
 .court{
 
 border:1px solid #ddd;
@@ -288,9 +317,25 @@ border-radius:8px;
 
 padding:8px;
 
-margin:8px 0;
+margin:6px 0;
 
 background:#fafafa;
+
+}
+
+
+
+.court b{
+
+font-size:15px;
+
+}
+
+
+
+.court p{
+
+margin:6px 0;
 
 }
 
@@ -300,13 +345,19 @@ background:#fafafa;
 
 .rest-box{
 
-background:#fff3cd;
+background:#fff4cc;
 
 padding:8px;
 
 border-radius:8px;
 
+margin-top:8px;
+
+font-size:14px;
+
 }
+
+
 
 
 
@@ -317,9 +368,9 @@ border-radius:8px;
 
 .player-box{
 
-max-height:420px;
+max-height:400px;
 
-overflow:auto;
+overflow-y:auto;
 
 }
 
@@ -331,15 +382,25 @@ background:white;
 
 border-radius:8px;
 
-padding:8px;
+padding:7px;
 
 margin:5px 0;
 
 display:flex;
 
+align-items:center;
+
 justify-content:space-between;
 
-align-items:center;
+}
+
+
+
+
+
+.player-item span{
+
+font-size:14px;
 
 }
 
@@ -349,9 +410,9 @@ align-items:center;
 
 .player-item button{
 
-font-size:12px;
+font-size:11px;
 
-padding:5px 8px;
+padding:4px 7px;
 
 }
 
@@ -376,8 +437,6 @@ border:1px solid #ccc;
 
 
 
-
-
 textarea{
 
 height:120px;
@@ -388,13 +447,22 @@ height:120px;
 
 
 
-/* 隱藏 */
+/* 統計 */
 
-.hidden{
 
-display:none;
+#statisticsBox p{
+
+background:white;
+
+padding:8px;
+
+border-radius:8px;
+
+margin:5px 0;
 
 }
+
+
 
 
 
@@ -417,7 +485,7 @@ align-items:center;
 
 justify-content:center;
 
-z-index:30;
+z-index:50;
 
 }
 
@@ -439,11 +507,11 @@ border-radius:12px;
 
 
 
-
-
 .modal-content button{
 
 width:100%;
+
+padding:8px;
 
 }
 
@@ -451,14 +519,34 @@ width:100%;
 
 
 
-/* 手機調整 */
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+
+
 
 @media(max-width:600px){
 
 
+
 .title h1{
 
-font-size:17px;
+font-size:16px;
+
+}
+
+
+
+.info-bar{
+
+font-size:13px;
 
 }
 
@@ -466,11 +554,20 @@ font-size:17px;
 
 button{
 
-font-size:13px;
+font-size:11px;
 
-padding:6px 9px;
+padding:5px 7px;
 
 }
+
+
+
+.round-card{
+
+padding:8px;
+
+}
+
 
 
 }
