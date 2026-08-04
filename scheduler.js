@@ -1,6 +1,5 @@
- // 🏸 羽球輪轉小幫手 V8.1 Stable
+// 🏸 羽球輪轉小幫手 V8.1 Stable
 // scheduler.js
-
 
 
 // ======================
@@ -11,26 +10,45 @@
 function createSchedule(
     players,
     courts,
-    perCourt
+    playersPerCourt
 ){
 
 
-    let sorted =
-    [...players]
-    .sort(
-        (a,b)=>
-        a.playCount-b.playCount
+    let list =
+    [...players];
+
+
+
+    // 隨機打亂
+
+    list.sort(
+        ()=>Math.random()-0.5
     );
 
 
 
+
+    let result = {
+
+
+        courts:[],
+
+
+        resting:[]
+
+    };
+
+
+
+
     let need =
-    courts * perCourt;
+    courts *
+    playersPerCourt;
 
 
 
-    let selected =
-    sorted.slice(
+    let playing =
+    list.slice(
         0,
         need
     );
@@ -38,7 +56,7 @@ function createSchedule(
 
 
     let resting =
-    sorted.slice(
+    list.slice(
         need
     );
 
@@ -46,12 +64,7 @@ function createSchedule(
 
 
 
-    let courtList=[];
-
-
-
-    let index=0;
-
+    // 建立球場
 
 
     for(
@@ -61,40 +74,45 @@ function createSchedule(
     ){
 
 
-        let team =
+        let start =
+        i *
+        playersPerCourt;
 
-        selected.slice(
-            index,
-            index+perCourt
+
+
+        let group =
+        playing.slice(
+            start,
+            start+
+            playersPerCourt
         );
-
-
-        index+=perCourt;
 
 
 
         let half =
         Math.ceil(
-            team.length/2
+            group.length/2
         );
 
 
 
-        courtList.push({
+        result.courts.push({
 
             name:
-            "第"+(i+1)+"場",
+            "第"+
+            (i+1)+
+            "場",
 
 
             teamA:
-            team.slice(
+            group.slice(
                 0,
                 half
             ),
 
 
             teamB:
-            team.slice(
+            group.slice(
                 half
             )
 
@@ -106,16 +124,14 @@ function createSchedule(
 
 
 
-    return {
-
-        courts:
-        courtList,
 
 
-        resting:
-        resting
+    result.resting =
+    resting;
 
-    };
+
+
+    return result;
 
 
 }
@@ -127,7 +143,7 @@ function createSchedule(
 
 
 // ======================
-// 取得上場名單
+// 取得上場名字
 // ======================
 
 
@@ -163,7 +179,6 @@ function getPlayingNames(result){
         });
 
 
-
     });
 
 
@@ -179,18 +194,16 @@ function getPlayingNames(result){
 
 
 
-
 // ======================
-// 更新休息與上場統計
+// 更新休息時間
 // ======================
 
 
 function updateRestTime(
     players,
     playingNames,
-    minutes=5
+    minutes
 ){
-
 
 
     players.forEach(
@@ -217,17 +230,17 @@ function updateRestTime(
 
 
             p.restMinutes =
-            Math.min(
-                30,
-                (p.restMinutes||0)
-                +minutes
-            );
+            (p.restMinutes||0)
+            +
+            minutes;
 
 
         }
 
 
+
     });
+
 
 
 }
@@ -238,8 +251,9 @@ function updateRestTime(
 
 
 
+
 // ======================
-// 換人更新
+// 換場球員
 // ======================
 
 
@@ -247,7 +261,6 @@ function replaceCourtPlayers(
     court,
     players
 ){
-
 
 
     let half =
@@ -262,6 +275,7 @@ function replaceCourtPlayers(
         0,
         half
     );
+
 
 
     court.teamB =
