@@ -1,9 +1,10 @@
 {
-  "name": "🏸 空間羽航員 V5.6 Final Ultimate Plus",
+  "name": "🏸 空間羽航員 V6.1 Stable",
   "short_name": "空間羽航員",
-  "start_url": "./index.html",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#e8f4ff",
-  "theme_color": "#8fc9ff",
-  "lang": "zh-TW"
+  "background_color": "#f5f7fa",
+  "theme_color": "#333333",
+  "lang": "zh-TW",
+  "description": "羽球社團自動輪轉排場工具"
 }
