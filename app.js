@@ -588,47 +588,112 @@ function renderRounds(){
 
 function openSettings(){
 
-    document
-    .getElementById("settingModal")
-    .classList.remove("hidden");
+    let modal =
+    document.getElementById("settingModal");
+
+
+    if(modal){
+
+        modal.classList.remove("hidden");
+
+    }
 
 }
+
 
 
 
 function closeSettings(){
 
-    document
-    .getElementById("settingModal")
-    .classList.add("hidden");
+    let modal =
+    document.getElementById("settingModal");
+
+
+    if(modal){
+
+        modal.classList.add("hidden");
+
+    }
 
 }
+
 
 
 
 function saveSettings(){
 
 
-    settings.courts =
-    Number(
-        document.getElementById("courtSetting").value
-    );
+    let courtInput =
+    document.getElementById("courtSetting");
 
 
-    settings.players =
-    Number(
-        document.getElementById("playerPerCourt").value
-    );
+    let playerInput =
+    document.getElementById("playerPerCourt");
+
+
+
+    // 防止找不到設定欄位
+
+    if(!courtInput || !playerInput){
+
+        alert("設定欄位錯誤，請重新整理頁面");
+
+        return;
+
+    }
+
+
+
+    let courts =
+    Number(courtInput.value);
+
+
+
+    let players =
+    Number(playerInput.value);
+
+
+
+    if(courts < 1 || players < 1){
+
+        alert("球場數與每場人數必須大於0");
+
+        return;
+
+    }
+
+
+
+    settings = {
+
+        courts:courts,
+
+        players:players
+
+    };
 
 
 
     saveData();
 
 
+
     closeSettings();
 
-}
 
+
+    renderAll();
+
+
+
+    alert(
+        "設定已儲存\n\n" +
+        "球場數：" + settings.courts +
+        "\n每場人數：" + settings.players
+    );
+
+
+}
 
 
 
