@@ -1,156 +1,175 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>🏸 空間羽航員 V5.6 Final</title>
+<title>🏸 空間羽航員 V6.1 Stable</title>
 
 <link rel="stylesheet" href="style.css">
-
 <link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#9bd1ff">
 
 </head>
 
-
 <body>
 
+<header class="topbar">
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-<div class="app">
+    <div class="title">
+        <h1>🏸 空間羽航員</h1>
+        <span>V6.1 Stable</span>
+    </div>
 
-
-<h1>🏸 空間羽航員</h1>
-
-<h2>V5.6 Final Ultimate Plus</h2>
-
-<p>羽球公平輪轉排場工具</p>
-
-
-
-<section>
-
-<h3>👥 球友名單</h3>
+    <button class="setting-btn" onclick="openSettings()">⚙️</button>
+</header>
 
 
-<input 
-id="playerName"
-placeholder="輸入球友姓名">
+<!-- 側邊選單 -->
+<div id="sideMenu" class="side-menu">
+
+    <h2>☰ 功能</h2>
+
+    <button onclick="showHome()">
+        🏠 今日排場
+    </button>
+
+    <button onclick="showTodayPlayers()">
+        👥 今日活動
+    </button>
+
+    <button onclick="showClubPlayers()">
+        📋 社團球友
+    </button>
+
+    <button onclick="showStatistics()">
+        📊 今日統計
+    </button>
+
+</div>
 
 
-<button onclick="addPlayer()">
-新增球友
-</button>
-
-
-<ul id="playerList"></ul>
-
-
-</section>
-
-
-
-
-
-<section>
-
-<h3>🏟 排場設定</h3>
-
-
-<label>
-球場數
-</label>
-
-
-<input
-id="courtCount"
-type="number"
-value="2"
-min="1">
+<!-- 遮罩 -->
+<div id="overlay" onclick="toggleMenu()"></div>
 
 
 
-<br>
+<main>
 
 
-<label>
-每場人數
-</label>
+<!-- 今日資訊 -->
 
+<section class="info-bar">
 
-<input
-id="peopleCount"
-type="number"
-value="4"
-min="2">
+    <div>
+        👥
+        <span id="todayCount">0</span>人
+    </div>
 
+    <div>
+        🏟
+        <span id="courtCount">3</span>場
+    </div>
 
+    <div>
+        🏸
+        第<span id="roundCount">0</span>輪
+    </div>
 
 </section>
 
 
 
+<!-- 今日排場 -->
+
+<section id="schedulePage">
+
+<h2>🏸 今日排場</h2>
 
 
-<section>
+<div id="roundContainer">
 
-<h3>🏸 模式</h3>
+    <!-- 每輪卡片會由 JS 產生 -->
 
-
-<select id="mode">
-
-
-<option value="double">
-雙打模式
-</option>
+</div>
 
 
-<option value="rotate">
-輪替模式
-</option>
-
-
-<option value="free">
-自由模式
-</option>
-
-
-</select>
-
-
-</section>
-
-
-
-
-
-<section>
-
-
-<button class="main"
-onclick="startGame()">
-
-🏸 開始今日排場
-
-</button>
-
-
-
-<button onclick="nextRound()">
+<button class="main-btn"
+onclick="nextRound()">
 
 🔄 下一輪
 
 </button>
 
 
+</section>
 
-<button onclick="clearToday()">
 
-🗑 清除今日紀錄
+
+
+
+<!-- 今日活動 -->
+
+<section id="todayPlayersPage"
+class="hidden">
+
+<h2>👥 今日活動</h2>
+
+
+<input
+id="todaySearch"
+placeholder="搜尋球友..."
+oninput="searchTodayPlayers()">
+
+
+<div id="todayPlayerList"
+class="player-box">
+
+</div>
+
+
+<button onclick="addTodayPlayer()">
+➕ 加入今日活動
+</button>
+
+
+</section>
+
+
+
+
+
+
+<!-- 社團球友 -->
+
+<section id="clubPlayersPage"
+class="hidden">
+
+
+<h2>📋 社團球友</h2>
+
+
+<input
+id="clubSearch"
+placeholder="搜尋球友..."
+oninput="searchClubPlayers()">
+
+
+
+<div id="clubPlayerList"
+class="player-box">
+
+</div>
+
+
+<input
+id="newPlayerName"
+placeholder="輸入球友姓名">
+
+
+<button onclick="addClubPlayer()">
+
+➕ 新增球友
 
 </button>
 
@@ -163,35 +182,16 @@ onclick="startGame()">
 
 
 
-<section>
+<!-- 統計 -->
+
+<section id="statisticsPage"
+class="hidden">
 
 
-<h3>📋 排場結果</h3>
+<h2>📊 今日統計</h2>
 
 
-<div id="result">
-
-尚未開始
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section>
-
-
-<h3>📊 今日統計</h3>
-
-
-<div id="stats">
-
-尚無資料
+<div id="statisticsBox">
 
 </div>
 
@@ -200,22 +200,69 @@ onclick="startGame()">
 
 
 
+</main>
+
+
+
+
+
+<!-- 設定 -->
+
+<div id="settingModal"
+class="modal hidden">
+
+<div class="modal-content">
+
+<h2>⚙️ 設定</h2>
+
+
+<label>
+球場數
+</label>
+
+<input
+id="courtSetting"
+type="number"
+value="3">
+
+
+
+<label>
+每場人數
+</label>
+
+<input
+id="playerPerCourt"
+type="number"
+value="4">
+
+
+
+<button onclick="saveSettings()">
+
+儲存
+
+</button>
+
+
+<button onclick="closeSettings()">
+
+取消
+
+</button>
+
+
+</div>
+
 </div>
 
 
 
 
-
-<script src="storage.js"></script>
-
-<script src="stats.js"></script>
 
 <script src="scheduler.js"></script>
-
 <script src="app.js"></script>
 
 
-
 </body>
-
 </html>
