@@ -298,94 +298,6 @@ function deleteClubPlayer(index){
 }
 
 
-// ======================
-// 批次匯入名單
-// ======================
-
-function importPlayers(){
-
-    let textarea =
-    document.getElementById("importPlayers");
-
-
-    let text =
-    textarea.value.trim();
-
-
-
-    if(!text){
-
-        alert("請貼上名單");
-
-        return;
-
-    }
-
-
-
-    let names =
-    text
-    .split("\n")
-    .map(n=>n.trim())
-    .filter(n=>n);
-
-
-
-    let addCount = 0;
-
-
-
-    names.forEach(name=>{
-
-
-        let exists =
-        clubPlayers.some(
-            p=>p.name===name
-        );
-
-
-
-        if(!exists){
-
-            clubPlayers.push({
-
-                name:name,
-
-                restMinutes:0,
-
-                playCount:0
-
-            });
-
-
-            addCount++;
-
-        }
-
-
-    });
-
-
-
-    saveData();
-
-
-    renderClubPlayers();
-
-
-    textarea.value="";
-
-
-    alert(
-        "成功匯入 " 
-        + addCount 
-        + " 位球友"
-    );
-
-}
-
-
-
 
 // ======================
 // 今日活動
@@ -848,11 +760,104 @@ function searchTodayPlayers(){
 
 }
 
-
 function searchClubPlayers(){
 
     renderClubPlayers();
 
+}
+
+
+
+// ======================
+// 批次匯入名單
+// ======================
+
+function importPlayers(){
+
+    const textarea =
+    document.getElementById("importPlayers");
+
+
+    if(!textarea){
+
+        alert("找不到匯入欄");
+
+        return;
+
+    }
+
+
+    let text =
+    textarea.value.trim();
+
+
+    if(!text){
+
+        alert("請先貼上名單");
+
+        return;
+
+    }
+
+
+    let names =
+    text
+    .split("\n")
+    .map(name=>name.trim())
+    .filter(name=>name);
+
+
+
+    let count = 0;
+
+
+
+    names.forEach(name=>{
+
+
+        let exist =
+        clubPlayers.some(
+            p=>p.name===name
+        );
+
+
+        if(!exist){
+
+
+            clubPlayers.push({
+
+                name:name,
+
+                restMinutes:0,
+
+                playCount:0
+
+            });
+
+
+            count++;
+
+        }
+
+
+    });
+
+
+
+    saveData();
+
+
+    renderClubPlayers();
+
+
+    textarea.value="";
+
+
+    alert(
+        "成功匯入 "
+        + count
+        + " 位球友"
+    );
 
 }
 
