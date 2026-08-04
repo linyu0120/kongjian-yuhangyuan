@@ -767,17 +767,35 @@ function renderRounds(){
 
             <p>
 
-            ${court.teamA
-            .map(p=>p.name)
-            .join("、")}
+           ${court.teamA.map(
+(p,i)=>
+`
+<button 
+class="player-select-btn"
+onclick="changePlayer(${index},${c},'A',${i})">
+
+${p.name}
+
+</button>
+`
+).join("")}
 
 
             VS
 
 
-            ${court.teamB
-            .map(p=>p.name)
-            .join("、")}
+           ${court.teamB.map(
+(p,i)=>
+`
+<button 
+class="player-select-btn"
+onclick="changePlayer(${index},${c},'B',${i})">
+
+${p.name}
+
+</button>
+`
+).join("")}
 
 
             </p>
@@ -854,7 +872,116 @@ function renderRounds(){
 
 }
 
+function changePlayer(r,c,team,index){
 
+
+    let court =
+    rounds[r].courts[c];
+
+
+    let oldPlayer =
+    team==="A"
+    ?
+    court.teamA[index]
+    :
+    court.teamB[index];
+
+
+
+    let select =
+    document.createElement("select");
+
+
+
+    todayPlayers
+    .filter(
+        p=>p.checked!==false
+    )
+    .forEach(
+    p=>{
+
+
+        let option =
+        document.createElement("option");
+
+
+        option.value =
+        p.name;
+
+
+        option.innerText =
+        p.name;
+
+
+
+        if(
+            p.name===oldPlayer.name
+        ){
+
+            option.selected=true;
+
+        }
+
+
+
+        select.appendChild(option);
+
+
+    });
+
+
+
+    select.onchange=function(){
+
+
+        let newPlayer =
+        todayPlayers.find(
+            p=>p.name===this.value
+        );
+
+
+
+        if(!newPlayer)return;
+
+
+
+        if(team==="A"){
+
+            court.teamA[index]=newPlayer;
+
+        }
+        else{
+
+            court.teamB[index]=newPlayer;
+
+        }
+
+
+
+        saveData();
+
+
+        renderRounds();
+
+
+    };
+
+
+
+    let parent =
+    event.target.parentElement;
+
+
+    parent.replaceChild(
+        select,
+        event.target
+    );
+
+
+    select.focus();
+
+
+}
 
 
 
