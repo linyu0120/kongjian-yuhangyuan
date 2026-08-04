@@ -255,8 +255,13 @@ function renderClubPlayers(){
     box.innerHTML="";
 
 
-
     clubPlayers.forEach((p,i)=>{
+
+
+        let joined =
+        todayPlayers.some(
+            t=>t.name===p.name
+        );
 
 
         let div =
@@ -273,8 +278,12 @@ function renderClubPlayers(){
         </span>
 
 
-        <button onclick="addToToday(${i})">
-        加入今日
+        <button 
+        onclick="addToToday(${i})"
+        ${joined ? "disabled" : ""}>
+
+        ${joined ? "已加入" : "加入今日"}
+
         </button>
 
 
