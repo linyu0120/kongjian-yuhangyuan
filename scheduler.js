@@ -1,128 +1,122 @@
-function createSchedule(
-  players,
-  courts,
-  people,
-  round,
-  mode
-){
+// 🏸 空間羽航員 V6.1 Stable
+// 排場核心
 
-  let result = [];
+function createSchedule(players, courtCount, playerPerCourt) {
 
+    let totalNeed = courtCount * playerPerCourt;
 
-  if(players.length < people){
-
-    return [
-      "⚠️ 球友人數不足，無法排場"
-    ];
-
-  }
+    let sortedPlayers = [...players];
 
 
+    // 依照休息時間排序
+    sortedPlayers.sort((a,b)=>{
 
-  let total = players.length;
+        if(b.restMinutes !== a.restMinutes){
+
+            return b.restMinutes - a.restMinutes;
+
+        }
 
 
+        return a.playCount - b.playCount;
 
-  // 輪轉起點
-  let start =
-  (round * people) % total;
+    });
 
 
 
-  let used = [];
+    let playing = sortedPlayers.slice(0,totalNeed);
+
+    let resting = sortedPlayers.slice(totalNeed);
 
 
 
-  for(
-    let c = 1;
-    c <= courts;
-    c++
-  ){
+    let courts = [];
 
-
-    let group = [];
+    let index = 0;
 
 
 
-    for(
-      let i = 0;
-      i < people;
-      i++
-    ){
+    for(let i=0;i<courtCount;i++){
 
 
-      let index =
-      (start + i + ((c-1)*people))
-      % total;
+        let courtPlayers =
+            playing.slice(
+                index,
+                index + playerPerCourt
+            );
 
 
-
-      let name =
-      players[index];
+        index += playerPerCourt;
 
 
 
-      group.push(name);
+        let half =
+            Math.floor(
+                playerPerCourt / 2
+            );
 
 
-      used.push(name);
+        courts.push({
+
+            name:
+            `第${i+1}場`,
+
+            teamA:
+            courtPlayers.slice(0,half),
+
+            teamB:
+            courtPlayers.slice(half)
+
+        });
 
 
     }
 
 
 
-    result.push({
+    return {
 
-      court:c,
+        courts,
 
-      players:group,
+        resting
 
-      text:
-      "🏟 第 "
-      +c+
-      " 場（"
-      +getModeName(mode)+
-      "）："
-      +group.join("、")
+    };
+
+}
+
+
+
+
+
+
+// 更新休息時間
+
+function updateRestTime(players, playingNames, minutes){
+
+
+    players.forEach(player=>{
+
+
+        if(
+            playingNames.includes(player.name)
+        ){
+
+            player.restMinutes = 0;
+
+            player.playCount++;
+
+        }
+
+        else {
+
+
+            player.restMinutes += minutes;
+
+
+        }
+
 
     });
-
-
-  }
-
-
-
-  let rest =
-  players.filter(
-    function(p){
-
-      return !used.includes(p);
-
-    }
-  );
-
-
-
-  if(rest.length){
-
-    result.push({
-
-      court:0,
-
-      players:rest,
-
-      text:
-      "🪑 休息："
-      +rest.join("、")
-
-    });
-
-  }
-
-
-
-  return result;
 
 
 }
@@ -131,29 +125,36 @@ function createSchedule(
 
 
 
-function getModeName(mode){
+
+// 取得目前上場姓名
+
+function getPlayingNames(schedule){
 
 
-switch(mode){
+    let result=[];
 
 
-case "double":
-
-return "雙打";
+    schedule.courts.forEach(court=>{
 
 
-case "rotate":
+        court.teamA.forEach(p=>{
 
-return "輪替";
+            result.push(p.name);
 
-
-default:
-
-return "自由";
+        });
 
 
-}
+        court.teamB.forEach(p=>{
 
+            result.push(p.name);
+
+        });
+
+
+    });
+
+
+    return result;
 
 
 }
