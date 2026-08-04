@@ -928,4 +928,59 @@ function addToToday(index){
 
 }
 
+
+function addAllToday(){
+
+
+    let count = 0;
+
+
+    clubPlayers.forEach(player=>{
+
+
+        let exists =
+        todayPlayers.some(
+            t=>t.name===player.name
+        );
+
+
+        if(!exists){
+
+
+            todayPlayers.push({
+
+                name:player.name,
+
+                restMinutes:0,
+
+                playCount:0
+
+            });
+
+
+            count++;
+
+        }
+
+
+    });
+
+
+
+    saveData();
+
+
+    renderTodayPlayers();
+
+    renderClubPlayers();
+
+
+    alert(
+        "已加入今日活動 "
+        + count
+        + " 位球友"
+    );
+
+}
+
 alert("新版 V6.1 已載入");
