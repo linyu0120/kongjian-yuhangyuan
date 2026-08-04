@@ -583,50 +583,61 @@ function renderRounds(){
 
 function openSettings(){
 
-    const modal =
+    let modal =
     document.getElementById("settingModal");
 
 
-    const courtInput =
+    let court =
     document.getElementById("courtSetting");
 
 
-    const playerInput =
+    let player =
     document.getElementById("playerPerCourt");
 
 
-    if(courtInput){
-        courtInput.value = settings.courts;
+
+    if(court){
+
+        court.value =
+        settings.courts;
+
     }
 
 
-    if(playerInput){
-        playerInput.value = settings.players;
+    if(player){
+
+        player.value =
+        settings.players;
+
     }
+
 
 
     if(modal){
-        modal.classList.remove("hidden");
+
+        modal.style.display="flex";
+
     }
 
-}
 
+}
 
 
 
 
 function closeSettings(){
 
-    const modal =
+    let modal =
     document.getElementById("settingModal");
 
 
     if(modal){
-        modal.classList.add("hidden");
+
+        modal.style.display="none";
+
     }
 
 }
-
 
 
 
@@ -634,48 +645,27 @@ function closeSettings(){
 function saveSettings(){
 
 
-    const courtInput =
+    let court =
     document.getElementById("courtSetting");
 
 
-    const playerInput =
+    let player =
     document.getElementById("playerPerCourt");
 
 
 
-    if(!courtInput || !playerInput){
-
-        alert("找不到設定欄位");
-
-        return;
-
-    }
-
-
-
     let courts =
-    parseInt(courtInput.value);
-
+    Number(court.value);
 
 
     let players =
-    parseInt(playerInput.value);
+    Number(player.value);
 
 
 
-    if(isNaN(courts) || isNaN(players)){
+    if(courts<=0 || players<=0){
 
-        alert("請輸入數字");
-
-        return;
-
-    }
-
-
-
-    if(courts < 1 || players < 1){
-
-        alert("數值不能小於1");
+        alert("設定錯誤");
 
         return;
 
@@ -683,9 +673,13 @@ function saveSettings(){
 
 
 
-    settings.courts = courts;
+    settings={
 
-    settings.players = players;
+        courts:courts,
+
+        players:players
+
+    };
 
 
 
@@ -703,19 +697,7 @@ function saveSettings(){
     closeSettings();
 
 
-
-    alert(
-        "設定完成\n球場：" +
-        settings.courts +
-        " 面\n每場：" +
-        settings.players +
-        " 人"
-    );
-
-
 }
-
-
 
 
 
