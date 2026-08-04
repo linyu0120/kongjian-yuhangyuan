@@ -576,11 +576,6 @@ function renderRounds(){
 }
 
 
-
-
-
-
-
 // ======================
 // 設定
 // ======================
@@ -588,34 +583,50 @@ function renderRounds(){
 
 function openSettings(){
 
-    let modal =
+    const modal =
     document.getElementById("settingModal");
 
 
+    const courtInput =
+    document.getElementById("courtSetting");
+
+
+    const playerInput =
+    document.getElementById("playerPerCourt");
+
+
+    if(courtInput){
+        courtInput.value = settings.courts;
+    }
+
+
+    if(playerInput){
+        playerInput.value = settings.players;
+    }
+
+
     if(modal){
-
         modal.classList.remove("hidden");
-
     }
 
 }
+
 
 
 
 
 function closeSettings(){
 
-    let modal =
+    const modal =
     document.getElementById("settingModal");
 
 
     if(modal){
-
         modal.classList.add("hidden");
-
     }
 
 }
+
 
 
 
@@ -623,20 +634,18 @@ function closeSettings(){
 function saveSettings(){
 
 
-    let courtInput =
+    const courtInput =
     document.getElementById("courtSetting");
 
 
-    let playerInput =
+    const playerInput =
     document.getElementById("playerPerCourt");
 
 
 
-    // 防止找不到設定欄位
-
     if(!courtInput || !playerInput){
 
-        alert("設定欄位錯誤，請重新整理頁面");
+        alert("找不到設定欄位");
 
         return;
 
@@ -645,18 +654,18 @@ function saveSettings(){
 
 
     let courts =
-    Number(courtInput.value);
+    parseInt(courtInput.value);
 
 
 
     let players =
-    Number(playerInput.value);
+    parseInt(playerInput.value);
 
 
 
-    if(courts < 1 || players < 1){
+    if(isNaN(courts) || isNaN(players)){
 
-        alert("球場數與每場人數必須大於0");
+        alert("請輸入數字");
 
         return;
 
@@ -664,13 +673,19 @@ function saveSettings(){
 
 
 
-    settings = {
+    if(courts < 1 || players < 1){
 
-        courts:courts,
+        alert("數值不能小於1");
 
-        players:players
+        return;
 
-    };
+    }
+
+
+
+    settings.courts = courts;
+
+    settings.players = players;
 
 
 
@@ -678,18 +693,23 @@ function saveSettings(){
 
 
 
+    document
+    .getElementById("courtCount")
+    .innerText =
+    settings.courts;
+
+
+
     closeSettings();
 
 
 
-    renderAll();
-
-
-
     alert(
-        "設定已儲存\n\n" +
-        "球場數：" + settings.courts +
-        "\n每場人數：" + settings.players
+        "設定完成\n球場：" +
+        settings.courts +
+        " 面\n每場：" +
+        settings.players +
+        " 人"
     );
 
 
@@ -733,8 +753,6 @@ function renderStatistics(){
 }
 
 
-
-
 function renderAll(){
 
     renderClubPlayers();
@@ -750,4 +768,11 @@ function renderAll(){
     todayPlayers.length;
 
 
+    document
+    .getElementById("courtCount")
+    .innerText =
+    settings.courts;
+
+
 }
+
