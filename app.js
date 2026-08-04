@@ -134,39 +134,6 @@ window.onload=function(){
 
 
 
-
-function saveData(){
-
-    localStorage.setItem(
-        "clubPlayers",
-        JSON.stringify(clubPlayers)
-    );
-
-
-    localStorage.setItem(
-        "todayPlayers",
-        JSON.stringify(todayPlayers)
-    );
-
-
-    localStorage.setItem(
-        "rounds",
-        JSON.stringify(rounds)
-    );
-
-
-    localStorage.setItem(
-        "settings",
-        JSON.stringify(settings)
-    );
-
-}
-
-
-
-
-
-
 // ======================
 // 側邊選單
 // ======================
