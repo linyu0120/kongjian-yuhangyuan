@@ -918,4 +918,5 @@ function addToToday(index){
     );
 
 }
-alert("app.js 已載入");
+
+alert("新版 V6.1 已載入");
