@@ -1,77 +1,26 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        "Microsoft JhengHei",
-        sans-serif;
-
-    background: #f5f7fa;
-    color: #222;
-}
+ /* 🏸 羽球輪轉小幫手 V8.0 Stable */
+/* style.css */
 
 
-/* ===== 頂部 ===== */
+*{
 
-.topbar {
+box-sizing:border-box;
 
-    height: 60px;
-    background: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 12px;
-
-    position: sticky;
-    top: 0;
-    z-index: 10;
-
-    box-shadow: 0 1px 5px #ccc;
+font-family:
+"Microsoft JhengHei",
+sans-serif;
 
 }
 
 
-.topbar button {
 
-    width: 42px;
-    height: 38px;
+body{
 
-    border: none;
-    border-radius: 8px;
+margin:0;
 
-    font-size: 20px;
+background:#f5f7fb;
 
-    background: #eee;
-
-}
-
-
-.title {
-
-    text-align: center;
-
-}
-
-
-.title h1 {
-
-    font-size: 18px;
-    margin: 0;
-
-}
-
-
-.title span {
-
-    font-size: 12px;
-    color: #777;
+color:#333;
 
 }
 
@@ -79,78 +28,69 @@ body {
 
 
 
-/* ===== 側邊選單 ===== */
+/* 頂部 */
 
-.side-menu {
+.topbar{
 
-    position: fixed;
+height:60px;
 
-    left: -280px;
+background:#1f6feb;
 
-    top: 0;
+color:white;
 
-    width: 260px;
+display:flex;
 
-    height: 100%;
+align-items:center;
 
-    background:white;
+justify-content:space-between;
 
-    z-index:20;
+padding:0 10px;
 
-    padding:20px;
+position:sticky;
 
-    transition:0.3s;
+top:0;
 
-    box-shadow:2px 0 8px #aaa;
-
-}
-
-
-.side-menu.open {
-
-    left:0;
-
-}
-
-
-.side-menu button {
-
-    width:100%;
-
-    height:42px;
-
-    margin-bottom:10px;
-
-    border:none;
-
-    border-radius:8px;
-
-    background:#f0f0f0;
-
-    font-size:16px;
+z-index:10;
 
 }
 
 
 
-#overlay {
+.topbar button{
 
-    display:none;
+background:none;
 
-    position:fixed;
+border:none;
 
-    inset:0;
+color:white;
 
-    background:rgba(0,0,0,.35);
-
-    z-index:15;
+font-size:22px;
 
 }
 
 
-#overlay.show {
 
-    display:block;
+.title{
+
+text-align:center;
+
+}
+
+
+
+.title h1{
+
+font-size:20px;
+
+margin:0;
+
+}
+
+
+
+.title span{
+
+font-size:12px;
 
 }
 
@@ -158,13 +98,52 @@ body {
 
 
 
+/* 側邊選單 */
 
-/* ===== 主要內容 ===== */
+
+.side-menu{
+
+position:fixed;
+
+top:0;
+
+left:-260px;
+
+width:240px;
+
+height:100%;
+
+background:white;
+
+padding:20px;
+
+transition:.3s;
+
+z-index:20;
+
+box-shadow:2px 0 10px #999;
+
+}
 
 
-main {
 
-    padding:12px;
+.side-menu.open{
+
+left:0;
+
+}
+
+
+
+.side-menu button{
+
+width:100%;
+
+margin:5px 0;
+
+padding:8px;
+
+font-size:15px;
 
 }
 
@@ -172,24 +151,25 @@ main {
 
 
 
-/* ===== 頂部資訊 ===== */
+#overlay{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:#0008;
+
+z-index:15;
+
+}
 
 
-.info-bar {
 
-    display:flex;
+#overlay.show{
 
-    justify-content:space-around;
-
-    background:white;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    margin-bottom:15px;
-
-    font-size:15px;
+display:block;
 
 }
 
@@ -197,69 +177,9 @@ main {
 
 
 
+main{
 
-
-/* ===== 排場卡片 ===== */
-
-
-.round-card {
-
-
-    background:white;
-
-    border-radius:14px;
-
-    padding:15px;
-
-    margin-bottom:15px;
-
-    box-shadow:0 2px 5px #ddd;
-
-
-}
-
-
-
-.round-title {
-
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-.court {
-
-
-    background:#f7f7f7;
-
-    border-radius:10px;
-
-    padding:10px;
-
-    margin-bottom:10px;
-
-
-}
-
-
-
-.rest-box {
-
-
-    margin-top:10px;
-
-    padding:10px;
-
-    background:#fafafa;
-
-    border-radius:8px;
+padding:10px;
 
 }
 
@@ -267,33 +187,21 @@ main {
 
 
 
-/* ===== 按鈕 ===== */
+/* 資訊 */
 
+.info-bar{
 
-button {
+display:flex;
 
+justify-content:space-around;
 
-    cursor:pointer;
+background:white;
 
-}
+border-radius:10px;
 
+padding:10px;
 
-.main-btn {
-
-
-    width:100%;
-
-    height:44px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#333;
-
-    color:white;
-
-    font-size:16px;
+margin-bottom:10px;
 
 }
 
@@ -301,18 +209,41 @@ button {
 
 
 
-section button {
+/* 按鈕 */
+
+button{
+
+border:none;
+
+border-radius:8px;
+
+padding:7px 12px;
+
+margin:3px;
+
+background:#1f6feb;
+
+color:white;
+
+font-size:14px;
+
+}
 
 
-    height:40px;
 
-    border:none;
+button:active{
 
-    border-radius:8px;
+transform:scale(.96);
 
-    padding:0 15px;
+}
 
-    margin-top:8px;
+
+
+.main-btn{
+
+font-size:15px;
+
+width:120px;
 
 }
 
@@ -320,41 +251,28 @@ section button {
 
 
 
+/* 卡片 */
 
 
-/* ===== 名單 ===== */
+.round-card{
 
+background:white;
 
-.player-box {
+border-radius:12px;
 
+padding:10px;
 
-    max-height:420px;
+margin-bottom:10px;
 
-    overflow-y:auto;
-
-    background:white;
-
-    border-radius:10px;
-
-    padding:10px;
-
-    margin:10px 0;
-
+box-shadow:0 2px 8px #ddd;
 
 }
 
 
-.player-item {
 
+.round-card h3{
 
-    display:flex;
-
-    justify-content:space-between;
-
-    padding:10px;
-
-    border-bottom:1px solid #eee;
-
+margin:0 0 8px;
 
 }
 
@@ -362,24 +280,17 @@ section button {
 
 
 
+.court{
 
-input {
+border:1px solid #ddd;
 
+border-radius:8px;
 
-    width:100%;
+padding:8px;
 
-    height:42px;
+margin:8px 0;
 
-    border-radius:8px;
-
-    border:1px solid #ccc;
-
-    padding:0 10px;
-
-    font-size:16px;
-
-    margin-bottom:8px;
-
+background:#fafafa;
 
 }
 
@@ -387,13 +298,48 @@ input {
 
 
 
+.rest-box{
 
-/* ===== 隱藏 ===== */
+background:#fff3cd;
+
+padding:8px;
+
+border-radius:8px;
+
+}
 
 
-.hidden {
 
-    display:none;
+
+
+/* 球友列表 */
+
+
+.player-box{
+
+max-height:420px;
+
+overflow:auto;
+
+}
+
+
+
+.player-item{
+
+background:white;
+
+border-radius:8px;
+
+padding:8px;
+
+margin:5px 0;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
 
 }
 
@@ -401,102 +347,130 @@ input {
 
 
 
+.player-item button{
 
-/* ===== Modal ===== */
+font-size:12px;
 
-
-.modal {
-
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.4);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:50;
-
-
-}
-
-
-
-.modal-content {
-
-
-    background:white;
-
-    width:90%;
-
-    max-width:350px;
-
-    padding:20px;
-
-    border-radius:15px;
-
+padding:5px 8px;
 
 }
 
 
 
 
-/* 手機微調 */
 
+input,
+textarea{
 
-@media(max-width:600px){
+width:100%;
 
+padding:8px;
 
-    .round-card{
+margin:5px 0;
 
-        padding:12px;
+border-radius:8px;
 
-    }
-
-
-    .title h1{
-
-        font-size:16px;
-
-    }
-
+border:1px solid #ccc;
 
 }
+
+
+
+
+
+textarea{
+
+height:120px;
+
+}
+
+
+
+
+
+/* 隱藏 */
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+
+
+/* 彈窗 */
 
 
 .modal{
 
-    position:fixed;
+position:fixed;
 
-    top:0;
-    left:0;
+inset:0;
 
-    width:100%;
-    height:100%;
+background:#0006;
 
-    background:rgba(0,0,0,0.5);
+display:flex;
 
-    justify-content:center;
-    align-items:center;
+align-items:center;
 
-    z-index:9999;
+justify-content:center;
+
+z-index:30;
 
 }
 
 
+
 .modal-content{
 
-    background:white;
+background:white;
 
-    padding:20px;
+width:90%;
 
-    border-radius:15px;
+max-width:350px;
 
-    width:300px;
+padding:20px;
+
+border-radius:12px;
+
+}
+
+
+
+
+
+.modal-content button{
+
+width:100%;
+
+}
+
+
+
+
+
+/* 手機調整 */
+
+@media(max-width:600px){
+
+
+.title h1{
+
+font-size:17px;
+
+}
+
+
+
+button{
+
+font-size:13px;
+
+padding:6px 9px;
+
+}
+
 
 }
