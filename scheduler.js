@@ -1,81 +1,64 @@
-// 🏸 空間羽航員 V6.2 Stable
-// 隨機公平排場核心
+ // 🏸 羽球輪轉小幫手 V8.0 Stable
+// scheduler.js
+// 排場核心
 
 
-function createSchedule(players, courtCount, playerPerCourt) {
+function createSchedule(
+    players,
+    courtCount,
+    playerPerCourt
+){
 
 
-    let totalNeed =
+    let need =
     courtCount * playerPerCourt;
 
 
 
-    // 複製避免直接改原資料
-    let pool = [...players];
+    let list =
+    [...players];
 
 
 
-    // 依照休息時間 + 出場次數排序
-    pool.sort((a,b)=>{
+    // 隨機打散
 
-
-        let scoreA =
-        a.restMinutes - (a.playCount * 5);
-
-
-        let scoreB =
-        b.restMinutes - (b.playCount * 5);
+    list.sort(
+        ()=>Math.random()-0.5
+    );
 
 
 
-        return scoreB - scoreA;
+    // 優先讓休息久的人上場
 
+    list.sort((a,b)=>{
+
+        if(
+            b.restMinutes !== a.restMinutes
+        ){
+
+            return b.restMinutes-a.restMinutes;
+
+        }
+
+
+        return a.playCount-b.playCount;
 
     });
 
 
 
-    // 取前面候選
-    let candidates =
-    pool.slice(
-        0,
-        Math.min(
-            totalNeed + 6,
-            pool.length
-        )
-    );
-
-
-
-    // 隨機洗牌
-    candidates =
-    shuffle(candidates);
-
-
-
-    // 最終上場
     let playing =
-    candidates.slice(
+    list.slice(
         0,
-        totalNeed
+        need
     );
 
 
 
-    // 休息
     let resting =
-    players.filter(
-        p =>
-        !playing.some(
-            x=>x.name===p.name
-        )
+    list.slice(
+        need
     );
-
-
-
-    // 再洗一次上場順序
-    playing =
-    shuffle(playing);
 
 
 
@@ -93,20 +76,20 @@ function createSchedule(players, courtCount, playerPerCourt) {
     ){
 
 
-        let courtPlayers =
+        let group =
         playing.slice(
             index,
-            index + playerPerCourt
+            index+playerPerCourt
         );
 
 
-        index += playerPerCourt;
+        index+=playerPerCourt;
 
 
 
         let half =
         Math.floor(
-            playerPerCourt/2
+            group.length/2
         );
 
 
@@ -118,19 +101,15 @@ function createSchedule(players, courtCount, playerPerCourt) {
 
 
             teamA:
-            shuffle(
-                courtPlayers.slice(
-                    0,
-                    half
-                )
+            group.slice(
+                0,
+                half
             ),
 
 
             teamB:
-            shuffle(
-                courtPlayers.slice(
-                    half
-                )
+            group.slice(
+                half
             )
 
 
@@ -138,6 +117,7 @@ function createSchedule(players, courtCount, playerPerCourt) {
 
 
     }
+
 
 
 
@@ -156,67 +136,22 @@ function createSchedule(players, courtCount, playerPerCourt) {
 
 
 
-// =====================
-// 隨機洗牌
-// =====================
-
-function shuffle(array){
 
 
-    let result =
-    [...array];
-
-
-
-    for(
-        let i=result.length-1;
-        i>0;
-        i--
-    ){
-
-
-        let j =
-        Math.floor(
-            Math.random()
-            *
-            (i+1)
-        );
-
-
-
-        [
-            result[i],
-            result[j]
-        ] =
-        [
-            result[j],
-            result[i]
-        ];
-
-    }
-
-
-
-    return result;
-
-}
-
-
-
-
-
-// =====================
+// ======================
 // 更新休息時間
-// =====================
+// ======================
+
 
 function updateRestTime(
     players,
-    playingNames,
-    minutes
+    playingNames
 ){
 
 
-    players.forEach(player=>{
+
+    players.forEach(
+    player=>{
 
 
         if(
@@ -225,15 +160,30 @@ function updateRestTime(
             )
         ){
 
-            player.restMinutes=0;
 
             player.playCount++;
 
-        }
 
+            player.restMinutes=0;
+
+
+
+        }
         else{
 
-            player.restMinutes += minutes;
+
+            player.restMinutes +=5;
+
+
+
+            if(
+                player.restMinutes>30
+            ){
+
+                player.restMinutes=30;
+
+            }
+
 
         }
 
@@ -247,37 +197,34 @@ function updateRestTime(
 
 
 
-// =====================
-// 取得上場姓名
-// =====================
 
-function getPlayingNames(schedule){
+
+// ======================
+// 取得上場名單
+// ======================
+
+
+function getPlayingNames(
+    schedule
+){
 
 
     let result=[];
 
 
 
-    schedule.courts.forEach(court=>{
+    schedule.courts.forEach(
+    court=>{
 
 
-        court.teamA.forEach(p=>{
-
-            result.push(
-                p.name
-            );
-
-        });
+        court.teamA.forEach(
+            p=>result.push(p.name)
+        );
 
 
-
-        court.teamB.forEach(p=>{
-
-            result.push(
-                p.name
-            );
-
-        });
+        court.teamB.forEach(
+            p=>result.push(p.name)
+        );
 
 
     });
@@ -285,6 +232,44 @@ function getPlayingNames(schedule){
 
 
     return result;
+
+
+}
+
+
+
+
+
+// ======================
+// 隨機換人
+// ======================
+
+
+function replaceCourtPlayers(
+    court,
+    newPlayers
+){
+
+
+    let half =
+    Math.floor(
+        newPlayers.length/2
+    );
+
+
+
+    court.teamA =
+    newPlayers.slice(
+        0,
+        half
+    );
+
+
+
+    court.teamB =
+    newPlayers.slice(
+        half
+    );
 
 
 }
