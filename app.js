@@ -983,4 +983,32 @@ function addAllToday(){
 
 }
 
+
+function clearRounds(){
+
+    if(
+        !confirm("確定清除今日所有排場？")
+    ){
+        return;
+    }
+
+
+    rounds=[];
+
+
+    saveData();
+
+
+    renderRounds();
+
+
+    document
+    .getElementById("roundCount")
+    .innerText=0;
+
+
+    alert("今日排場已清除");
+
+}
+
 alert("新版 V6.1 已載入");
