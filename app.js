@@ -1,116 +1,18 @@
-// 🏸 羽球輪轉小幫手 V7.0 Stable
+ // 🏸 羽球輪轉小幫手 V8.0 Stable
+// app.js - Part 1
 
-let clubPlayers = [];
 
-let todayPlayers = [];
+let clubPlayers=[];
 
-let rounds = [];
+let todayPlayers=[];
 
-let settings = {
+let rounds=[];
+
+
+let settings={
     courts:3,
     players:4
 };
-
-
-
-
-// ======================
-// 載入目前球團資料
-// ======================
-
-function loadClubData(){
-
-
-    let club =
-    getCurrentClub();
-
-
-
-    if(!club){
-
-        clubPlayers=[];
-        todayPlayers=[];
-        rounds=[];
-
-        return;
-
-    }
-
-
-
-    clubPlayers =
-    club.players || [];
-
-
-
-    todayPlayers =
-    club.todayPlayers || [];
-
-
-
-    rounds =
-    club.rounds || [];
-
-
-
-    settings =
-    club.settings ||
-    {
-        courts:3,
-        players:4
-    };
-
-
-}
-
-
-
-
-
-
-// ======================
-// 儲存目前球團資料
-// ======================
-
-function saveData(){
-
-
-    let club =
-    getCurrentClub();
-
-
-
-    if(!club){
-
-        return;
-
-    }
-
-
-
-    club.players =
-    clubPlayers;
-
-
-
-    club.todayPlayers =
-    todayPlayers;
-
-
-
-    club.rounds =
-    rounds;
-
-
-
-    club.settings =
-    settings;
-
-
-
-    saveClubs();
-
-}
 
 
 
@@ -120,10 +22,20 @@ function saveData(){
 // 初始化
 // ======================
 
+
 window.onload=function(){
 
 
     loadClubData();
+
+
+    if(!currentClub){
+
+        document
+        .getElementById("clubSetup")
+        .style.display="flex";
+
+    }
 
 
     renderAll();
@@ -134,25 +46,109 @@ window.onload=function(){
 
 
 
+
+
 // ======================
-// 側邊選單
+// 建立球團
+// ======================
+
+
+function createNewClub(){
+
+
+    let input =
+    document.getElementById(
+        "clubNameInput"
+    );
+
+
+    let name =
+    input.value.trim();
+
+
+
+    if(
+        createClub(name)
+    ){
+
+
+        document
+        .getElementById(
+            "clubSetup"
+        )
+        .style.display="none";
+
+
+
+        loadClubData();
+
+
+        renderAll();
+
+
+        showClubName();
+
+
+    }
+
+
+}
+
+
+
+
+
+
+function showClubName(){
+
+
+    let box =
+    document.getElementById(
+        "currentClubName"
+    );
+
+
+    if(box){
+
+        box.innerHTML =
+        "目前球團：" +
+        currentClub;
+
+    }
+
+
+}
+
+
+
+
+
+
+// ======================
+// 選單
 // ======================
 
 
 function toggleMenu(){
 
-    let menu =
-    document.getElementById("sideMenu");
+
+    document
+    .getElementById(
+        "sideMenu"
+    )
+    .classList.toggle(
+        "open"
+    );
 
 
-    let overlay =
-    document.getElementById("overlay");
+    document
+    .getElementById(
+        "overlay"
+    )
+    .classList.toggle(
+        "show"
+    );
 
-
-
-    menu.classList.toggle("open");
-
-    overlay.classList.toggle("show");
 
 }
 
@@ -161,19 +157,23 @@ function toggleMenu(){
 
 
 // ======================
-// 頁面切換
+// 頁面
 // ======================
 
 
 function hidePages(){
 
+
     document
-    .querySelectorAll("main section")
-    .forEach(s=>{
+    .querySelectorAll(
+        "main section"
+    )
+    .forEach(
+        s=>s.classList.add(
+            "hidden"
+        )
+    );
 
-        s.classList.add("hidden");
-
-    });
 
 }
 
@@ -184,13 +184,21 @@ function showHome(){
 
     hidePages();
 
+
     document
-    .getElementById("schedulePage")
-    .classList.remove("hidden");
+    .getElementById(
+        "schedulePage"
+    )
+    .classList.remove(
+        "hidden"
+    );
+
 
     toggleMenu();
 
 }
+
+
 
 
 
@@ -198,16 +206,24 @@ function showTodayPlayers(){
 
     hidePages();
 
+
     document
-    .getElementById("todayPlayersPage")
-    .classList.remove("hidden");
+    .getElementById(
+        "todayPlayersPage"
+    )
+    .classList.remove(
+        "hidden"
+    );
 
 
     renderTodayPlayers();
 
+
     toggleMenu();
 
+
 }
+
 
 
 
@@ -216,16 +232,24 @@ function showClubPlayers(){
 
     hidePages();
 
+
     document
-    .getElementById("clubPlayersPage")
-    .classList.remove("hidden");
+    .getElementById(
+        "clubPlayersPage"
+    )
+    .classList.remove(
+        "hidden"
+    );
 
 
     renderClubPlayers();
 
+
     toggleMenu();
 
+
 }
+
 
 
 
@@ -234,14 +258,21 @@ function showStatistics(){
 
     hidePages();
 
+
     document
-    .getElementById("statisticsPage")
-    .classList.remove("hidden");
+    .getElementById(
+        "statisticsPage"
+    )
+    .classList.remove(
+        "hidden"
+    );
 
 
     renderStatistics();
 
+
     toggleMenu();
+
 
 }
 
@@ -249,9 +280,50 @@ function showStatistics(){
 
 
 
+function showClubManager(){
+
+
+    hidePages();
+
+
+    document
+    .getElementById(
+        "clubManagerPage"
+    )
+    .classList.remove(
+        "hidden"
+    );
+
+
+    renderClubList();
+
+
+    toggleMenu();
+
+
+}
+
+
+
+
 
 // ======================
-// 社團名單
+// 儲存
+// ======================
+
+
+function saveData(){
+
+    updateClubData();
+
+}
+
+
+
+
+
+// ======================
+// 球友新增
 // ======================
 
 
@@ -259,7 +331,9 @@ function addClubPlayer(){
 
 
     let input =
-    document.getElementById("newPlayerName");
+    document.getElementById(
+        "newPlayerName"
+    );
 
 
     let name =
@@ -267,7 +341,7 @@ function addClubPlayer(){
 
 
 
-    if(!name) return;
+    if(!name)return;
 
 
 
@@ -277,7 +351,9 @@ function addClubPlayer(){
         )
     ){
 
-        alert("已有此球友");
+        alert(
+            "已有此球友"
+        );
 
         return;
 
@@ -293,6 +369,7 @@ function addClubPlayer(){
 
         playCount:0
 
+
     });
 
 
@@ -302,10 +379,12 @@ function addClubPlayer(){
 
     saveData();
 
+
     renderClubPlayers();
 
 
 }
+
 
 
 
@@ -314,26 +393,31 @@ function renderClubPlayers(){
 
 
     let box =
-    document.getElementById("clubPlayerList");
+    document.getElementById(
+        "clubPlayerList"
+    );
+
+
+    if(!box)return;
 
 
     box.innerHTML="";
 
 
-    clubPlayers.forEach((p,i)=>{
 
-
-        let joined =
-        todayPlayers.some(
-            t=>t.name===p.name
-        );
+    clubPlayers.forEach(
+    (p,i)=>{
 
 
         let div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-        div.className="player-item";
+        div.className=
+        "player-item";
+
 
 
         div.innerHTML=`
@@ -342,15 +426,9 @@ function renderClubPlayers(){
         ${p.name}
         </span>
 
-
-        <button 
-        onclick="addToToday(${i})"
-        ${joined ? "disabled" : ""}>
-
-        ${joined ? "已加入" : "加入今日"}
-
+        <button onclick="addToToday(${i})">
+        加入
         </button>
-
 
         <button onclick="deleteClubPlayer(${i})">
         刪除
@@ -359,60 +437,87 @@ function renderClubPlayers(){
         `;
 
 
+
         box.appendChild(div);
+
 
 
     });
 
+
+
 }
 
 
 
 
-function deleteClubPlayer(index){
 
-    clubPlayers.splice(index,1);
+function deleteClubPlayer(i){
+
+
+    clubPlayers.splice(
+        i,
+        1
+    );
+
 
     saveData();
 
+
     renderClubPlayers();
+
 
 }
 
 
-
 // ======================
-// 今日活動
+// 今日到場
 // ======================
 
 
-function addTodayPlayer(){
+function addToToday(index){
 
 
-    let name =
-    prompt("輸入球友姓名");
+    let p =
+    clubPlayers[index];
 
 
-    if(!name)return;
+
+    if(
+        todayPlayers.some(
+            x=>x.name===p.name
+        )
+    ){
+
+        return;
+
+    }
 
 
 
     todayPlayers.push({
 
-        name:name,
+        name:p.name,
 
         restMinutes:0,
 
-        playCount:0
+        playCount:0,
+
+        checked:true
+
 
     });
 
 
+
     saveData();
+
 
     renderTodayPlayers();
 
+
 }
+
 
 
 
@@ -421,63 +526,124 @@ function renderTodayPlayers(){
 
 
     let box =
-    document.getElementById("todayPlayerList");
+    document.getElementById(
+        "todayPlayerList"
+    );
+
+
+    if(!box)return;
+
 
 
     box.innerHTML="";
 
 
 
-    todayPlayers.forEach((p,i)=>{
+    todayPlayers.forEach(
+    (p,i)=>{
 
 
         let div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-        div.className="player-item";
+        div.className=
+        "player-item";
+
 
 
         div.innerHTML=`
 
-        <span>
+        <label>
+
+        <input
+        type="checkbox"
+        ${p.checked?"checked":""}
+        onchange="togglePlayer(${i})">
+
         ${p.name}
+
         🪑${p.restMinutes}分
-        </span>
+
+        🏸${p.playCount}場
+
+        </label>
 
 
         <button onclick="removeToday(${i})">
-        離開
+
+        移除
+
         </button>
 
+
         `;
+
 
 
         box.appendChild(div);
 
 
+
     });
 
 
-
 }
 
 
 
 
 
-function removeToday(index){
+function togglePlayer(i){
 
-    todayPlayers.splice(index,1);
+
+    todayPlayers[i].checked =
+    !todayPlayers[i].checked;
+
 
     saveData();
 
-    renderTodayPlayers();
+}
+
+
+
+
+
+function confirmTodayPlayers(){
+
+
+    saveData();
+
+
+    alert(
+        "已更新到場名單"
+    );
+
 
 }
 
 
 
+
+
+function removeToday(i){
+
+
+    todayPlayers.splice(
+        i,
+        1
+    );
+
+
+    saveData();
+
+
+    renderTodayPlayers();
+
+
+}
 
 
 
@@ -491,9 +657,23 @@ function removeToday(index){
 function nextRound(){
 
 
-    if(todayPlayers.length===0){
 
-        alert("請先加入球友");
+    let activePlayers =
+    todayPlayers.filter(
+        p=>p.checked!==false
+    );
+
+
+
+    if(
+        activePlayers.length<
+        settings.courts*
+        settings.players
+    ){
+
+        alert(
+        "到場人數不足"
+        );
 
         return;
 
@@ -501,10 +681,12 @@ function nextRound(){
 
 
 
+
+
     let result =
     createSchedule(
 
-        todayPlayers,
+        activePlayers,
 
         settings.courts,
 
@@ -530,19 +712,19 @@ function nextRound(){
         result.resting
 
 
+
     });
 
 
 
-    let playing =
-    getPlayingNames(result);
-
 
 
     updateRestTime(
-        todayPlayers,
-        playing,
-        15
+
+        activePlayers,
+
+        getPlayingNames(result)
+
     );
 
 
@@ -563,57 +745,91 @@ function renderRounds(){
 
 
     let box =
-    document.getElementById("roundContainer");
+    document.getElementById(
+        "roundContainer"
+    );
+
+
+    if(!box)return;
+
 
 
     box.innerHTML="";
 
 
-    rounds.forEach((round,i)=>{
+
+    rounds.forEach(
+    (round,index)=>{
 
 
         let card =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-        card.className="round-card";
+        card.className=
+        "round-card";
+
 
 
         let html=`
 
-        <div class="round-title">
-        第${i+1}輪
-        ${round.time}
-        </div>
+        <h3>
+        第${index+1}輪
+        </h3>
+
 
         `;
 
 
 
-        round.courts.forEach(c=>{
+        round.courts.forEach(
+        (court,cIndex)=>{
 
 
             html+=`
 
             <div class="court">
 
-            <b>${c.name}</b>
 
-            <br>
+            <b>
+            ${court.name}
+            </b>
 
-            ${c.teamA.map(p=>p.name).join("、")}
+
+            <p>
+
+            ${court.teamA.map(
+                p=>p.name
+            ).join("、")}
 
             VS
 
-            ${c.teamB.map(p=>p.name).join("、")}
+            ${court.teamB.map(
+                p=>p.name
+            ).join("、")}
+
+
+            </p>
+
+
+            <button onclick="editCourt(${index},${cIndex})">
+
+            換人
+
+            </button>
 
 
             </div>
 
+
             `;
 
 
+
         });
+
 
 
 
@@ -625,7 +841,9 @@ function renderRounds(){
 
         ${
             round.resting
-            .map(p=>p.name)
+            .map(
+                p=>p.name
+            )
             .join("、")
         }
 
@@ -635,10 +853,14 @@ function renderRounds(){
 
 
 
-        card.innerHTML=html;
+        card.innerHTML=
+        html;
 
 
-        box.appendChild(card);
+        box.appendChild(
+            card
+        );
+
 
 
     });
@@ -646,12 +868,102 @@ function renderRounds(){
 
 
     document
-    .getElementById("roundCount")
+    .getElementById(
+        "roundCount"
+    )
     .innerText =
     rounds.length;
 
 
+
 }
+
+
+
+
+
+
+function editCourt(r,c){
+
+
+    let names =
+    prompt(
+    "輸入新上場名單，用逗號分隔"
+    );
+
+
+
+    if(!names)return;
+
+
+
+    let players =
+    names
+    .split(",")
+    .map(
+        n=>({
+            name:n.trim()
+        })
+    );
+
+
+
+    replaceCourtPlayers(
+
+        rounds[r].courts[c],
+
+        players
+
+    );
+
+
+
+    saveData();
+
+
+    renderRounds();
+
+
+}
+
+
+
+
+
+
+// ======================
+// 清除排場
+// ======================
+
+
+function clearRounds(){
+
+
+    if(
+        !confirm(
+        "清除今日排場？"
+        )
+    ){
+
+        return;
+
+    }
+
+
+
+    rounds=[];
+
+
+    saveData();
+
+
+    renderRounds();
+
+
+
+}
+
+
 
 
 // ======================
@@ -661,41 +973,32 @@ function renderRounds(){
 
 function openSettings(){
 
+
     let modal =
-    document.getElementById("settingModal");
+    document.getElementById(
+        "settingModal"
+    );
 
 
-    let court =
-    document.getElementById("courtSetting");
-
-
-    let player =
-    document.getElementById("playerPerCourt");
-
-
-
-    if(court){
-
-        court.value =
-        settings.courts;
-
-    }
-
-
-    if(player){
-
-        player.value =
-        settings.players;
-
-    }
+    document
+    .getElementById(
+        "courtSetting"
+    )
+    .value =
+    settings.courts;
 
 
 
-    if(modal){
+    document
+    .getElementById(
+        "playerPerCourt"
+    )
+    .value =
+    settings.players;
 
-        modal.style.display="flex";
 
-    }
+
+    modal.style.display="flex";
 
 
 }
@@ -705,17 +1008,16 @@ function openSettings(){
 
 function closeSettings(){
 
-    let modal =
-    document.getElementById("settingModal");
 
+    document
+    .getElementById(
+        "settingModal"
+    )
+    .style.display="none";
 
-    if(modal){
-
-        modal.style.display="none";
-
-    }
 
 }
+
 
 
 
@@ -723,31 +1025,21 @@ function closeSettings(){
 function saveSettings(){
 
 
-    let court =
-    document.getElementById("courtSetting");
-
-
-    let player =
-    document.getElementById("playerPerCourt");
-
-
-
     let courts =
-    Number(court.value);
+    Number(
+    document.getElementById(
+        "courtSetting"
+    ).value
+    );
+
 
 
     let players =
-    Number(player.value);
-
-
-
-    if(courts<=0 || players<=0){
-
-        alert("設定錯誤");
-
-        return;
-
-    }
+    Number(
+    document.getElementById(
+        "playerPerCourt"
+    ).value
+    );
 
 
 
@@ -766,9 +1058,11 @@ function saveSettings(){
 
 
     document
-    .getElementById("courtCount")
+    .getElementById(
+        "courtCount"
+    )
     .innerText =
-    settings.courts;
+    courts;
 
 
 
@@ -776,6 +1070,10 @@ function saveSettings(){
 
 
 }
+
+
+
+
 
 
 
@@ -788,21 +1086,34 @@ function renderStatistics(){
 
 
     let box =
-    document.getElementById("statisticsBox");
+    document.getElementById(
+        "statisticsBox"
+    );
+
+
+
+    if(!box)return;
+
 
 
     box.innerHTML="";
 
 
-    todayPlayers.forEach(p=>{
+
+    todayPlayers.forEach(
+    p=>{
 
 
-        box.innerHTML +=`
+        box.innerHTML+=`
 
         <p>
+
         ${p.name}
+
         🏸${p.playCount}場
+
         🪑${p.restMinutes}分
+
         </p>
 
         `;
@@ -810,100 +1121,179 @@ function renderStatistics(){
 
     });
 
-}
-
-
-function renderAll(){
-
-    renderClubPlayers();
-
-    renderTodayPlayers();
-
-    renderRounds();
-
-
-    document
-    .getElementById("todayCount")
-    .innerText =
-    todayPlayers.length;
-
-
-    document
-    .getElementById("courtCount")
-    .innerText =
-    settings.courts;
-
 
 }
 
-function searchTodayPlayers(){
 
-    renderTodayPlayers();
-
-}
-
-function searchClubPlayers(){
-
-    renderClubPlayers();
-
-}
 
 
 
 // ======================
-// 批次匯入名單
+// 球團管理
 // ======================
+
+
+function renderClubList(){
+
+
+    let box =
+    document.getElementById(
+        "clubList"
+    );
+
+
+    if(!box)return;
+
+
+
+    box.innerHTML="";
+
+
+
+    clubs.forEach(
+    c=>{
+
+
+        let div =
+        document.createElement(
+            "div"
+        );
+
+
+
+        div.className=
+        "player-item";
+
+
+
+        div.innerHTML=`
+
+        <span>
+
+        ${c.name}
+
+        </span>
+
+
+        <button onclick="switchClub('${c.name}')">
+
+        切換
+
+        </button>
+
+
+        <button onclick="deleteClub('${c.name}')">
+
+        刪除
+
+        </button>
+
+
+        `;
+
+
+
+        box.appendChild(div);
+
+
+
+    });
+
+
+}
+
+
+
+
+
+function createNewClubFromList(){
+
+
+    let input =
+    document.getElementById(
+        "newClubName"
+    );
+
+
+
+    let name =
+    input.value.trim();
+
+
+
+    if(
+        createClub(name)
+    ){
+
+
+        input.value="";
+
+
+        loadClubData();
+
+
+        showClubName();
+
+
+        renderAll();
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+// ======================
+// 匯入名單
+// ======================
+
 
 function importPlayers(){
 
-    const textarea =
-    document.getElementById("importPlayers");
 
-
-    if(!textarea){
-
-        alert("找不到匯入欄");
-
-        return;
-
-    }
+    let textarea =
+    document.getElementById(
+        "importPlayers"
+    );
 
 
     let text =
     textarea.value.trim();
 
 
-    if(!text){
 
-        alert("請先貼上名單");
+    if(!text)return;
 
-        return;
-
-    }
 
 
     let names =
     text
     .split("\n")
-    .map(name=>name.trim())
-    .filter(name=>name);
+    .map(
+        n=>n.trim()
+    )
+    .filter(
+        n=>n
+    );
 
 
 
-    let count = 0;
+    names.forEach(
+    name=>{
 
 
-
-    names.forEach(name=>{
-
-
-        let exist =
-        clubPlayers.some(
-            p=>p.name===name
-        );
-
-
-        if(!exist){
+        if(
+            !clubPlayers.some(
+                p=>p.name===name
+            )
+        ){
 
 
             clubPlayers.push({
@@ -917,113 +1307,90 @@ function importPlayers(){
             });
 
 
-            count++;
-
         }
+
 
 
     });
 
-
-
-    saveData();
-
-
-    renderClubPlayers();
 
 
     textarea.value="";
 
 
-    alert(
-        "成功匯入 "
-        + count
-        + " 位球友"
-    );
+    saveData();
+
+
+    renderClubPlayers();
+
 
 }
 
 
 
 
-function addToToday(index){
+
+// ======================
+// 搜尋
+// ======================
 
 
-    let player =
-    clubPlayers[index];
-
-
-    if(
-        todayPlayers.some(
-            p=>p.name===player.name
-        )
-    ){
-
-        alert(
-            player.name + " 已經在今日活動"
-        );
-
-        return;
-
-    }
-
-
-
-    todayPlayers.push({
-
-        name:player.name,
-
-        restMinutes:0,
-
-        playCount:0
-
-    });
-
-
-
-    saveData();
+function searchTodayPlayers(){
 
 
     renderTodayPlayers();
 
 
-    alert(
-        player.name + " 加入今日活動"
-    );
+}
+
+
+
+function searchClubPlayers(){
+
+
+    renderClubPlayers();
+
 
 }
+
+
+
+
+
+
+
+// ======================
+// 全部加入今日
+// ======================
 
 
 function addAllToday(){
 
 
-    let count = 0;
+
+    clubPlayers.forEach(
+    p=>{
 
 
-    clubPlayers.forEach(player=>{
-
-
-        let exists =
-        todayPlayers.some(
-            t=>t.name===player.name
-        );
-
-
-        if(!exists){
+        if(
+            !todayPlayers.some(
+                x=>x.name===p.name
+            )
+        ){
 
 
             todayPlayers.push({
 
-                name:player.name,
+                name:p.name,
 
                 restMinutes:0,
 
-                playCount:0
+                playCount:0,
+
+                checked:true
 
             });
 
-
-            count++;
 
         }
 
@@ -1037,43 +1404,61 @@ function addAllToday(){
 
     renderTodayPlayers();
 
-    renderClubPlayers();
 
-
-    alert(
-        "已加入今日活動 "
-        + count
-        + " 位球友"
-    );
 
 }
 
 
-function clearRounds(){
-
-    if(
-        !confirm("確定清除今日所有排場？")
-    ){
-        return;
-    }
 
 
-    rounds=[];
 
 
-    saveData();
+
+// ======================
+// 全部更新
+// ======================
+
+
+function renderAll(){
+
+
+    loadClubData();
+
+
+
+    renderClubPlayers();
+
+
+    renderTodayPlayers();
 
 
     renderRounds();
 
 
+
+    renderStatistics();
+
+
+
+    showClubName();
+
+
+
     document
-    .getElementById("roundCount")
-    .innerText=0;
+    .getElementById(
+        "todayCount"
+    )
+    .innerText =
+    todayPlayers.length;
 
 
-    alert("今日排場已清除");
+
+    document
+    .getElementById(
+        "courtCount"
+    )
+    .innerText =
+    settings.courts;
+
 
 }
-
-alert("新版 V6.1 已載入");
