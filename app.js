@@ -1,84 +1,243 @@
-let players =
-loadData("players") || [];
+// 🏸 空間羽航員 V6.1 Stable
+
+let clubPlayers =
+JSON.parse(localStorage.getItem("clubPlayers")) || [];
 
 
-let round = 0;
+let todayPlayers =
+JSON.parse(localStorage.getItem("todayPlayers")) || [];
 
 
-
-function savePlayers(){
-
-  saveData(
-    "players",
-    players
-  );
-
-}
+let rounds =
+JSON.parse(localStorage.getItem("rounds")) || [];
 
 
-
-
-function addPlayer(){
-
-
-  let input =
-  document.getElementById("playerName");
-
-
-  let name =
-  input.value.trim();
+let settings =
+JSON.parse(localStorage.getItem("settings")) ||
+{
+    courts:3,
+    players:4
+};
 
 
 
-  if(name===""){
-
-    alert("請輸入球友姓名");
-
-    return;
-
-  }
 
 
+// ======================
+// 初始化
+// ======================
 
-  if(players.includes(name)){
+window.onload=function(){
 
-    alert("此球友已存在");
+    renderAll();
 
-    return;
-
-  }
+};
 
 
 
-  players.push(name);
 
 
+function saveData(){
 
-  savePlayers();
+    localStorage.setItem(
+        "clubPlayers",
+        JSON.stringify(clubPlayers)
+    );
 
 
+    localStorage.setItem(
+        "todayPlayers",
+        JSON.stringify(todayPlayers)
+    );
 
-  input.value="";
+
+    localStorage.setItem(
+        "rounds",
+        JSON.stringify(rounds)
+    );
 
 
-  showPlayers();
-
+    localStorage.setItem(
+        "settings",
+        JSON.stringify(settings)
+    );
 
 }
 
 
 
 
-function removePlayer(index){
 
 
-  players.splice(index,1);
+// ======================
+// 側邊選單
+// ======================
 
 
-  savePlayers();
+function toggleMenu(){
+
+    let menu =
+    document.getElementById("sideMenu");
 
 
-  showPlayers();
+    let overlay =
+    document.getElementById("overlay");
+
+
+
+    menu.classList.toggle("open");
+
+    overlay.classList.toggle("show");
+
+}
+
+
+
+
+
+// ======================
+// 頁面切換
+// ======================
+
+
+function hidePages(){
+
+    document
+    .querySelectorAll("main section")
+    .forEach(s=>{
+
+        s.classList.add("hidden");
+
+    });
+
+}
+
+
+
+
+function showHome(){
+
+    hidePages();
+
+    document
+    .getElementById("schedulePage")
+    .classList.remove("hidden");
+
+    toggleMenu();
+
+}
+
+
+
+function showTodayPlayers(){
+
+    hidePages();
+
+    document
+    .getElementById("todayPlayersPage")
+    .classList.remove("hidden");
+
+
+    renderTodayPlayers();
+
+    toggleMenu();
+
+}
+
+
+
+
+function showClubPlayers(){
+
+    hidePages();
+
+    document
+    .getElementById("clubPlayersPage")
+    .classList.remove("hidden");
+
+
+    renderClubPlayers();
+
+    toggleMenu();
+
+}
+
+
+
+
+function showStatistics(){
+
+    hidePages();
+
+    document
+    .getElementById("statisticsPage")
+    .classList.remove("hidden");
+
+
+    renderStatistics();
+
+    toggleMenu();
+
+}
+
+
+
+
+
+
+// ======================
+// 社團名單
+// ======================
+
+
+function addClubPlayer(){
+
+
+    let input =
+    document.getElementById("newPlayerName");
+
+
+    let name =
+    input.value.trim();
+
+
+
+    if(!name) return;
+
+
+
+    if(
+        clubPlayers.some(
+            p=>p.name===name
+        )
+    ){
+
+        alert("已有此球友");
+
+        return;
+
+    }
+
+
+
+    clubPlayers.push({
+
+        name:name,
+
+        restMinutes:0,
+
+        playCount:0
+
+    });
+
+
+
+    input.value="";
+
+
+    saveData();
+
+    renderClubPlayers();
 
 
 }
@@ -86,40 +245,141 @@ function removePlayer(index){
 
 
 
-function showPlayers(){
+function renderClubPlayers(){
 
 
-  let list =
-  document.getElementById("playerList");
+    let box =
+    document.getElementById("clubPlayerList");
 
 
-  list.innerHTML="";
-
-
-
-  players.forEach(
-  function(name,index){
+    box.innerHTML="";
 
 
 
-    let li =
-    document.createElement("li");
+    clubPlayers.forEach((p,i)=>{
+
+
+        let div =
+        document.createElement("div");
+
+
+        div.className="player-item";
+
+
+        div.innerHTML=`
+
+        <span>${p.name}</span>
+
+        <button onclick="deleteClubPlayer(${i})">
+        刪除
+        </button>
+
+        `;
+
+
+        box.appendChild(div);
+
+
+    });
+
+}
 
 
 
-    li.innerHTML =
-    name+
-    " <button onclick='removePlayer("
-    +index+
-    ")'>❌</button>";
+
+function deleteClubPlayer(index){
+
+    clubPlayers.splice(index,1);
+
+    saveData();
+
+    renderClubPlayers();
+
+}
 
 
 
-    list.appendChild(li);
 
 
 
-  });
+
+// ======================
+// 今日活動
+// ======================
+
+
+function addTodayPlayer(){
+
+
+    let name =
+    prompt("輸入球友姓名");
+
+
+    if(!name)return;
+
+
+
+    todayPlayers.push({
+
+        name:name,
+
+        restMinutes:0,
+
+        playCount:0
+
+    });
+
+
+    saveData();
+
+    renderTodayPlayers();
+
+}
+
+
+
+
+function renderTodayPlayers(){
+
+
+    let box =
+    document.getElementById("todayPlayerList");
+
+
+    box.innerHTML="";
+
+
+
+    todayPlayers.forEach((p,i)=>{
+
+
+        let div =
+        document.createElement("div");
+
+
+        div.className="player-item";
+
+
+        div.innerHTML=`
+
+        <span>
+        ${p.name}
+        🪑${p.restMinutes}分
+        </span>
+
+
+        <button onclick="removeToday(${i})">
+        離開
+        </button>
+
+        `;
+
+
+        box.appendChild(div);
+
+
+    });
+
 
 
 }
@@ -127,100 +387,92 @@ function showPlayers(){
 
 
 
-function startGame(){
 
+function removeToday(index){
 
-  if(players.length===0){
+    todayPlayers.splice(index,1);
 
-    alert("請先新增球友");
+    saveData();
 
-    return;
-
-  }
-
-
-  round=0;
-
-
-  makeRound();
-
+    renderTodayPlayers();
 
 }
 
 
+
+
+
+
+
+
+// ======================
+// 排場
+// ======================
 
 
 function nextRound(){
 
 
-  round++;
+    if(todayPlayers.length===0){
 
+        alert("請先加入球友");
 
-  makeRound();
+        return;
 
-
-}
-
-
-
-
-
-function makeRound(){
-
-
- let courts =
- Number(
- document.getElementById("courtCount").value
- );
-
-
- let people =
- Number(
- document.getElementById("peopleCount").value
- );
-
-
- let mode =
- document.getElementById("mode").value;
+    }
 
 
 
- let data =
- createSchedule(
-   players,
-   courts,
-   people,
-   round,
-   mode
- );
+    let result =
+    createSchedule(
+
+        todayPlayers,
+
+        settings.courts,
+
+        settings.players
+
+    );
 
 
 
- let text="";
+
+    rounds.push({
+
+        time:
+        new Date()
+        .toLocaleTimeString(),
 
 
- data.forEach(
- function(item){
+        courts:
+        result.courts,
 
 
-  text +=
-  item.text+
-  "<br>";
+        resting:
+        result.resting
 
 
- });
-
-
-
- document.getElementById("result")
- .innerHTML=text;
+    });
 
 
 
- recordGames(data);
+    let playing =
+    getPlayingNames(result);
 
 
- updateStats();
+
+    updateRestTime(
+        todayPlayers,
+        playing,
+        15
+    );
+
+
+
+    saveData();
+
+
+    renderRounds();
 
 
 }
@@ -229,15 +481,96 @@ function makeRound(){
 
 
 
-function updateStats(){
+function renderRounds(){
 
 
- let box =
- document.getElementById("stats");
+    let box =
+    document.getElementById("roundContainer");
 
 
- box.innerHTML =
- getStatsText();
+    box.innerHTML="";
+
+
+    rounds.forEach((round,i)=>{
+
+
+        let card =
+        document.createElement("div");
+
+
+        card.className="round-card";
+
+
+        let html=`
+
+        <div class="round-title">
+        第${i+1}輪
+        ${round.time}
+        </div>
+
+        `;
+
+
+
+        round.courts.forEach(c=>{
+
+
+            html+=`
+
+            <div class="court">
+
+            <b>${c.name}</b>
+
+            <br>
+
+            ${c.teamA.map(p=>p.name).join("、")}
+
+            VS
+
+            ${c.teamB.map(p=>p.name).join("、")}
+
+
+            </div>
+
+            `;
+
+
+        });
+
+
+
+        html+=`
+
+        <div class="rest-box">
+
+        🪑休息：
+
+        ${
+            round.resting
+            .map(p=>p.name)
+            .join("、")
+        }
+
+        </div>
+
+        `;
+
+
+
+        card.innerHTML=html;
+
+
+        box.appendChild(card);
+
+
+    });
+
+
+
+    document
+    .getElementById("roundCount")
+    .innerText =
+    rounds.length;
 
 
 }
@@ -246,22 +579,53 @@ function updateStats(){
 
 
 
-function clearToday(){
 
 
- localStorage.removeItem("stats");
+// ======================
+// 設定
+// ======================
 
 
- round=0;
+function openSettings(){
+
+    document
+    .getElementById("settingModal")
+    .classList.remove("hidden");
+
+}
 
 
- document.getElementById("result")
- .innerHTML =
- "已清除今日紀錄";
+
+function closeSettings(){
+
+    document
+    .getElementById("settingModal")
+    .classList.add("hidden");
+
+}
 
 
- updateStats();
 
+function saveSettings(){
+
+
+    settings.courts =
+    Number(
+        document.getElementById("courtSetting").value
+    );
+
+
+    settings.players =
+    Number(
+        document.getElementById("playerPerCourt").value
+    );
+
+
+
+    saveData();
+
+
+    closeSettings();
 
 }
 
@@ -269,6 +633,56 @@ function clearToday(){
 
 
 
-showPlayers();
 
-updateStats();
+// ======================
+// 統計
+// ======================
+
+
+function renderStatistics(){
+
+
+    let box =
+    document.getElementById("statisticsBox");
+
+
+    box.innerHTML="";
+
+
+    todayPlayers.forEach(p=>{
+
+
+        box.innerHTML +=`
+
+        <p>
+        ${p.name}
+        🏸${p.playCount}場
+        🪑${p.restMinutes}分
+        </p>
+
+        `;
+
+
+    });
+
+}
+
+
+
+
+function renderAll(){
+
+    renderClubPlayers();
+
+    renderTodayPlayers();
+
+    renderRounds();
+
+
+    document
+    .getElementById("todayCount")
+    .innerText =
+    todayPlayers.length;
+
+
+}
