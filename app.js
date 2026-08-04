@@ -311,13 +311,37 @@ function showClubManager(){
 // 儲存
 // ======================
 
-
 function saveData(){
 
-    updateClubData();
+    let club = getCurrentClub();
+
+
+    if(!club){
+
+        return;
+
+    }
+
+
+    club.players =
+    clubPlayers;
+
+
+    club.todayPlayers =
+    todayPlayers;
+
+
+    club.rounds =
+    rounds;
+
+
+    club.settings =
+    settings;
+
+
+    saveClubs();
 
 }
-
 
 
 
@@ -719,14 +743,11 @@ function nextRound(){
 
 
 
-    updateRestTime(
-
-        activePlayers,
-
-        getPlayingNames(result)
-
-    );
-
+  updateRestTime(
+    activePlayers,
+    getPlayingNames(result),
+    5
+);
 
 
     saveData();
@@ -839,13 +860,9 @@ function renderRounds(){
 
         🪑休息：
 
-        ${
-            round.resting
-            .map(
-                p=>p.name
-            )
-            .join("、")
-        }
+${round.resting.map(
+p=>p.name+"("+p.restMinutes+"分)"
+).join("、")}
 
         </div>
 
@@ -885,44 +902,108 @@ function renderRounds(){
 
 function editCourt(r,c){
 
-
     let names =
     prompt(
     "輸入新上場名單，用逗號分隔"
     );
 
 
-
     if(!names)return;
-
 
 
     let players =
     names
     .split(",")
     .map(
-        n=>({
-            name:n.trim()
-        })
+        n=>n.trim()
+    )
+    .filter(
+        n=>n
+    );
+
+
+    let newPlayers =
+    players.map(
+        name=>{
+
+            let old =
+            todayPlayers.find(
+                p=>p.name===name
+            );
+
+
+            if(old){
+
+                return old;
+
+            }
+
+
+            return {
+
+                name:name,
+
+                restMinutes:0,
+
+                playCount:0,
+
+                checked:true
+
+            };
+
+        }
     );
 
 
 
     replaceCourtPlayers(
-
         rounds[r].courts[c],
-
-        players
-
+        newPlayers
     );
+
+
+
+    newPlayers.forEach(
+    p=>{
+
+        p.playCount++;
+
+        p.restMinutes=0;
+
+    });
+
+
+
+    todayPlayers.forEach(
+    p=>{
+
+        if(
+            !getPlayingNames(
+                {
+                    courts:
+                    rounds[r].courts
+                }
+            )
+            .includes(p.name)
+        ){
+
+            if(p.restMinutes<30){
+
+                p.restMinutes+=5;
+
+            }
+
+        }
+
+    });
 
 
 
     saveData();
 
-
     renderRounds();
 
+    renderStatistics();
 
 }
 
@@ -1442,16 +1523,16 @@ function renderAll(){
 
     showClubName();
 
+document
+.getElementById(
+    "todayCount"
+)
+.innerText =
+todayPlayers.filter(
+    p=>p.checked!==false
+).length;
 
-
-    document
-    .getElementById(
-        "todayCount"
-    )
-    .innerText =
-    todayPlayers.length;
-
-
+  
 
     document
     .getElementById(
