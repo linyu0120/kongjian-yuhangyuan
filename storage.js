@@ -1,25 +1,23 @@
 // 🏸 羽球輪轉小幫手 V7.0 Stable
-// 資料管理核心
+// 球團資料管理核心
 
 
 let currentClub =
 localStorage.getItem("currentClub") || "";
 
 
-
 let clubs =
 JSON.parse(
     localStorage.getItem("clubs")
 )
-||
-[];
+|| [];
 
 
 
 
 
 // ======================
-// 儲存全部資料
+// 儲存
 // ======================
 
 function saveClubs(){
@@ -48,7 +46,10 @@ function saveClubs(){
 function createClub(name){
 
 
-    if(!name.trim()){
+    name=name.trim();
+
+
+    if(!name){
 
         alert("請輸入球團名稱");
 
@@ -76,11 +77,15 @@ function createClub(name){
 
         name:name,
 
+
         players:[],
+
 
         todayPlayers:[],
 
+
         rounds:[],
+
 
         settings:{
 
@@ -108,9 +113,8 @@ function createClub(name){
 
 
 
-
 // ======================
-// 取得目前球團
+// 目前球團
 // ======================
 
 function getCurrentClub(){
@@ -122,6 +126,105 @@ function getCurrentClub(){
 
     );
 
+}
+
+
+
+
+
+// ======================
+// 載入球團資料
+// ======================
+
+function loadClubData(){
+
+
+    let club =
+    getCurrentClub();
+
+
+
+    if(!club){
+
+        return;
+
+    }
+
+
+
+    clubPlayers =
+    club.players || [];
+
+
+
+    todayPlayers =
+    club.todayPlayers || [];
+
+
+
+    rounds =
+    club.rounds || [];
+
+
+
+    settings =
+    club.settings || {
+
+        courts:3,
+
+        players:4
+
+    };
+
+
+
+}
+
+
+
+
+
+// ======================
+// 儲存目前球團資料
+// ======================
+
+function saveClubData(){
+
+
+    let club =
+    getCurrentClub();
+
+
+
+    if(!club){
+
+        return;
+
+    }
+
+
+
+    club.players =
+    clubPlayers;
+
+
+
+    club.todayPlayers =
+    todayPlayers;
+
+
+
+    club.rounds =
+    rounds;
+
+
+
+    club.settings =
+    settings;
+
+
+
+    saveClubs();
 
 }
 
@@ -142,11 +245,13 @@ function switchClub(name){
     );
 
 
+
     if(!club){
 
-        return;
+        return false;
 
     }
+
 
 
     currentClub=name;
@@ -154,6 +259,11 @@ function switchClub(name){
 
     saveClubs();
 
+
+    loadClubData();
+
+
+    return true;
 
 }
 
@@ -170,7 +280,7 @@ function deleteClub(name){
 
     if(
         !confirm(
-        "確定刪除這個球團？"
+            "確定刪除這個球團？"
         )
     ){
 
@@ -187,7 +297,9 @@ function deleteClub(name){
 
 
 
-    if(currentClub===name){
+    if(
+        currentClub===name
+    ){
 
         currentClub="";
 
@@ -197,5 +309,35 @@ function deleteClub(name){
 
     saveClubs();
 
+}
+
+
+
+
+
+// ======================
+// 更新球團名稱顯示
+// ======================
+
+function updateClubName(){
+
+
+    let box =
+    document.getElementById(
+        "currentClubName"
+    );
+
+
+
+    if(box){
+
+        box.innerText =
+        currentClub
+        ?
+        "🏸 "+currentClub
+        :
+        "";
+
+    }
 
 }
