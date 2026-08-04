@@ -1,23 +1,116 @@
-// 🏸 空間羽航員 V6.1 Stable
+// 🏸 羽球輪轉小幫手 V7.0 Stable
 
-let clubPlayers =
-JSON.parse(localStorage.getItem("clubPlayers")) || [];
+let clubPlayers = [];
 
+let todayPlayers = [];
 
-let todayPlayers =
-JSON.parse(localStorage.getItem("todayPlayers")) || [];
+let rounds = [];
 
-
-let rounds =
-JSON.parse(localStorage.getItem("rounds")) || [];
-
-
-let settings =
-JSON.parse(localStorage.getItem("settings")) ||
-{
+let settings = {
     courts:3,
     players:4
 };
+
+
+
+
+// ======================
+// 載入目前球團資料
+// ======================
+
+function loadClubData(){
+
+
+    let club =
+    getCurrentClub();
+
+
+
+    if(!club){
+
+        clubPlayers=[];
+        todayPlayers=[];
+        rounds=[];
+
+        return;
+
+    }
+
+
+
+    clubPlayers =
+    club.players || [];
+
+
+
+    todayPlayers =
+    club.todayPlayers || [];
+
+
+
+    rounds =
+    club.rounds || [];
+
+
+
+    settings =
+    club.settings ||
+    {
+        courts:3,
+        players:4
+    };
+
+
+}
+
+
+
+
+
+
+// ======================
+// 儲存目前球團資料
+// ======================
+
+function saveData(){
+
+
+    let club =
+    getCurrentClub();
+
+
+
+    if(!club){
+
+        return;
+
+    }
+
+
+
+    club.players =
+    clubPlayers;
+
+
+
+    club.todayPlayers =
+    todayPlayers;
+
+
+
+    club.rounds =
+    rounds;
+
+
+
+    club.settings =
+    settings;
+
+
+
+    saveClubs();
+
+}
 
 
 
@@ -29,7 +122,12 @@ JSON.parse(localStorage.getItem("settings")) ||
 
 window.onload=function(){
 
+
+    loadClubData();
+
+
     renderAll();
+
 
 };
 
