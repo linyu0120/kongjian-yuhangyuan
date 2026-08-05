@@ -24,22 +24,31 @@ let settings = {
 // 初始化
 // ======================
 
-
 window.onload=function(){
 
 
 
-    let hasClub =
-    checkClub();
+    loadStorage();
 
 
 
-    if(!hasClub){
+    loadClubData();
 
 
-        let setup =
+
+
+
+
+    if(!currentClub){
+
+
+
+        let setup=
+
         document.getElementById(
+
             "clubSetup"
+
         );
 
 
@@ -51,7 +60,34 @@ window.onload=function(){
         }
 
 
+
     }
+
+    else{
+
+
+
+        let setup=
+
+        document.getElementById(
+
+            "clubSetup"
+
+        );
+
+
+
+        if(setup){
+
+            setup.style.display="none";
+
+        }
+
+
+
+    }
+
+
 
 
 
@@ -60,8 +96,6 @@ window.onload=function(){
 
 
 };
-
-
 
 
 
