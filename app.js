@@ -1554,9 +1554,8 @@ team
 
 
 
-
 // ======================
-// V9.5 點名字換人修正版
+// V9.6.1 點名字換人修正版
 // ======================
 
 
@@ -1575,7 +1574,6 @@ button
 ){
 
 
-
     let court =
 
     rounds[r].courts[c];
@@ -1588,25 +1586,17 @@ button
 
     if(team==="A"){
 
-
         oldPlayer =
-
         court.teamA[index];
-
 
     }
 
     else{
 
-
         oldPlayer =
-
         court.teamB[index];
 
-
     }
-
-
 
 
 
@@ -1615,47 +1605,28 @@ button
     let select =
 
     document.createElement(
-
         "select"
-
     );
 
 
-
-    select.className=
-
+    select.className =
     "player-select";
 
 
 
 
 
-
-
-    // 取得目前場上所有人
-
-    let playing = [];
-
+    let currentNames=[];
 
 
     court.teamA.forEach(
-
-    p=>
-
-    playing.push(p.name)
-
+        p=>currentNames.push(p.name)
     );
-
 
 
     court.teamB.forEach(
-
-    p=>
-
-    playing.push(p.name)
-
+        p=>currentNames.push(p.name)
     );
-
 
 
 
@@ -1669,21 +1640,19 @@ button
 
     p=>
 
-
     p.checked!==false
 
     &&
 
     (
 
-        !playing.includes(p.name)
+    !currentNames.includes(p.name)
 
-        ||
+    ||
 
-        p.name===oldPlayer.name
+    p.name===oldPlayer.name
 
     )
-
 
     )
 
@@ -1695,31 +1664,23 @@ button
         let option =
 
         document.createElement(
-
             "option"
-
         );
 
 
 
-        option.value=
-
+        option.value =
         p.name;
 
 
-
-        option.textContent=
-
+        option.textContent =
         p.name;
-
 
 
 
 
         if(
-
-        p.name===oldPlayer.name
-
+            p.name===oldPlayer.name
         ){
 
             option.selected=true;
@@ -1727,14 +1688,10 @@ button
         }
 
 
-
         select.appendChild(option);
 
 
-
     });
-
-
 
 
 
@@ -1759,20 +1716,12 @@ button
 
 
 
-
-
-        if(!newPlayer){
-
-            return;
-
-        }
+        if(!newPlayer)return;
 
 
 
 
 
-
-        // 同一人不用換
 
         if(
 
@@ -1791,24 +1740,34 @@ button
 
 
 
+        // 修正統計
 
-        // 扣除舊球員場數
 
         oldPlayer.playCount =
 
         Math.max(
 
-            0,
+        0,
 
-            (oldPlayer.playCount||1)-1
+        (oldPlayer.playCount||0)-1
 
         );
 
 
 
+        oldPlayer.restMinutes =
+
+        (oldPlayer.restMinutes||0)
+
+        +
+
+        5;
 
 
-        // 新球員增加場數
+
+
+
+
 
         newPlayer.playCount =
 
@@ -1825,13 +1784,7 @@ button
 
 
 
-
-        // 交換球員
-
-
-
         if(team==="A"){
-
 
 
             court.teamA[index]
@@ -1841,11 +1794,9 @@ button
             newPlayer;
 
 
-
         }
 
         else{
-
 
 
             court.teamB[index]
@@ -1855,10 +1806,7 @@ button
             newPlayer;
 
 
-
         }
-
-
 
 
 
@@ -1868,9 +1816,7 @@ button
         saveData();
 
 
-
         renderRounds();
-
 
 
         renderStatistics();
@@ -1878,6 +1824,7 @@ button
 
 
     };
+
 
 
 
@@ -1902,8 +1849,6 @@ button
 
 
 }
-
-
 
 
 
