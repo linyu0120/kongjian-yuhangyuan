@@ -1,5 +1,6 @@
-// 🏸 羽球輪轉小幫手 V8.1 Stable
+// 🏸 羽球輪轉小幫手 V9 Final Ultimate
 // scheduler.js
+
 
 
 // ======================
@@ -10,7 +11,7 @@
 function createSchedule(
     players,
     courts,
-    playersPerCourt
+    perCourt
 ){
 
 
@@ -19,31 +20,31 @@ function createSchedule(
 
 
 
-    // 隨機打亂
-
+    // 先依休息時間排序
     list.sort(
-        ()=>Math.random()-0.5
-    );
+    (a,b)=>{
+
+        return (
+            (b.restMinutes||0)
+            -
+            (a.restMinutes||0)
+        );
+
+    });
 
 
 
+    // 同休息時間再隨機
+    list =
+    shuffleArray(list);
 
-    let result = {
-
-
-        courts:[],
-
-
-        resting:[]
-
-    };
 
 
 
 
     let need =
     courts *
-    playersPerCourt;
+    perCourt;
 
 
 
@@ -64,28 +65,32 @@ function createSchedule(
 
 
 
-    // 建立球場
+    let courtList=[];
+
+
+
+    let index=0;
+
+
 
 
     for(
-        let i=0;
-        i<courts;
-        i++
+        let c=1;
+        c<=courts;
+        c++
     ){
-
-
-        let start =
-        i *
-        playersPerCourt;
 
 
 
         let group =
         playing.slice(
-            start,
-            start+
-            playersPerCourt
+            index,
+            index+perCourt
         );
+
+
+
+        index += perCourt;
 
 
 
@@ -96,12 +101,12 @@ function createSchedule(
 
 
 
-        result.courts.push({
+        courtList.push({
+
 
             name:
-            "第"+
-            (i+1)+
-            "場",
+            "第"+c+"場",
+
 
 
             teamA:
@@ -111,13 +116,16 @@ function createSchedule(
             ),
 
 
+
             teamB:
             group.slice(
                 half
             )
 
 
+
         });
+
 
 
     }
@@ -126,12 +134,18 @@ function createSchedule(
 
 
 
-    result.resting =
-    resting;
+    return {
 
 
+        courts:
+        courtList,
 
-    return result;
+
+        resting:
+        resting
+
+
+    };
 
 
 }
@@ -143,9 +157,8 @@ function createSchedule(
 
 
 // ======================
-// 取得上場名字
+// 取得目前上場名字
 // ======================
-
 
 function getPlayingNames(result){
 
@@ -179,6 +192,7 @@ function getPlayingNames(result){
         });
 
 
+
     });
 
 
@@ -198,12 +212,16 @@ function getPlayingNames(result){
 // 更新休息時間
 // ======================
 
-
 function updateRestTime(
+
     players,
+
     playingNames,
+
     minutes
+
 ){
+
 
 
     players.forEach(
@@ -219,7 +237,6 @@ function updateRestTime(
 
             p.playCount =
             (p.playCount||0)+1;
-
 
 
             p.restMinutes=0;
@@ -238,9 +255,7 @@ function updateRestTime(
         }
 
 
-
     });
-
 
 
 }
@@ -253,9 +268,8 @@ function updateRestTime(
 
 
 // ======================
-// 換場球員
+// 取代場上球員
 // ======================
-
 
 function replaceCourtPlayers(
     court,
@@ -283,6 +297,59 @@ function replaceCourtPlayers(
         half
     );
 
+
+}
+
+
+
+
+
+
+
+
+// ======================
+// 洗牌
+// ======================
+
+function shuffleArray(arr){
+
+
+    let array =
+    [...arr];
+
+
+
+    for(
+        let i=array.length-1;
+        i>0;
+        i--
+    ){
+
+
+        let j =
+        Math.floor(
+            Math.random()
+            *
+            (i+1)
+        );
+
+
+
+        [
+            array[i],
+            array[j]
+        ]
+        =
+        [
+            array[j],
+            array[i]
+        ];
+
+    }
+
+
+
+    return array;
 
 
 }
