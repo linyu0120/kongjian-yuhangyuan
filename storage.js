@@ -1,359 +1,183 @@
-// 🏸 羽球輪轉小幫手 V8.2 Stable
+```javascript
+// 🏸 羽球輪轉小幫手 V8.3 Final
 // storage.js
 
-
 let clubs = [];
-
-let currentClub = "";
-
-
-
-
+let currentClub = null;
 
 // ======================
-// 初始化讀取
+// 讀取資料
 // ======================
 
-function loadClubData(){
+function loadClubData() {
 
+    clubs = JSON.parse(localStorage.getItem("clubs")) || [];
 
-    let data =
-    localStorage.getItem(
-        "badmintonClubs"
-    );
+    currentClub = localStorage.getItem("currentClub");
 
-
-
-    if(data){
-
-        clubs =
-        JSON.parse(data);
-
-    }
-    else{
-
-        clubs=[];
-
+    // 如果目前球團不存在，就自動切到第一個球團
+    if (
+        currentClub &&
+        !clubs.some(c => c.name === currentClub)
+    ) {
+        currentClub = clubs.length ? clubs[0].name : null;
     }
 
+    if (currentClub) {
 
+        const club = getCurrentClub();
 
-    currentClub =
-    localStorage.getItem(
-        "currentClub"
-    );
+        if (club) {
 
-
-
-    if(currentClub){
-
-
-        let club =
-        getCurrentClub();
-
-
-
-        if(club){
-
-
-            clubPlayers =
-            club.players || [];
-
-
-
-            todayPlayers =
-            club.todayPlayers || [];
-
-
-
-            rounds =
-            club.rounds || [];
-
-
-
-            settings =
-            club.settings ||
-            {
-
-                courts:3,
-
-                players:4
-
+            clubPlayers = club.players || [];
+            todayPlayers = club.todayPlayers || [];
+            rounds = club.rounds || [];
+            settings = club.settings || {
+                courts: 3,
+                players: 4
             };
-
 
         }
 
+    } else {
+
+        clubPlayers = [];
+        todayPlayers = [];
+        rounds = [];
+        settings = {
+            courts: 3,
+            players: 4
+        };
 
     }
 
-
 }
 
+// ======================
+// 儲存所有球團
+// ======================
 
+function saveClubs() {
 
+    localStorage.setItem(
+        "clubs",
+        JSON.stringify(clubs)
+    );
 
+    if (currentClub) {
 
+        localStorage.setItem(
+            "currentClub",
+            currentClub
+        );
 
+    }
 
+}
 
 // ======================
 // 取得目前球團
 // ======================
 
-function getCurrentClub(){
-
+function getCurrentClub() {
 
     return clubs.find(
-        c=>
-        c.name===currentClub
+        c => c.name === currentClub
     );
 
-
 }
-
-
-
-
-
-
-
 
 // ======================
 // 建立球團
 // ======================
 
-function createClub(name){
+function createClub(name) {
 
+    name = name.trim();
 
-    if(!name){
+    if (!name) {
 
+        alert("請輸入球團名稱");
         return false;
 
     }
 
+    if (
+        clubs.some(c => c.name === name)
+    ) {
 
-
-    if(
-        clubs.some(
-            c=>c.name===name
-        )
-    ){
-
-        alert(
-            "已有此球團"
-        );
-
+        alert("球團已存在");
         return false;
 
     }
 
+    clubs.push({
 
+        name,
 
-    let club = {
+        players: [],
 
+        todayPlayers: [],
 
-        name:name,
+        rounds: [],
 
-
-        players:[],
-
-
-        todayPlayers:[],
-
-
-        rounds:[],
-
-
-        settings:{
-
-
-            courts:3,
-
-
-            players:4
-
-
+        settings: {
+            courts: 3,
+            players: 4
         }
 
+    });
 
-    };
-
-
-
-    clubs.push(
-        club
-    );
-
-
-
-    currentClub =
-    name;
-
-
+    currentClub = name;
 
     saveClubs();
 
-
-
-    localStorage.setItem(
-
-        "currentClub",
-
-        currentClub
-
-    );
-
-
-
     return true;
 
-
 }
-
-
-
-
-
-
-
-
-// ======================
-// 儲存全部球團
-// ======================
-
-function saveClubs(){
-
-
-    localStorage.setItem(
-
-        "badmintonClubs",
-
-        JSON.stringify(
-            clubs
-        )
-
-    );
-
-
-
-    localStorage.setItem(
-
-        "currentClub",
-
-        currentClub
-
-    );
-
-
-}
-
-
-
-
-
-
-
-
 
 // ======================
 // 切換球團
 // ======================
 
-function switchClub(name){
+function switchClub(name) {
 
-
-
-    let club =
-    clubs.find(
-        c=>c.name===name
-    );
-
-
-
-    if(!club)return;
-
-
-
-    currentClub =
-    name;
-
-
-
-    loadClubData();
-
-
+    currentClub = name;
 
     saveClubs();
 
-
+    loadClubData();
 
     renderAll();
 
-
 }
-
-
-
-
-
-
-
-
 
 // ======================
 // 刪除球團
 // ======================
 
-function deleteClub(name){
+function deleteClub(name) {
 
+    if (!confirm("確定刪除球團？")) return;
 
-    if(
-        !confirm(
-            "確定刪除 "
-            +name+
-            " ?"
-        )
-    ){
-
-        return;
-
-    }
-
-
-
-    clubs =
-    clubs.filter(
-        c=>c.name!==name
+    clubs = clubs.filter(
+        c => c.name !== name
     );
 
-
-
-    if(
-        currentClub===name
-    ){
+    if (currentClub === name) {
 
         currentClub =
-        clubs.length
-        ?
-        clubs[0].name
-        :
-        "";
-
+            clubs.length ?
+            clubs[0].name :
+            null;
 
     }
-
-
 
     saveClubs();
 
-
-
     loadClubData();
-
-
 
     renderAll();
 
-
 }
+```
