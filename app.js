@@ -1522,7 +1522,7 @@ team
 
 
 // ======================
-// 點名字換人
+// V9.5 點名字換人修正版
 // ======================
 
 
@@ -1548,17 +1548,14 @@ button
 
 
 
-
-
     let oldPlayer;
-
 
 
 
     if(team==="A"){
 
 
-        oldPlayer=
+        oldPlayer =
 
         court.teamA[index];
 
@@ -1568,7 +1565,7 @@ button
     else{
 
 
-        oldPlayer=
+        oldPlayer =
 
         court.teamB[index];
 
@@ -1591,11 +1588,40 @@ button
 
 
 
-
-
     select.className=
 
     "player-select";
+
+
+
+
+
+
+
+    // 取得目前場上所有人
+
+    let playing = [];
+
+
+
+    court.teamA.forEach(
+
+    p=>
+
+    playing.push(p.name)
+
+    );
+
+
+
+    court.teamB.forEach(
+
+    p=>
+
+    playing.push(p.name)
+
+    );
+
 
 
 
@@ -1609,7 +1635,21 @@ button
 
     p=>
 
+
     p.checked!==false
+
+    &&
+
+    (
+
+        !playing.includes(p.name)
+
+        ||
+
+        p.name===oldPlayer.name
+
+    )
+
 
     )
 
@@ -1618,15 +1658,13 @@ button
     p=>{
 
 
-
-        let option=
+        let option =
 
         document.createElement(
 
             "option"
 
         );
-
 
 
 
@@ -1643,6 +1681,7 @@ button
 
 
 
+
         if(
 
         p.name===oldPlayer.name
@@ -1652,7 +1691,6 @@ button
             option.selected=true;
 
         }
-
 
 
 
@@ -1668,11 +1706,14 @@ button
 
 
 
+
+
+
     select.onchange=function(){
 
 
 
-        let newPlayer=
+        let newPlayer =
 
         todayPlayers.find(
 
@@ -1681,6 +1722,7 @@ button
         p.name===this.value
 
         );
+
 
 
 
@@ -1696,12 +1738,73 @@ button
 
 
 
+        // 同一人不用換
+
+        if(
+
+        newPlayer.name===oldPlayer.name
+
+        ){
+
+            renderRounds();
+
+            return;
+
+        }
+
+
+
+
+
+
+
+        // 扣除舊球員場數
+
+        oldPlayer.playCount =
+
+        Math.max(
+
+            0,
+
+            (oldPlayer.playCount||1)-1
+
+        );
+
+
+
+
+
+        // 新球員增加場數
+
+        newPlayer.playCount =
+
+        (newPlayer.playCount||0)+1;
+
+
+
+        newPlayer.restMinutes=0;
+
+
+
+
+
+
+
+
+
+        // 交換球員
+
+
 
         if(team==="A"){
 
 
 
-            court.teamA[index]=newPlayer;
+            court.teamA[index]
+
+            =
+
+            newPlayer;
 
 
 
@@ -1711,11 +1814,18 @@ button
 
 
 
-            court.teamB[index]=newPlayer;
+            court.teamB[index]
+
+            =
+
+            newPlayer;
 
 
 
         }
+
+
+
 
 
 
@@ -1740,7 +1850,10 @@ button
 
 
 
-    button.parentElement.replaceChild(
+
+    button.parentElement
+
+    .replaceChild(
 
         select,
 
@@ -1755,7 +1868,6 @@ button
 
 
 }
-
 
 
 
