@@ -595,7 +595,136 @@ function deleteClubPlayer(i){
 }
 
 
+// ======================
+// 一鍵移除全部社團球友
+// ======================
 
+
+function clearClubPlayers(){
+
+
+
+    if(
+        !confirm(
+        "確定移除全部社團球友？\n\n今日活動與排場也會清除"
+        )
+    ){
+
+        return;
+
+    }
+
+
+
+
+
+
+    // 清除社團名單
+
+    clubPlayers=[];
+
+
+
+
+
+    // 清除今日活動
+
+    todayPlayers=[];
+
+
+
+
+
+    // 清除今日排場
+
+    rounds=[];
+
+
+
+
+
+    // 重置統計
+
+    settings={
+
+        courts:3,
+
+        players:4
+
+    };
+
+
+
+
+
+
+
+    saveData();
+
+
+
+
+
+
+    renderClubPlayers();
+
+
+
+    renderTodayPlayers();
+
+
+
+    renderRounds();
+
+
+
+    renderStatistics();
+
+
+
+
+
+    let count =
+    document.getElementById(
+        "todayCount"
+    );
+
+
+
+    if(count){
+
+        count.innerText=0;
+
+    }
+
+
+
+
+
+
+    let round =
+    document.getElementById(
+        "roundCount"
+    );
+
+
+
+    if(round){
+
+        round.innerText=0;
+
+    }
+
+
+
+
+
+    alert(
+        "已清除全部球友資料"
+    );
+
+
+}
 
 
 
