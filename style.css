@@ -1,7 +1,8 @@
-/* 🏸 羽球輪轉小幫手 V8.2 Stable */
+/* 🏸 羽球輪轉小幫手 V9.1 Stable */
+
 
 /* ======================
-   基本
+   基本設定
 ====================== */
 
 
@@ -22,6 +23,7 @@ body{
     "Noto Sans TC",
     Arial,
     sans-serif;
+
 
     background:#f5f7fa;
 
@@ -44,6 +46,18 @@ button{
     font-size:15px;
 
     cursor:pointer;
+
+    background:#e8f0ff;
+
+}
+
+
+
+
+
+button:hover{
+
+    opacity:.85;
 
 }
 
@@ -72,6 +86,20 @@ select{
 
 
 
+textarea{
+
+    min-height:120px;
+
+    resize:vertical;
+
+}
+
+
+
+
+
+
+
 
 /* ======================
    頂部
@@ -86,13 +114,16 @@ select{
 
     color:white;
 
+
     display:flex;
 
     align-items:center;
 
     justify-content:space-between;
 
+
     padding:10px 15px;
+
 
     position:sticky;
 
@@ -100,7 +131,10 @@ select{
 
     z-index:10;
 
+
 }
+
+
 
 
 
@@ -130,20 +164,35 @@ select{
 
 
 
+#currentClubName{
+
+    font-size:12px;
+
+    margin-top:3px;
+
+}
+
+
 
 
 .menu-btn,
 .setting-btn{
 
+
+    width:42px;
+
+    height:42px;
+
+
     background:white;
 
     color:#1f6feb;
 
-    width:40px;
 
-    height:40px;
+    font-size:20px;
 
 }
+
 
 
 
@@ -158,23 +207,37 @@ select{
 
 .side-menu{
 
+
     position:fixed;
+
 
     left:-260px;
 
+
     top:0;
+
 
     width:240px;
 
+
     height:100%;
+
 
     background:white;
 
+
     padding:20px;
+
 
     transition:.3s;
 
+
     z-index:20;
+
+
+    box-shadow:
+
+    2px 0 10px rgba(0,0,0,.2);
 
 }
 
@@ -190,11 +253,12 @@ select{
 
 .side-menu button{
 
+
     width:100%;
+
 
     margin-bottom:10px;
 
-    background:#eef5ff;
 
 }
 
@@ -204,13 +268,20 @@ select{
 
 #overlay{
 
+
     display:none;
+
 
     position:fixed;
 
+
     inset:0;
 
-    background:rgba(0,0,0,.4);
+
+    background:
+
+    rgba(0,0,0,.4);
+
 
     z-index:15;
 
@@ -230,6 +301,8 @@ select{
 
 
 
+
+
 /* ======================
    主內容
 ====================== */
@@ -237,11 +310,11 @@ select{
 
 main{
 
+
     padding:15px;
 
+
 }
-
-
 
 
 
@@ -264,60 +337,64 @@ main{
 
 .info-bar{
 
+
     display:flex;
+
 
     justify-content:space-around;
 
+
     background:white;
+
 
     padding:12px;
 
+
     border-radius:12px;
+
 
     margin-bottom:15px;
 
+
+    box-shadow:
+
+    0 1px 5px rgba(0,0,0,.08);
+
+
 }
+
+
 
 
 
 
 
 /* ======================
-   按鈕
+   主按鈕
 ====================== */
 
 
 .main-btn{
 
+
     width:100%;
+
 
     margin-top:15px;
 
+
     background:#1f6feb;
+
 
     color:white;
 
-}
 
+    font-size:17px;
 
-
-
-
-button{
-
-    background:#e8f0ff;
 
 }
 
 
-
-
-
-button:hover{
-
-    opacity:.85;
-
-}
 
 
 
@@ -332,15 +409,21 @@ button:hover{
 
 .player-box{
 
+
     max-height:420px;
+
 
     overflow-y:auto;
 
+
     background:white;
+
 
     padding:10px;
 
+
     border-radius:12px;
+
 
 }
 
@@ -350,47 +433,63 @@ button:hover{
 
 .player-item{
 
+
     display:flex;
 
-    justify-content:space-between;
 
     align-items:center;
 
-    background:#fff;
+
+    justify-content:space-between;
+
+
+    gap:6px;
+
+
+    background:white;
+
 
     padding:10px;
 
+
     margin-bottom:8px;
 
+
     border-radius:10px;
+
 
     box-shadow:
 
     0 1px 4px rgba(0,0,0,.1);
 
-}
 
+}
 
 
 
 
 .player-item span{
 
+
     flex:1;
 
-}
 
+}
 
 
 
 
 .player-item button{
 
-    margin-left:5px;
+
+    white-space:nowrap;
+
 
     padding:6px 10px;
 
+
 }
+
 
 
 
@@ -399,19 +498,29 @@ button:hover{
 
 
 /* ======================
-   排場
+   排場卡片
 ====================== */
 
 
 .round-card{
 
+
     background:white;
+
 
     border-radius:15px;
 
+
     padding:15px;
 
+
     margin-bottom:15px;
+
+
+    box-shadow:
+
+    0 2px 8px rgba(0,0,0,.08);
+
 
 }
 
@@ -421,13 +530,18 @@ button:hover{
 
 .court{
 
-    background:#f0f7ff;
+
+    background:#eef6ff;
+
 
     padding:12px;
 
+
     border-radius:12px;
 
+
     margin-bottom:12px;
+
 
 }
 
@@ -437,20 +551,26 @@ button:hover{
 
 .team{
 
+
     display:flex;
 
-    flex-wrap:wrap;
 
     justify-content:center;
 
+
     align-items:center;
+
+
+    flex-wrap:wrap;
+
 
     gap:6px;
 
-    margin:10px 0;
+
+    margin-top:10px;
+
 
 }
-
 
 
 
@@ -458,31 +578,48 @@ button:hover{
 
 .player-select-btn{
 
+
     background:white;
+
 
     border:
 
     1px solid #1f6feb;
 
+
     color:#1f6feb;
+
 
     padding:8px 12px;
 
+
     border-radius:10px;
 
-    font-size:16px;
+
+    font-size:15px;
+
 
 }
 
 
 
 
+/* 換人下拉 */
+
 
 .player-select{
 
+
     width:130px;
 
+
     background:white;
+
+
+    border:
+
+    2px solid #1f6feb;
+
 
 }
 
@@ -492,13 +629,21 @@ button:hover{
 
 .rest-box{
 
-    background:#fff6d8;
+
+    background:#fff5d6;
+
 
     padding:10px;
 
+
     border-radius:10px;
 
+
+    margin-top:10px;
+
+
 }
+
 
 
 
@@ -513,21 +658,29 @@ button:hover{
 
 .modal{
 
+
     position:fixed;
 
+
     inset:0;
+
 
     background:
 
     rgba(0,0,0,.5);
 
+
     display:flex;
+
 
     align-items:center;
 
+
     justify-content:center;
 
+
     z-index:30;
+
 
 }
 
@@ -537,15 +690,21 @@ button:hover{
 
 .modal-content{
 
+
     background:white;
+
 
     width:90%;
 
+
     max-width:400px;
+
 
     padding:20px;
 
+
     border-radius:15px;
+
 
 }
 
@@ -555,9 +714,12 @@ button:hover{
 
 .modal-content button{
 
+
     width:100%;
 
+
     margin-top:10px;
+
 
 }
 
@@ -567,8 +729,10 @@ button:hover{
 
 
 
+
+
 /* ======================
-   桌機
+   桌面版
 ====================== */
 
 
@@ -577,11 +741,77 @@ button:hover{
 
     main{
 
-        max-width:800px;
+
+        max-width:850px;
+
 
         margin:auto;
 
+
     }
+
+
+}
+
+
+
+
+
+
+
+
+/* ======================
+   手機最佳化
+====================== */
+
+
+@media(max-width:500px){
+
+
+    .title h1{
+
+
+        font-size:18px;
+
+
+    }
+
+
+
+
+
+    .team{
+
+
+        flex-direction:column;
+
+
+    }
+
+
+
+
+
+    .player-select-btn{
+
+
+        width:100%;
+
+
+    }
+
+
+
+
+
+    .player-select{
+
+
+        width:100%;
+
+
+    }
+
 
 
 }
