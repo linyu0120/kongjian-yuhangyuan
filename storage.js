@@ -1,10 +1,11 @@
 // 🏸 羽球輪轉小幫手 V9.1 Stable
-// storage.js
+// storage.js Final
 
 
-let clubs=[];
+let clubs = [];
 
-let currentClub="";
+let currentClub = "";
+
 
 
 
@@ -13,59 +14,64 @@ let currentClub="";
 // 載入資料
 // ======================
 
+
 function loadStorage(){
 
 
+
     let data =
+
     localStorage.getItem(
         "badmintonClubs"
     );
 
 
+
     if(data){
 
+
         try{
+
 
             clubs =
             JSON.parse(data);
 
+
+
+            if(!Array.isArray(clubs)){
+
+
+                clubs=[];
+
+
+            }
+
+
+
         }
         catch(e){
 
+
             clubs=[];
 
+
         }
+
 
     }
 
 
 
+
+
     currentClub =
+
     localStorage.getItem(
         "currentClub"
     )
     ||
     "";
 
-
-
-    // 自動恢復第一個球團
-
-    if(
-        !currentClub &&
-        clubs.length>0
-    ){
-
-        currentClub =
-        clubs[0].name;
-
-
-        localStorage.setItem(
-            "currentClub",
-            currentClub
-        );
-
-    }
 
 
 }
@@ -76,11 +82,14 @@ function loadStorage(){
 
 
 
+
 // ======================
-// 儲存全部
+// 儲存資料
 // ======================
 
+
 function saveClubs(){
+
 
 
     localStorage.setItem(
@@ -116,80 +125,126 @@ function saveClubs(){
 
 
 
+
+
 // ======================
-// 載入目前球團
+// 讀取目前球團
 // ======================
 
+
 function loadClubData(){
+
 
 
     loadStorage();
 
 
 
+
+    // 沒有球團
+
     if(!currentClub){
 
-        return;
+
+        return false;
+
 
     }
+
+
+
 
 
 
     let club =
+
     clubs.find(
+
         c=>
+
         c.name===currentClub
+
     );
 
 
 
+
+
+
+    // 找不到球團
+
     if(!club){
+
+
 
         currentClub="";
 
 
+
         localStorage.removeItem(
+
             "currentClub"
+
         );
 
 
-        return;
+
+        return false;
+
+
 
     }
 
 
 
+
+
+
     clubPlayers =
-    club.players
-    ||
-    [];
+
+    club.players || [];
+
+
 
 
 
     todayPlayers =
-    club.todayPlayers
-    ||
-    [];
+
+    club.todayPlayers || [];
+
+
 
 
 
     rounds =
-    club.rounds
-    ||
-    [];
+
+    club.rounds || [];
+
+
+
 
 
 
     settings =
-    club.settings
-    ||
+
+    club.settings ||
+
     {
+
 
         courts:3,
 
+
         players:4
 
+
     };
+
+
+
+
+
+    return true;
 
 
 
@@ -202,34 +257,58 @@ function loadClubData(){
 
 
 
+
 // ======================
 // 建立球團
 // ======================
 
+
 function createClub(name){
 
 
+
     name =
+
     name.trim();
 
 
 
+
+
     if(!name)
+
     return false;
 
 
 
+
+
+
+
     if(
-        clubs.some(
-            c=>c.name===name
-        )
+
+    clubs.some(
+
+        c=>
+
+        c.name===name
+
+    )
+
     ){
 
+
+
         alert(
-            "已有此球團"
+
+        "已有此球團"
+
         );
 
+
+
         return false;
+
 
     }
 
@@ -237,10 +316,14 @@ function createClub(name){
 
 
 
-    let club={
+
+
+    let club = {
+
 
 
         name:name,
+
 
 
         players:[],
@@ -252,13 +335,18 @@ function createClub(name){
         rounds:[],
 
 
+
         settings:{
+
 
             courts:3,
 
+
             players:4
 
+
         }
+
 
 
     };
@@ -266,9 +354,11 @@ function createClub(name){
 
 
 
-    clubs.push(
-        club
-    );
+
+
+
+    clubs.push(club);
+
 
 
 
@@ -276,18 +366,41 @@ function createClub(name){
 
 
 
+
     saveClubs();
 
 
 
-    localStorage.setItem(
-        "currentClub",
-        name
-    );
+
+
+    // 同步清空目前資料
+
+
+    clubPlayers=[];
+
+
+    todayPlayers=[];
+
+
+    rounds=[];
+
+
+    settings={
+
+
+        courts:3,
+
+
+        players:4
+
+
+    };
+
 
 
 
     return true;
+
 
 
 }
@@ -303,18 +416,25 @@ function createClub(name){
 // 取得目前球團
 // ======================
 
+
 function getCurrentClub(){
+
 
 
     return clubs.find(
 
+
         c=>
+
         c.name===currentClub
+
 
     );
 
 
+
 }
+
 
 
 
@@ -327,31 +447,48 @@ function getCurrentClub(){
 // 切換球團
 // ======================
 
+
 function switchClub(name){
 
 
+
     let club =
+
     clubs.find(
-        c=>c.name===name
+
+        c=>
+
+        c.name===name
+
     );
 
 
 
     if(!club)
+
     return;
+
+
 
 
 
     currentClub=name;
 
 
+
+
     saveClubs();
+
+
 
 
     loadClubData();
 
 
+
+
     renderAll();
+
 
 
 }
@@ -367,47 +504,125 @@ function switchClub(name){
 // 刪除球團
 // ======================
 
+
 function deleteClub(name){
 
 
+
     if(
-        !confirm(
-        "確定刪除球團？"
-        )
+
+    !confirm(
+
+    "確定刪除球團？"
+
     )
+
+    )
+
     return;
 
 
 
+
+
+
     clubs =
+
     clubs.filter(
-        c=>c.name!==name
+
+        c=>
+
+        c.name!==name
+
     );
 
 
 
-    if(
-        currentClub===name
-    ){
 
-        currentClub =
-        clubs.length
-        ?
-        clubs[0].name
-        :
-        "";
+
+
+
+
+    if(currentClub===name){
+
+
+        currentClub="";
+
+
+        localStorage.removeItem(
+
+            "currentClub"
+
+        );
+
 
     }
+
+
 
 
 
     saveClubs();
 
 
-    loadClubData();
 
 
     renderClubList();
+
+
+
+}
+
+
+
+
+
+
+
+
+// ======================
+// 第一次啟動檢查
+// ======================
+
+
+function checkClub(){
+
+
+
+    loadStorage();
+
+
+
+    if(
+
+    currentClub &&
+
+    clubs.some(
+
+        c=>
+
+        c.name===currentClub
+
+    )
+
+    ){
+
+
+
+        loadClubData();
+
+
+
+        return true;
+
+
+
+    }
+
+
+
+    return false;
+
 
 
 }
