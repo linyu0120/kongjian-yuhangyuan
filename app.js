@@ -2843,3 +2843,93 @@ function clearClubPlayers(){
 
 
 }
+
+
+// ======================
+// V9.6.1 快速測試資料
+// ======================
+
+
+function createTestPlayers(){
+
+
+    if(
+
+    !confirm(
+
+    "建立30位測試球友？"
+
+    )
+
+    ){
+
+        return;
+
+    }
+
+
+
+    for(
+
+    let i=1;
+
+    i<=30;
+
+    i++
+
+    ){
+
+
+        let name=
+
+        "測試球友"+i;
+
+
+
+        if(
+
+        !clubPlayers.some(
+
+        p=>p.name===name
+
+        )
+
+        ){
+
+
+
+            clubPlayers.push({
+
+                name:name,
+
+                restMinutes:0,
+
+                playCount:0
+
+            });
+
+
+        }
+
+
+    }
+
+
+
+
+    saveData();
+
+
+    renderClubPlayers();
+
+
+
+    alert(
+
+    "已建立30位測試球友"
+
+    );
+
+
+
+}
