@@ -1,8 +1,8 @@
-/* 🏸 羽球輪轉小幫手 V9.1 Stable */
+/* 🏸 羽球輪轉小幫手 V9.2 Final Ultimate */
 
 
 /* ======================
-   基本設定
+   基本
 ====================== */
 
 
@@ -16,7 +16,9 @@
 
 body{
 
+
     margin:0;
+
 
     font-family:
 
@@ -27,7 +29,9 @@ body{
 
     background:#f5f7fa;
 
+
     color:#222;
+
 
 }
 
@@ -35,19 +39,25 @@ body{
 
 
 
+
+
 button{
+
 
     border:none;
 
+
     border-radius:8px;
 
-    padding:8px 12px;
+
+    padding:9px 12px;
+
 
     font-size:15px;
 
+
     cursor:pointer;
 
-    background:#e8f0ff;
 
 }
 
@@ -57,9 +67,12 @@ button{
 
 button:hover{
 
+
     opacity:.85;
 
+
 }
+
 
 
 
@@ -69,30 +82,24 @@ input,
 textarea,
 select{
 
+
     width:100%;
+
 
     padding:10px;
 
+
     border-radius:8px;
+
 
     border:1px solid #ccc;
 
+
     font-size:16px;
 
-}
-
-
-
-
-
-
-textarea{
-
-    min-height:120px;
-
-    resize:vertical;
 
 }
+
 
 
 
@@ -108,16 +115,21 @@ textarea{
 
 .topbar{
 
+
     height:70px;
 
+
     background:#1f6feb;
+
 
     color:white;
 
 
     display:flex;
 
+
     align-items:center;
+
 
     justify-content:space-between;
 
@@ -127,7 +139,9 @@ textarea{
 
     position:sticky;
 
+
     top:0;
+
 
     z-index:10;
 
@@ -137,20 +151,25 @@ textarea{
 
 
 
-
 .title{
 
+
     text-align:center;
+
 
 }
 
 
 
+
 .title h1{
+
 
     margin:0;
 
+
     font-size:20px;
+
 
 }
 
@@ -158,19 +177,13 @@ textarea{
 
 .title span{
 
+
     font-size:12px;
+
 
 }
 
 
-
-#currentClubName{
-
-    font-size:12px;
-
-    margin-top:3px;
-
-}
 
 
 
@@ -179,19 +192,20 @@ textarea{
 .setting-btn{
 
 
-    width:42px;
-
-    height:42px;
-
-
     background:white;
+
 
     color:#1f6feb;
 
 
-    font-size:20px;
+    width:40px;
+
+
+    height:40px;
+
 
 }
+
 
 
 
@@ -235,17 +249,16 @@ textarea{
     z-index:20;
 
 
-    box-shadow:
-
-    2px 0 10px rgba(0,0,0,.2);
-
 }
+
 
 
 
 .side-menu.open{
 
+
     left:0;
+
 
 }
 
@@ -260,7 +273,12 @@ textarea{
     margin-bottom:10px;
 
 
+    background:#eef5ff;
+
+
 }
+
+
 
 
 
@@ -285,13 +303,16 @@ textarea{
 
     z-index:15;
 
+
 }
 
 
 
 #overlay.show{
 
+
     display:block;
+
 
 }
 
@@ -304,7 +325,7 @@ textarea{
 
 
 /* ======================
-   主內容
+   主體
 ====================== */
 
 
@@ -318,11 +339,15 @@ main{
 
 
 
+
 .hidden{
+
 
     display:none;
 
+
 }
+
 
 
 
@@ -356,11 +381,6 @@ main{
     margin-bottom:15px;
 
 
-    box-shadow:
-
-    0 1px 5px rgba(0,0,0,.08);
-
-
 }
 
 
@@ -369,8 +389,9 @@ main{
 
 
 
+
 /* ======================
-   主按鈕
+   按鈕
 ====================== */
 
 
@@ -389,7 +410,16 @@ main{
     color:white;
 
 
-    font-size:17px;
+}
+
+
+
+
+
+button{
+
+
+    background:#e8f0ff;
 
 
 }
@@ -410,7 +440,7 @@ main{
 .player-box{
 
 
-    max-height:420px;
+    max-height:360px;
 
 
     overflow-y:auto;
@@ -431,6 +461,7 @@ main{
 
 
 
+
 .player-item{
 
 
@@ -441,9 +472,6 @@ main{
 
 
     justify-content:space-between;
-
-
-    gap:6px;
 
 
     background:white;
@@ -468,6 +496,7 @@ main{
 
 
 
+
 .player-item span{
 
 
@@ -479,10 +508,11 @@ main{
 
 
 
+
 .player-item button{
 
 
-    white-space:nowrap;
+    margin-left:5px;
 
 
     padding:6px 10px;
@@ -497,8 +527,9 @@ main{
 
 
 
+
 /* ======================
-   排場卡片
+   排場
 ====================== */
 
 
@@ -517,12 +548,8 @@ main{
     margin-bottom:15px;
 
 
-    box-shadow:
-
-    0 2px 8px rgba(0,0,0,.08);
-
-
 }
+
 
 
 
@@ -531,7 +558,7 @@ main{
 .court{
 
 
-    background:#eef6ff;
+    background:#f0f7ff;
 
 
     padding:12px;
@@ -555,13 +582,13 @@ main{
     display:flex;
 
 
+    flex-wrap:wrap;
+
+
     justify-content:center;
 
 
     align-items:center;
-
-
-    flex-wrap:wrap;
 
 
     gap:6px;
@@ -571,6 +598,8 @@ main{
 
 
 }
+
+
 
 
 
@@ -596,21 +625,18 @@ main{
     border-radius:10px;
 
 
-    font-size:15px;
-
-
 }
 
 
 
 
-/* 換人下拉 */
+
 
 
 .player-select{
 
 
-    width:130px;
+    width:140px;
 
 
     background:white;
@@ -627,19 +653,19 @@ main{
 
 
 
+
+
+
 .rest-box{
 
 
-    background:#fff5d6;
+    background:#fff6d8;
 
 
     padding:10px;
 
 
     border-radius:10px;
-
-
-    margin-top:10px;
 
 
 }
@@ -687,7 +713,6 @@ main{
 
 
 
-
 .modal-content{
 
 
@@ -707,7 +732,6 @@ main{
 
 
 }
-
 
 
 
@@ -732,23 +756,23 @@ main{
 
 
 /* ======================
-   桌面版
+   清除按鈕
 ====================== */
 
 
-@media(min-width:700px){
+button[onclick="clearClubPlayers()"]{
 
 
-    main{
+    background:#ffe5e5;
 
 
-        max-width:850px;
+    color:#c62828;
 
 
-        margin:auto;
+    width:100%;
 
 
-    }
+    margin-top:10px;
 
 
 }
@@ -761,53 +785,21 @@ main{
 
 
 /* ======================
-   手機最佳化
+   桌機
 ====================== */
 
 
-@media(max-width:500px){
-
-
-    .title h1{
-
-
-        font-size:18px;
-
-
-    }
+@media(min-width:700px){
 
 
 
+    main{
 
 
-    .team{
+        max-width:800px;
 
 
-        flex-direction:column;
-
-
-    }
-
-
-
-
-
-    .player-select-btn{
-
-
-        width:100%;
-
-
-    }
-
-
-
-
-
-    .player-select{
-
-
-        width:100%;
+        margin:auto;
 
 
     }
