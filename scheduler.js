@@ -1,4 +1,4 @@
-// 🏸 羽球輪轉小幫手 V9.2 Fair Rotation
+// 🏸 羽球輪轉小幫手 V9.1 Stable
 // scheduler.js
 
 
@@ -9,9 +9,13 @@
 
 
 function createSchedule(
+
     players,
+
     courts,
+
     perCourt
+
 ){
 
 
@@ -21,62 +25,32 @@ function createSchedule(
 
 
 
-    let need =
-    courts *
-    perCourt;
-
-
-
-
-
-    /*
-      公平排序
-
-      1. 休息時間多的人優先
-      2. 上場少的人優先
-      3. 同條件隨機
-    */
-
+    // 公平排序
+    // 休息最多優先
 
     list.sort(
+
     (a,b)=>{
 
 
-        let restDiff =
-
-        (b.restMinutes||0)
-
-        -
-
-        (a.restMinutes||0);
+        let restA =
+        a.restMinutes||0;
 
 
-
-        if(restDiff!==0){
-
-            return restDiff;
-
-        }
+        let restB =
+        b.restMinutes||0;
 
 
 
-        let playDiff =
+        if(restA!==restB){
 
-        (a.playCount||0)
-
-        -
-
-        (b.playCount||0);
-
-
-
-        if(playDiff!==0){
-
-            return playDiff;
+            return restB-restA;
 
         }
 
 
+
+        // 同休息時間隨機
 
         return Math.random()-0.5;
 
@@ -84,12 +58,26 @@ function createSchedule(
     });
 
 
+    
+
+
+
+    let need =
+    courts *
+    perCourt;
+
+
+
+    let playing=[];
+
+    let resting=[];
 
 
 
 
-    let playing =
+    // 取出上場名單
 
+    playing =
     list.slice(
         0,
         need
@@ -97,10 +85,7 @@ function createSchedule(
 
 
 
-
-
-    let resting =
-
+    resting =
     list.slice(
         need
     );
@@ -110,11 +95,12 @@ function createSchedule(
 
 
 
-    let courtsData=[];
+    let courtList=[];
 
 
 
     let index=0;
+
 
 
 
@@ -126,11 +112,14 @@ function createSchedule(
     ){
 
 
-        let group =
 
+        let group =
         playing.slice(
+
             index,
+
             index+perCourt
+
         );
 
 
@@ -140,8 +129,24 @@ function createSchedule(
 
 
 
-        let half =
 
+        // 確保人數不足保護
+
+        if(
+            group.length <
+            perCourt
+        ){
+
+            continue;
+
+        }
+
+
+
+
+
+
+        let half =
         Math.ceil(
             group.length/2
         );
@@ -149,9 +154,8 @@ function createSchedule(
 
 
 
-        courtsData.push({
 
-
+        courtList.push({
 
             name:
 
@@ -159,26 +163,29 @@ function createSchedule(
 
 
 
-
             teamA:
 
             group.slice(
-                0,
-                half
-            ),
 
+                0,
+
+                half
+
+            ),
 
 
 
             teamB:
 
             group.slice(
+
                 half
+
             )
 
 
-
         });
+
 
 
 
@@ -187,20 +194,18 @@ function createSchedule(
 
 
 
-    return {
 
+    return{
 
 
         courts:
 
-        courtsData,
-
+        courtList,
 
 
         resting:
 
         resting
-
 
 
     };
@@ -237,20 +242,39 @@ function getPlayingNames(result){
 
         p=>{
 
-            names.push(
-                p.name
-            );
+            if(
+                !names.includes(
+                    p.name
+                )
+            ){
+
+                names.push(
+                    p.name
+                );
+
+            }
 
         });
+
 
 
         court.teamB.forEach(
 
         p=>{
 
-            names.push(
-                p.name
-            );
+
+            if(
+                !names.includes(
+                    p.name
+                )
+            ){
+
+                names.push(
+                    p.name
+                );
+
+            }
+
 
         });
 
@@ -296,11 +320,9 @@ minutes
 
 
         if(
-
-        playingNames.includes(
-            p.name
-        )
-
+            playingNames.includes(
+                p.name
+            )
         ){
 
 
@@ -318,13 +340,12 @@ minutes
         else{
 
 
+
             p.restMinutes =
-
             (p.restMinutes||0)
-
             +
-
             minutes;
+
 
 
         }
@@ -345,7 +366,7 @@ minutes
 
 
 // ======================
-// 換人後重新整理
+// 替換球場球員
 // ======================
 
 
@@ -362,17 +383,21 @@ players
     let half =
 
     Math.ceil(
-        players.length/2
-    );
 
+        players.length/2
+
+    );
 
 
 
     court.teamA =
 
     players.slice(
+
         0,
+
         half
+
     );
 
 
@@ -380,13 +405,13 @@ players
     court.teamB =
 
     players.slice(
+
         half
+
     );
 
 
-
 }
-
 
 
 
@@ -403,16 +428,22 @@ players
 function shuffleArray(arr){
 
 
+
     let array =
     [...arr];
 
 
 
     for(
+
         let i=array.length-1;
+
         i>0;
+
         i--
+
     ){
+
 
 
         let j =
@@ -430,8 +461,10 @@ function shuffleArray(arr){
 
 
         [
-        array[i],
-        array[j]
+
+            array[i],
+
+            array[j]
 
         ]
 
@@ -439,8 +472,9 @@ function shuffleArray(arr){
 
         [
 
-        array[j],
-        array[i]
+            array[j],
+
+            array[i]
 
         ];
 
