@@ -1,4 +1,4 @@
-// 🏸 羽球輪轉小幫手 V9 Final Ultimate
+// 🏸 羽球輪轉小幫手 V9.2 Fair Rotation
 // scheduler.js
 
 
@@ -15,30 +15,9 @@ function createSchedule(
 ){
 
 
+
     let list =
     [...players];
-
-
-
-    // 先依休息時間排序
-    list.sort(
-    (a,b)=>{
-
-        return (
-            (b.restMinutes||0)
-            -
-            (a.restMinutes||0)
-        );
-
-    });
-
-
-
-    // 同休息時間再隨機
-    list =
-    shuffleArray(list);
-
-
 
 
 
@@ -48,7 +27,69 @@ function createSchedule(
 
 
 
+
+
+    /*
+      公平排序
+
+      1. 休息時間多的人優先
+      2. 上場少的人優先
+      3. 同條件隨機
+    */
+
+
+    list.sort(
+    (a,b)=>{
+
+
+        let restDiff =
+
+        (b.restMinutes||0)
+
+        -
+
+        (a.restMinutes||0);
+
+
+
+        if(restDiff!==0){
+
+            return restDiff;
+
+        }
+
+
+
+        let playDiff =
+
+        (a.playCount||0)
+
+        -
+
+        (b.playCount||0);
+
+
+
+        if(playDiff!==0){
+
+            return playDiff;
+
+        }
+
+
+
+        return Math.random()-0.5;
+
+
+    });
+
+
+
+
+
+
     let playing =
+
     list.slice(
         0,
         need
@@ -56,7 +97,10 @@ function createSchedule(
 
 
 
+
+
     let resting =
+
     list.slice(
         need
     );
@@ -65,7 +109,8 @@ function createSchedule(
 
 
 
-    let courtList=[];
+
+    let courtsData=[];
 
 
 
@@ -81,8 +126,8 @@ function createSchedule(
     ){
 
 
-
         let group =
+
         playing.slice(
             index,
             index+perCourt
@@ -94,22 +139,29 @@ function createSchedule(
 
 
 
+
         let half =
+
         Math.ceil(
             group.length/2
         );
 
 
 
-        courtList.push({
+
+        courtsData.push({
+
 
 
             name:
+
             "第"+c+"場",
 
 
 
+
             teamA:
+
             group.slice(
                 0,
                 half
@@ -117,7 +169,9 @@ function createSchedule(
 
 
 
+
             teamB:
+
             group.slice(
                 half
             )
@@ -133,16 +187,20 @@ function createSchedule(
 
 
 
-
     return {
 
 
+
         courts:
-        courtList,
+
+        courtsData,
+
 
 
         resting:
+
         resting
+
 
 
     };
@@ -156,9 +214,12 @@ function createSchedule(
 
 
 
+
+
 // ======================
-// 取得目前上場名字
+// 取得上場名字
 // ======================
+
 
 function getPlayingNames(result){
 
@@ -168,10 +229,12 @@ function getPlayingNames(result){
 
 
     result.courts.forEach(
+
     court=>{
 
 
         court.teamA.forEach(
+
         p=>{
 
             names.push(
@@ -181,8 +244,8 @@ function getPlayingNames(result){
         });
 
 
-
         court.teamB.forEach(
+
         p=>{
 
             names.push(
@@ -208,38 +271,47 @@ function getPlayingNames(result){
 
 
 
+
+
 // ======================
 // 更新休息時間
 // ======================
 
+
 function updateRestTime(
 
-    players,
+players,
 
-    playingNames,
+playingNames,
 
-    minutes
+minutes
 
 ){
 
 
 
     players.forEach(
+
     p=>{
 
 
         if(
-            playingNames.includes(
-                p.name
-            )
+
+        playingNames.includes(
+            p.name
+        )
+
         ){
+
 
 
             p.playCount =
             (p.playCount||0)+1;
 
 
+
             p.restMinutes=0;
+
 
 
         }
@@ -247,12 +319,16 @@ function updateRestTime(
 
 
             p.restMinutes =
+
             (p.restMinutes||0)
+
             +
+
             minutes;
 
 
         }
+
 
 
     });
@@ -267,24 +343,33 @@ function updateRestTime(
 
 
 
+
 // ======================
-// 取代場上球員
+// 換人後重新整理
 // ======================
 
+
 function replaceCourtPlayers(
-    court,
-    players
+
+court,
+
+players
+
 ){
 
 
+
     let half =
+
     Math.ceil(
         players.length/2
     );
 
 
 
+
     court.teamA =
+
     players.slice(
         0,
         half
@@ -293,9 +378,11 @@ function replaceCourtPlayers(
 
 
     court.teamB =
+
     players.slice(
         half
     );
+
 
 
 }
@@ -307,9 +394,11 @@ function replaceCourtPlayers(
 
 
 
+
 // ======================
 // 洗牌
 // ======================
+
 
 function shuffleArray(arr){
 
@@ -327,23 +416,35 @@ function shuffleArray(arr){
 
 
         let j =
+
         Math.floor(
+
             Math.random()
+
             *
+
             (i+1)
+
         );
 
 
 
         [
-            array[i],
-            array[j]
+        array[i],
+        array[j]
+
         ]
+
         =
+
         [
-            array[j],
-            array[i]
+
+        array[j],
+        array[i]
+
         ];
+
+
 
     }
 
