@@ -1,10 +1,10 @@
-// 🏸 羽球輪轉小幫手 V9.2 Final Ultimate
+// 🏸 羽球輪轉小幫手 V9.4 Final Ultimate
 // scheduler.js
 
 
 
 // ======================
-// 建立排場
+// 建立公平排場
 // ======================
 
 
@@ -19,15 +19,18 @@ function createSchedule(
 ){
 
 
-
     let list=[...players];
 
 
 
+    /*
+      排序優先：
 
+      1. 休息分鐘最多
+      2. 上場次數最少
+      3. 隨機打散
+    */
 
-    // 依休息時間排序
-    // 休息越久越優先
 
 
     list.sort(
@@ -35,48 +38,85 @@ function createSchedule(
     (a,b)=>{
 
 
-        let restA =
-        a.restMinutes || 0;
-
-
-        let restB =
-        b.restMinutes || 0;
-
-
-
-        return restB-restA;
-
-
-    });
-
-
-
-    // 同休息時間打散
-
-    let grouped =
-    shuffleArray(list);
-
-
-
-
-
-    grouped.sort(
-
-    (a,b)=>{
-
-
-        return (
+        let restDiff =
 
         (b.restMinutes||0)
 
         -
 
-        (a.restMinutes||0)
+        (a.restMinutes||0);
+
+
+
+        if(restDiff!==0){
+
+            return restDiff;
+
+        }
+
+
+
+        return (
+
+        (a.playCount||0)
+
+        -
+
+        (b.playCount||0)
+
+        );
+
+
+
+    });
+
+
+
+
+    // 同條件增加隨機性
+
+    let topShuffle=
+
+    shuffleArray(list);
+
+
+
+    topShuffle.sort(
+
+    (a,b)=>{
+
+
+        let rest =
+
+        (b.restMinutes||0)
+
+        -
+
+        (a.restMinutes||0);
+
+
+
+        if(rest!==0){
+
+            return rest;
+
+        }
+
+
+
+        return (
+
+        (a.playCount||0)
+
+        -
+
+        (b.playCount||0)
 
         );
 
 
     });
+
 
 
 
@@ -95,10 +135,9 @@ function createSchedule(
 
 
 
-
     let playing =
 
-    grouped.slice(
+    topShuffle.slice(
 
         0,
 
@@ -111,13 +150,16 @@ function createSchedule(
 
 
 
+
     let resting =
 
-    grouped.slice(
+    topShuffle.slice(
 
         need
 
     );
+
+
 
 
 
@@ -129,8 +171,6 @@ function createSchedule(
 
 
     let index=0;
-
-
 
 
 
@@ -161,7 +201,7 @@ function createSchedule(
 
 
 
-        index += perCourt;
+        index+=perCourt;
 
 
 
@@ -224,7 +264,6 @@ function createSchedule(
 
 
 
-
     return {
 
 
@@ -253,8 +292,9 @@ function createSchedule(
 
 
 
+
 // ======================
-// 取得上場名字
+// 取得上場名單
 // ======================
 
 
@@ -272,15 +312,14 @@ function getPlayingNames(result){
     court=>{
 
 
+
         court.teamA.forEach(
 
         p=>{
 
 
             names.push(
-
                 p.name
-
             );
 
 
@@ -294,9 +333,7 @@ function getPlayingNames(result){
 
 
             names.push(
-
                 p.name
-
             );
 
 
@@ -305,6 +342,7 @@ function getPlayingNames(result){
 
 
     });
+
 
 
 
@@ -321,8 +359,9 @@ function getPlayingNames(result){
 
 
 
+
 // ======================
-// 更新休息統計
+// 更新休息時間
 // ======================
 
 
@@ -371,6 +410,7 @@ minutes
         else{
 
 
+
             p.restMinutes =
 
             (p.restMinutes||0)
@@ -398,64 +438,23 @@ minutes
 
 
 
-// ======================
-// 計算休息排序
-// ======================
-
-
-function getRestOrder(players){
-
-
-
-    return [...players]
-
-    .sort(
-
-    (a,b)=>{
-
-
-        return (
-
-        (b.restMinutes||0)
-
-        -
-
-        (a.restMinutes||0)
-
-        );
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
 
 // ======================
 // 洗牌
 // ======================
 
 
-function shuffleArray(array){
+function shuffleArray(arr){
 
 
 
-    let arr=[...array];
+    let array=[...arr];
 
 
 
     for(
 
-        let i=
-
-        arr.length-1;
+        let i=array.length-1;
 
         i>0;
 
@@ -479,14 +478,11 @@ function shuffleArray(array){
 
 
 
-
-
-
         [
 
-        arr[i],
+        array[i],
 
-        arr[j]
+        array[j]
 
         ]
 
@@ -494,9 +490,9 @@ function shuffleArray(array){
 
         [
 
-        arr[j],
+        array[j],
 
-        arr[i]
+        array[i]
 
         ];
 
@@ -506,8 +502,7 @@ function shuffleArray(array){
 
 
 
-
-    return arr;
+    return array;
 
 
 
