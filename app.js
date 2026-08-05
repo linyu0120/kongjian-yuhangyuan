@@ -2361,3 +2361,394 @@ function renderAll(){
 
 
 }
+
+// ======================
+// V9.3 新增修正功能
+// ======================
+
+
+
+// ======================
+// 清除全部排場
+// ======================
+
+function clearRounds(){
+
+
+    if(
+        !confirm(
+            "確定清除今天所有排場？"
+        )
+    ){
+
+        return;
+
+    }
+
+
+
+    rounds=[];
+
+
+    saveData();
+
+
+    renderRounds();
+
+
+}
+
+
+
+
+
+
+// ======================
+// 更新今日到場
+// ======================
+
+function confirmTodayPlayers(){
+
+
+    todayPlayers.forEach(
+
+    p=>{
+
+
+        if(
+            p.checked===false
+        ){
+
+            p.restMinutes=0;
+
+
+        }
+
+
+    });
+
+
+
+    saveData();
+
+
+    renderTodayPlayers();
+
+
+    alert(
+        "今日名單已更新"
+    );
+
+
+}
+
+
+
+
+
+
+
+// ======================
+// 今日球友搜尋
+// ======================
+
+function searchTodayPlayers(){
+
+
+    let keyword =
+
+    document
+
+    .getElementById(
+
+        "todaySearch"
+
+    )
+
+    .value
+
+    .trim();
+
+
+
+
+    let box =
+
+    document.getElementById(
+
+        "todayPlayerList"
+
+    );
+
+
+
+    if(!box)return;
+
+
+
+    box.innerHTML="";
+
+
+
+
+
+    todayPlayers
+
+    .filter(
+
+    p=>
+
+    p.name.includes(keyword)
+
+    )
+
+    .forEach(
+
+    (p,i)=>{
+
+
+
+        let div=
+
+        document.createElement(
+
+            "div"
+
+        );
+
+
+
+        div.className=
+
+        "player-item";
+
+
+
+        div.innerHTML=`
+
+
+
+        <label>
+
+
+        <input
+
+        type="checkbox"
+
+        ${
+        p.checked!==false
+        ?
+        "checked"
+        :
+        ""
+        }
+
+        onchange="togglePlayer(${i})"
+
+        >
+
+
+
+        ${p.name}
+
+
+
+        🏸${p.playCount||0}場
+
+
+
+        🪑${p.restMinutes||0}分
+
+
+
+        </label>
+
+
+
+
+        <button onclick="removeToday(${i})">
+
+        移除
+
+        </button>
+
+
+
+        `;
+
+
+
+        box.appendChild(div);
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+
+// ======================
+// 社團搜尋
+// ======================
+
+function searchClubPlayers(){
+
+
+
+    let keyword =
+
+    document
+
+    .getElementById(
+
+        "clubSearch"
+
+    )
+
+    .value
+
+    .trim();
+
+
+
+
+    let box=
+
+    document.getElementById(
+
+        "clubPlayerList"
+
+    );
+
+
+
+    if(!box)return;
+
+
+
+    box.innerHTML="";
+
+
+
+
+
+    clubPlayers
+
+    .filter(
+
+    p=>
+
+    p.name.includes(keyword)
+
+    )
+
+    .forEach(
+
+    (p,i)=>{
+
+
+
+        let index=
+
+        clubPlayers.indexOf(p);
+
+
+
+        box.innerHTML += `
+
+
+
+        <div class="player-item">
+
+
+        <span>
+
+        ${p.name}
+
+        </span>
+
+
+
+        <button onclick="addToToday(${index})">
+
+        加入今日
+
+        </button>
+
+
+
+        <button onclick="deleteClubPlayer(${index})">
+
+        刪除
+
+        </button>
+
+
+
+        </div>
+
+
+
+        `;
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+// ======================
+// 一鍵移除全部球友
+// ======================
+
+function clearClubPlayers(){
+
+
+
+    if(
+
+    !confirm(
+
+    "確定移除全部社團球友？"
+
+    )
+
+    ){
+
+        return;
+
+    }
+
+
+
+
+
+    clubPlayers=[];
+
+
+
+    saveData();
+
+
+
+    renderClubPlayers();
+
+
+
+}
